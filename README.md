@@ -1,4 +1,7 @@
-# # FINAL PROJECT - KELOMPOK 1 | RAKAMIN ACADEMY | FSWD-5B
+# # FINAL PROJECT | RAKAMIN ACADEMY | FSWD-5B
+
+## Kelompok 1
+
 - Raie Aswajjillah
 - Affan Maulana Zulkarnain
 - Muhammad Ikhsan Supriadi
@@ -54,4 +57,4 @@ npx sequelize-cli db:migrate
 ```bash
 npx sequelize-cli db:seed:all
 ```
-Lakukan ``npx sequelize-cli db:migrate:undo`` jika ingin menghapus table, lalu ulang semua 
+Lakukan ``npx sequelize-cli db:migrate:undo`` jika ingin menghapus table.

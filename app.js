@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 app.set("view engine", "ejs")
 
-app.use('/', routers)
+app.use('/api/v1/', routers)
 app.use(errorHandler);
 
 
