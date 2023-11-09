@@ -45,7 +45,7 @@ Setelah melakukan `npm install` , lakukan setup file config.json untuk mengatur 
   > `git commit -m "feature: fitur apa yang di buat`
 
 ## Setup .env
-Jika ingin melakukan `npm run start` ubah `NODE_TEST` pada file config.json menjadi `NODE_TEST=development`. Jika `NODE_TEST=test` maka proses listening dari server tidak akan berjalan.
+Jika ingin melakukan `npm run start` ubah `NODE_ENV` pada file .env menjadi `NODE_ENV=development`. Jika `NODE_ENV=test` maka proses listening dari server tidak akan berjalan.
 
 ## Step Setup Database Utama*
 ```bash
