@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "root",
+    "database": "finpro_kel1_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "root",
+    "database": "finpro_kel1__test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "root",
+    "database": "finpro_kel1__production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
