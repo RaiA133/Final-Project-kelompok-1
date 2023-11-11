@@ -1,7 +1,7 @@
 const express = require('express');
 const route = express.Router();
 const jwt = require('jsonwebtoken');
-const secretKey = process.env.JWT_SECRET_KEY || 'defaultSecretKey'; 
+const secretKey = process.env.JWT_SECRET || 'defaultSecretKey'; 
 
 const verifyToken = (req, res, next) => {
   const token = req.headers.authorization;

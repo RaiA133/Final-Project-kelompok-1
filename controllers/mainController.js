@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { User } = require('../models')
 const jwt = require('jsonwebtoken');
-const secretKey = process.env.JWT_SECRET_KEY || 'defaultSecretKey';
+const secretKey = process.env.JWT_SECRET || 'defaultSecretKey';
 
 class mainController {
   static healthCheck (req, res, next) {
@@ -29,7 +29,7 @@ class mainController {
       if (!data) {
         res.status(404).json({ message: 'Email atau Password Salah!' })
       } else {
-        const token = jwt.sign({ email }, secretKey, { expiresIn: '300s' });
+        const token = jwt.sign({ email }, secretKey, { expiresIn: process.env.JWT_EXPIRED_TIME });
         res.status(200).json({ 
           status: 'Success', 
           halaman: 'Login', 
