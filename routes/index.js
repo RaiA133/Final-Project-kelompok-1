@@ -1,4 +1,5 @@
 const route = require('express').Router()
+
 const homeRoute = require('./home')
 const authRoute = require('./auth')
 
