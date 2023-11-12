@@ -15,10 +15,10 @@ module.exports = {
                         updatedAt: new Date(),
                   },
             ];
-            return queryInterface.bulkInsert("users_role", addusers_role, {});
+            return queryInterface.bulkInsert("User_roles", addusers_role, {});
       },
 
       async down(queryInterface, Sequelize) {
-            return queryInterface.bulkDelete("users_role", null, {});
+            return queryInterface.bulkDelete("User_roles", null, {});
       },
 };
