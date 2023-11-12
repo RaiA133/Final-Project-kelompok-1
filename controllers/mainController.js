@@ -33,7 +33,11 @@ class mainController {
       });
     } catch (err) {
       console.error('Registration error:', err);
-      res.status(500).json({ message: 'Something went wrong', error: err.message });
+      res.status(500).json({ 
+        status: 'failed',
+        message: 'Email atau Username Sudah Terdaftar', 
+        error: err.message 
+      });
     }
   }
 
@@ -43,34 +47,44 @@ class mainController {
     const { email, password } = req.body
     User.findOne({
       where: {
-        email: email,
-        password: password
+        email: email
       }
     })
       .then(async data => {
         if (!data) {
-          res.status(404).json({ message: 'Email Salah!' })
+          return res.status(404).json({ 
+            status: 'Failed',
+            message: 'Email Salah atau Tidak Terdaftar!' 
+          });
         }
+
         const passwordMatch = await bcrypt.compare(password, data.password);
+
         if (!passwordMatch) {
-          return res.status(400).json({ message: "Password Salah" });
-        } else {
+          return res.status(400).json({ 
+            status: 'Failed',
+            message: `Password Salah untuk email : ${data.email}` 
+          });
+        } 
+
+        else {
           const token = jwt.sign({ email }, secretKey, { expiresIn: process.env.JWT_EXPIRED_TIME });
-          res.status(200).json({
+          return res.status(200).json({
             status: 'Success',
             halaman: 'Login',
             message: 'Anda Berhasil Login',
             token
-          })
+          });
         }
       })
       .catch(err => {
-        res.status(500).json({
+        return res.status(500).json({
           status: 'Something went wrong',
           error: err
-        })
-      })
+        });
+      });
   }
+  
 
   // halaman all data user ( cek penggunaan middleware yg dikirim dari routes/home.js )
   static index(req, res, next) {

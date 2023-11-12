@@ -23,10 +23,15 @@ module.exports = {
       },
       username: {
         allowNull: false,
-        type: Sequelize.STRING
+        unique: true, 
+        type: Sequelize.STRING,
       },
       email: {
         allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true, // Validasi bahwa nilainya harus berupa alamat email
+        },
         type: Sequelize.STRING
       },
       password: {

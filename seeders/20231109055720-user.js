@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     const addUsers = [
       {
         user_role_id: 2,
@@ -39,7 +39,7 @@ module.exports = {
     return queryInterface.bulkInsert('Users', addUsers, {})
   },
 
-      async down(queryInterface, Sequelize) {
-            return queryInterface.bulkDelete("Users", null, {});
-      },
+  async down(queryInterface, Sequelize) {
+    return queryInterface.bulkDelete("Users", null, {});
+  },
 };
