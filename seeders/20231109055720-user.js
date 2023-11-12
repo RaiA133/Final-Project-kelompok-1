@@ -12,6 +12,7 @@ module.exports = {
         name: 'Raie Aswajjillah',
         username: 'R41iee',
         email: 'rai@gmail.com',
+        img_profile: 'default.png',
         password: await bcrypt.hash('123', 10),
         createdAt: new Date(),
         updatedAt: new Date()
@@ -22,6 +23,7 @@ module.exports = {
         name: 'Ikhsan',
         username: 'death_vader32',
         email: 'ikhsan@gmail.com',
+        img_profile: 'default.png',
         password: await bcrypt.hash('321', 10),
         createdAt: new Date(),
         updatedAt: new Date()
@@ -32,6 +34,7 @@ module.exports = {
         name: 'Iffat',
         username: 'nbilIffat',
         email: 'nabil@gmail.com',
+        img_profile: 'default.png',
         password: await bcrypt.hash('111', 10),
         createdAt: new Date(),
         updatedAt: new Date()

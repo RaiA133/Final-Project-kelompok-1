@@ -1,9 +1,5 @@
 require('dotenv').config();
 const { User } = require('../models')
-const jwt = require('jsonwebtoken');
-const secretKey = process.env.JWT_SECRET || 'defaultSecretKey';
-const { v4: uuidv4 } = require('uuid');
-const bcrypt = require("bcrypt");
 
 class mainController {
   static healthCheck(req, res, next) {
