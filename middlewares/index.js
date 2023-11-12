@@ -6,29 +6,47 @@ const secretKey = process.env.JWT_SECRET || 'defaultSecretKey';
 
 const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization;
-  const user = await User.findOne({
+  if (!token) {
+    return res.status(401).json({
+      status: 'failed',
+      message: 'Token Belum Dimasukan.'
+    });
+  }
+
+  await User.findOne({
     where: {
       remember_token: token
     }
-  });
-
-  if (!user) {
-      return res.status(401).json({ 
+  })
+  .then(user => {
+    if (!user) {
+      return res.status(401).json({
         status: 'failed',
         message: 'Anda Belum Login.'
       });
-  }
-  jwt.verify(token, secretKey, (err, decoded) => {
-      if (err) {
-          return res.status(401).json({ 
-            status: 'failed',
-            message: 'Sesi Login Berakhir.'
-          });
-      }
-      // Token valid, menyimpan data pengguna ke dalam objek req untuk digunakan di handler selanjutnya
-      req.userData = decoded;
-      next();
+    }
+    else {
+      jwt.verify(token, secretKey, (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ 
+              status: 'failed',
+              message: 'Sesi Login Berakhir.'
+            });
+        }
+        // Proses Decoded Token, diteruskan ke pengguna middleware
+        req.userData = decoded;
+        next();
+    });
+    }
+  })
+  .catch(err => {
+    return res.status(500).json({
+      status: 'Something went wrong',
+      error: err
+    });
   });
+
+  
 };
 
 module.exports = { verifyToken, route }; 
