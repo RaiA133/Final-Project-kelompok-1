@@ -1,17 +1,18 @@
 'use strict';
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require("bcrypt");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     const addUsers = [
       {
-        user_role_id: 2,
+        user_role_id: 1,
         unique_id: uuidv4(),
         name: 'Raie Aswajjillah',
         username: 'R41iee',
         email: 'rai@gmail.com',
-        password: '123',
+        password: await bcrypt.hash('123', 10),
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -21,7 +22,7 @@ module.exports = {
         name: 'Ikhsan',
         username: 'death_vader32',
         email: 'ikhsan@gmail.com',
-        password: '123',
+        password: await bcrypt.hash('321', 10),
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -31,7 +32,7 @@ module.exports = {
         name: 'Iffat',
         username: 'nbilIffat',
         email: 'nabil@gmail.com',
-        password: '123',
+        password: await bcrypt.hash('111', 10),
         createdAt: new Date(),
         updatedAt: new Date()
       },

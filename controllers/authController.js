@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require("bcrypt");
 
 class authController {
+
   // halaman register
   static async register(req, res, next) {
     try {
@@ -37,7 +38,6 @@ class authController {
     }
   }
 
-
   // halaman login
   static login(req, res, next) {
     const { email, password } = req.body
@@ -53,18 +53,16 @@ class authController {
             message: 'Email Salah atau Tidak Terdaftar!'
           });
         }
-
         const passwordMatch = await bcrypt.compare(password, data.password);
-
         if (!passwordMatch) {
           return res.status(400).json({
             status: 'Failed',
             message: `Password Salah untuk email : ${data.email}`
           });
         }
-
         else {
           const token = jwt.sign({ email }, secretKey, { expiresIn: process.env.JWT_EXPIRED_TIME });
+          data.update({ remember_token: token }) // update data token ke database
           return res.status(200).json({
             status: 'Success',
             halaman: 'Login',
@@ -80,21 +78,38 @@ class authController {
         });
       });
   }
-  
-  static async logout(req, res, next) {
-    try {
-      const token = req.headers.authorization;
-      console.log(token)
-      if (!token) {
-        return res.status(401).json({ message: 'Token not provided' });
-      }
-      await Session.destroy({ where: { token } });
-      res.status(200).json({ message: 'Logout berhasil' });
 
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Gagal melakukan logout' });
-    }
+  static logout(req, res, next) {
+    const token = req.headers.authorization;
+
+    User.findOne({
+      where: {
+        remember_token: token
+      }
+    })
+      .then(async data => {
+        if (!data) {
+          return res.status(404).json({
+            status: 'Failed',
+            message: 'Token Salah atau Anda Belum Login!'
+          });
+        }
+        else {
+          data.update({ remember_token: null }) // update data token ke database
+          return res.status(200).json({
+            status: 'Success',
+            halaman: 'Logout',
+            message: 'Anda Berhasil Logout',
+            tokedExpired: token,
+          });
+        }
+      })
+      .catch(err => {
+        return res.status(500).json({
+          status: 'Something went wrong',
+          error: err
+        });
+      });
   }
 }
 
