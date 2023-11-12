@@ -61,7 +61,13 @@ class authController {
           });
         }
         else {
-          const token = jwt.sign({ email }, secretKey, { expiresIn: process.env.JWT_EXPIRED_TIME });
+          const token = jwt.sign({
+            // apa saya yang bisa dijadikan jwt, nantinya bisa di decoded untuk digunakan sebagai data WHERE ketika get data
+            id: data.id,
+            unique_id: data.unique_id,
+            email
+          }, secretKey, { expiresIn: process.env.JWT_EXPIRED_TIME });
+
           data.update({ remember_token: token }) // update data token ke database
           return res.status(200).json({
             status: 'Success',
@@ -80,14 +86,13 @@ class authController {
   }
 
   static logout(req, res, next) {
-    const token = req.headers.authorization;
-
+    const { id, unique_id, email } = req.userData;
     User.findOne({
       where: {
-        remember_token: token
+        unique_id
       }
     })
-      .then(async data => {
+      .then(data => {
         if (!data) {
           return res.status(404).json({
             status: 'Failed',
@@ -100,7 +105,6 @@ class authController {
             status: 'Success',
             halaman: 'Logout',
             message: 'Anda Berhasil Logout',
-            tokedExpired: token,
           });
         }
       })
