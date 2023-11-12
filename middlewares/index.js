@@ -1,12 +1,18 @@
 const express = require('express');
 const route = express.Router();
 const jwt = require('jsonwebtoken');
+const { User } = require('../models')
 const secretKey = process.env.JWT_SECRET || 'defaultSecretKey'; 
 
-const verifyToken = (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization;
+  const user = await User.findOne({
+    where: {
+      remember_token: token
+    }
+  });
 
-  if (!token) {
+  if (!user) {
       return res.status(401).json({ 
         status: 'failed',
         message: 'Anda Belum Login.'
