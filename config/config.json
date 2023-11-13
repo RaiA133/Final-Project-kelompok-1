@@ -9,14 +9,14 @@
   "test": {
     "username": "postgres",
     "password": "root",
-    "database": "finpro_kel1__test",
+    "database": "finpro_kel1_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
     "password": "root",
-    "database": "finpro_kel1__production",
+    "database": "finpro_kel1_production",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }
