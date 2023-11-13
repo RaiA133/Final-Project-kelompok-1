@@ -4,75 +4,118 @@ const app = require('../app')
 console.log(`PASTIKAN JIKA KONDISI TABLE hw_week_11_rakamin_test FRESH,
 BELUM MELAKUKAN EDIT TABLE SETELAH MELAKUKAN SEEDING`)
 
-test('GET ALL DATA TODO', (done) => {
-  request(app)
-    .get('/')
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .then(response => {
-      expect(response.body.message).toBe('Success')
-      done()
-    })
-    .catch(done)
-})
-
-test('GET DATA TODO by ID', (done) => {
-  request(app)
-    .get('/1')
-    .expect('Content-Type', /json/)
-    .expect(200)
-    .then(response => {
-      expect(response.body.message).toBe('Success')
-      done()
-    })
-    .catch(done)
-})
-
-test('CREATE NEW DATA TODO', (done) => {
+test('REGISTER', (done) => {
   const data = {
-    title: 'Judul Baru',
-    description: 'Deskripsi Baru'
+    name: "Test Name",
+    username: "Test Username",
+    email: "test@gmail.com",
+    password: "123"
   }
-
   request(app)
-    .post('/create')
+    .post('/api/v1/register')
     .send(data)
     .expect('Content-Type', /json/)
     .expect(201)
     .then(response => {
-      expect(response.body.message).toBe('Todo Created!')
+      expect(response.body.status).toBe('Success')
       done()
     })
     .catch(done)
 })
 
-test('UPDATE DATA TODO by ID', (done) => {
+test('LOGIN', (done) => {
   const data = {
-    title: 'Judul Updated',
-    description: 'Deskripsi Updated'
+    email: "test@gmail.com",
+    password: "123"
   }
-
   request(app)
-    .put('/update/4')
+    .post('/api/v1/login')
     .send(data)
     .expect('Content-Type', /json/)
     .expect(200)
     .then(response => {
-      console.log(response.body)
-      expect(response.body.message).toBe('Todo Updated!')
+      const token = response.body.token;
+      global.testToken = token;
+      expect(response.body.status).toBe('Success')
       done()
     })
     .catch(done)
 })
 
-test('SOFT DELETE DATA TODO by ID', (done) => {
+test('GET ALL DATA USER', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
   request(app)
-    .put('/delete/4')
+    .get('/api/v1/')
+    .set('Authorization', `${token}`)
     .expect('Content-Type', /json/)
     .expect(200)
-    .then(response => {
-      expect(response.body.message).toBe('Todo Deleted!')
-      done()
+    .then((response) => {
+      expect(response.body.status).toBe('Success');
+      done();
     })
-    .catch(done)
+    .catch(done);
+});
+
+test('GET DATA USER PROFILE', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  request(app)
+    .get('/api/v1/profile')
+    .set('Authorization', `${token}`)
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
+
+test('UPDATE DATA USER PROFILE', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  const data = {
+    github_link: "link github updated",
+    fb_link: "link facebook updated",
+    ig_link: "link instagram updated"
+  }
+  request(app)
+    .put('/api/v1/profile/update')
+    .set('Authorization', `${token}`)
+    .send(data)
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status).toBe('Success');
+      done();
+    })
+    .catch(done);
+})
+
+test('LOGOUT', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  request(app)
+    .post('/api/v1/logout')
+    .set('Authorization', `${token}`)
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status).toBe('Success');
+      done();
+    })
+    .catch(done);
 })

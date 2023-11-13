@@ -69,3 +69,9 @@ jika ada data lain misal data yang ingin ditampilan sertakan diakhir. misalnya s
 
 <img src="assets/img/readme/contoh-endpoint-return-1.png" height="120" title="hover text">
 <img src="assets/img/readme/contoh-endpoint-return-2.png" height="120" alt="accessibility text">
+
+## Unit Testing
+untuk melakukan unit testing lakukan semua perintah dibawah : 
+- ubah ``NODE_ENV=development`` menjadi ``NODE_ENV=test`` di `.env` ,
+- jalankan ```npm run fresh``` di terminal
+- jalankan ```npm run test``` di terminal
