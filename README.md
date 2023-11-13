@@ -59,7 +59,7 @@ npx sequelize-cli db:seed:all
 ```
 Lakukan ``npx sequelize-cli db:migrate:undo`` jika ingin menghapus table.
 
-## Endpoint Return
+## Endpoint Response
 response harus wajib berisi : 
 - status: `Success / Failed`
 - halaman: `Nama-halaman`
