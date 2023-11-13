@@ -1,9 +1,6 @@
 const request = require('supertest')
 const app = require('../app')
 
-console.log(`PASTIKAN JIKA KONDISI TABLE hw_week_11_rakamin_test FRESH,
-BELUM MELAKUKAN EDIT TABLE SETELAH MELAKUKAN SEEDING`)
-
 test('REGISTER', (done) => {
   const data = {
     name: "Test Name",
