@@ -70,6 +70,11 @@ jika ada data lain misal data yang ingin ditampilan sertakan diakhir. misalnya s
 <img src="assets/img/readme/contoh-endpoint-return-1.png" height="120" title="hover text">
 <img src="assets/img/readme/contoh-endpoint-return-2.png" height="120" alt="accessibility text">
 
+## Develop Custom Script
+#### ```npm run fresh```  
+
+untuk menjalankan `db:migrate:undo:all` , `db:migrate` dan `db:seed:all ` secara bersamaan pada sequelize, atau yang disebut refresh database. Atur `NODE_ENV` di .env menjadi `development` atau `test`.
+
 ## Unit Testing
 untuk melakukan unit testing lakukan semua perintah dibawah : 
 - ubah ``NODE_ENV=development`` menjadi ``NODE_ENV=test`` di `.env` ,

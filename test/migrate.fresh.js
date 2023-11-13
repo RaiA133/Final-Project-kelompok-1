@@ -4,13 +4,8 @@ require('dotenv').config()
 const username = process.env.POSTGRES_USER
 const password = process.env.POSTGRES_PASSWORD
 const port = process.env.POSTGRES_PORT
-const database = process.env.POSTGRES_DATABASE_TEST
+const database = (process.env.NODE_ENV !== 'test' ? process.env.POSTGRES_DATABASE : process.env.POSTGRES_DATABASE_TEST)
 const url = `postgres://${username}:${password}@localhost:${port}/${database}`
-
-if (process.env.NODE_ENV !== 'test') {
-  console.log("Ubah 'NODE_ENV=development' menjadi 'NODE_ENV=test' di .env")
-  return
-}
 
 // Perintah-perintah yang ingin dijalankan
 const commands = [
