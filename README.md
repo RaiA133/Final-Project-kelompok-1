@@ -67,5 +67,5 @@ response harus wajib berisi :
 
 jika ada data lain misal data yang ingin ditampilan sertakan diakhir. misalnya seperti data atau error pada 2 gambar dibawah.
 
-<img src="assets/img/readme/contoh-endpoint-return-1.png" height="150" title="hover text">
-<img src="assets/img/readme/contoh-endpoint-return-2.png" height="150" alt="accessibility text">
+<img src="assets/img/readme/contoh-endpoint-return-1.png" height="120" title="hover text">
+<img src="assets/img/readme/contoh-endpoint-return-2.png" height="120" alt="accessibility text">
