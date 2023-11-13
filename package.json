@@ -4,7 +4,9 @@
   "description": "!Undefined | Final Project - Rakamin - MSIB5 2023",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "fresh": "node test/migrate.fresh.js",
+    "start": "nodemon app.js",
+    "test": "jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",
