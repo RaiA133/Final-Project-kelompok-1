@@ -1,8 +1,32 @@
+require('dotenv').config();
 const { User } = require('../models')
 
 class profileController {
-  static getProfile(req, res, next) {
-    const { id, unique_id, email } = req.userData; // hasil decoded dari middleware verifyToken
+
+  // halaman ADMIN | GET all data user ( middlewares : JWT is authenticated )
+  static getUser(req, res, next) {
+    User.findAll()
+      .then(data => {
+        res.status(200).json({
+          status: 'Success',
+          halaman: 'Home',
+          message: 'Berhasil GET all Data Users',
+          data,
+        })
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: 'Failed',
+          halaman: 'Home',
+          message: 'Something went wrong',
+          error: err
+        })
+      })
+  }
+
+  // halaman PROFILE | GET data user by id ( middlewares : JWT is authenticated )
+  static getUserById(req, res, next) {
+    const { unique_id } = req.userData; // hasil decoded dari middleware verifyToken
     User.findOne({
       where: {
         unique_id
@@ -12,6 +36,7 @@ class profileController {
       if (!data) {
         return res.status(404).json({
           status: 'Failed',
+          halaman: 'Profile',
           message: 'Anda Belum Login (token false)!'
         });
       }
@@ -26,31 +51,17 @@ class profileController {
     })
     .catch(err => {
       return res.status(500).json({
-        status: 'Something went wrong',
+        status: 'Failed',
+        halaman: 'Profile',
+        message: 'Something went wrong',
         error: err
       });
     });
   }
 
+  // halaman EDIT PROFILE | UPDATE data user by id ( middlewares : JWT is authenticated )
   static updateProfile(req, res, next) {
-    // const id = req.params.id;
-    // const { name, username, email, img_profile, birth_date, birth_place, about, company, job, country, address, contact, web_link, github_link, fb_link, ig_link } = req.body;
-    // User.update({ name, username, email, img_profile, birth_date, birth_place, about, company, job, country, address, contact, web_link, github_link, fb_link, ig_link }, { where: { id } })
-    //   .then(data => {
-    //     res.status(200).json({
-    //       status: 'Success',
-    //       message: 'Profile updated',
-    //       data,
-    //     })
-    //   })
-    //   .catch(err => {
-    //     res.status(500).json({
-    //       status: 'Something went wrong',
-    //       error: err
-    //     })
-    //   })
-
-    const { id } = req.userData;
+    const { id } = req.userData; // hasil decoded dari middleware verifyToken
     const { 
       name, username, email, 
       img_profile, birth_date, 
@@ -70,6 +81,7 @@ class profileController {
         if (!data) {
           res.status(404).json({ 
             status: 'Failed',
+            halaman: 'Profile',
             message: 'Data Tidak Ditemukan!' 
           })
         } else {
@@ -84,6 +96,8 @@ class profileController {
       })
       .catch(err => {
         res.status(500).json({ 
+          status: 'Failed',
+          halaman: 'Profile',
           message: 'Something went wrong', 
           error: err 
         })

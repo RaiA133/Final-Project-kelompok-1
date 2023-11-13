@@ -8,7 +8,8 @@ const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
     return res.status(401).json({
-      status: 'failed',
+      status: 'Failed',
+      halaman: 'Middleware JWT',
       message: 'Token Belum Dimasukan.'
     });
   }
@@ -21,7 +22,8 @@ const verifyToken = async (req, res, next) => {
   .then(user => {
     if (!user) {
       return res.status(401).json({
-        status: 'failed',
+        status: 'Failed',
+        halaman: 'Middleware JWT',
         message: 'Anda Belum Login.'
       });
     }
@@ -29,11 +31,12 @@ const verifyToken = async (req, res, next) => {
       jwt.verify(token, secretKey, (err, decoded) => {
         if (err) {
             return res.status(401).json({ 
-              status: 'failed',
+              status: 'Failed',
+              halaman: 'Middleware JWT',
               message: 'Sesi Login Berakhir.'
             });
         }
-        // Proses Decoded Token, diteruskan ke pengguna middleware
+        // Proses Decoded Token dari authController.login, diteruskan ke semua controller
         req.userData = decoded;
         next();
     });
@@ -41,6 +44,7 @@ const verifyToken = async (req, res, next) => {
   })
   .catch(err => {
     return res.status(500).json({
+      halaman: 'Middleware JWT',
       status: 'Something went wrong',
       error: err
     });
