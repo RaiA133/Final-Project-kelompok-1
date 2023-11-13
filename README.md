@@ -71,7 +71,7 @@ jika ada data lain misal data yang ingin ditampilan sertakan diakhir. misalnya s
 <img src="assets/img/readme/contoh-endpoint-return-2.png" height="120" alt="accessibility text">
 
 ## Develop Custom Script
-#### ```npm run fresh```  
+```npm run fresh```  
 
 untuk menjalankan `db:migrate:undo:all` , `db:migrate` dan `db:seed:all ` secara bersamaan pada sequelize, atau yang disebut refresh database. Atur `NODE_ENV` di .env menjadi `development` atau `test`.
 
