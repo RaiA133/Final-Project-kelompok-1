@@ -69,7 +69,7 @@ class authController {
           const token = jwt.sign({ // data yang di encoded jadi JWT, diteruskan ke middleware JWT : middlewares/index.js
             id: data.id,
             unique_id: data.unique_id,
-            email
+            user_role_id: data.user_role_id
           }, secretKey, { expiresIn: JWTtime });
 
           data.update({ remember_token: token }) // UPDATE data token ke database
@@ -93,7 +93,7 @@ class authController {
 
   // halaman LOGOUT | GET & UPDATE data user ( middlewares : JWT | login needed )
   static logout(req, res, next) {
-    const { id, unique_id, email } = req.userData;
+    const { unique_id } = req.userData;
     User.findOne({
       where: {
         unique_id

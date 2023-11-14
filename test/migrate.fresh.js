@@ -44,5 +44,4 @@ async function runCommandsSequentially() {
   }
 }
 
-// Menjalankan perintah-perintah secara berurutan
 runCommandsSequentially();
