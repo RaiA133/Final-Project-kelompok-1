@@ -1,9 +1,7 @@
 const express = require('express')
 const route = express.Router()
-const app = express()
 const userController = require('../controllers/userController')
 const middlewares = require('../middlewares') 
-const path = require('path')
 
 const multer = require('multer')
 const storage = multer.diskStorage({
