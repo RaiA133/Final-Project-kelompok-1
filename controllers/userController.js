@@ -3,27 +3,6 @@ const { User } = require('../models')
 
 class profileController {
 
-  // halaman ADMIN | GET all data user ( middlewares : JWT | login needed )
-  static getUser(req, res, next) {
-    User.findAll()
-      .then(data => {
-        res.status(200).json({
-          status: 'Success',
-          halaman: 'Home',
-          message: 'Berhasil GET all Data Users',
-          data,
-        })
-      })
-      .catch(err => {
-        res.status(500).json({
-          status: 'Failed',
-          halaman: 'Home',
-          message: 'Something went wrong',
-          error: err
-        })
-      })
-  }
-
   // halaman PROFILE | GET data user by id ( middlewares : JWT | login needed )
   static getUserById(req, res, next) {
     const { unique_id } = req.userData; // hasil decoded dari middleware verifyToken
@@ -32,61 +11,64 @@ class profileController {
         unique_id
       }
     })
-    .then(data => {
-      if (!data) {
-        return res.status(404).json({
+      .then(data => {
+        if (!data) {
+          return res.status(404).json({
+            status: 'Failed',
+            halaman: 'Profile',
+            message: [
+              'Anda Belum Login !', 
+              'token false'
+            ]
+          });
+        }
+        else {
+          return res.status(200).json({
+            status: 'Success',
+            halaman: 'Profile',
+            message: 'Berhasil Masuk Ke Profile',
+            data
+          });
+        }
+      })
+      .catch(err => {
+        return res.status(500).json({
           status: 'Failed',
           halaman: 'Profile',
-          message: 'Anda Belum Login (token false)!'
+          message: 'Something went wrong',
+          error: err
         });
-      }
-      else {
-        return res.status(200).json({
-          status: 'Success',
-          halaman: 'Profile',
-          message: 'Anda Berhasil Masuk Ke Profile',
-          data
-        });
-      }
-    })
-    .catch(err => {
-      return res.status(500).json({
-        status: 'Failed',
-        halaman: 'Profile',
-        message: 'Something went wrong',
-        error: err
       });
-    });
   }
 
   // halaman EDIT PROFILE | UPDATE data user by id ( middlewares : JWT | login needed )
   static updateProfile(req, res, next) {
     const { id } = req.userData; // hasil decoded dari middleware verifyToken
-    const { 
-      name, username, email, 
-      img_profile, birth_date, 
-      birth_place, about, company, 
-      job, country, address, contact, 
-      web_link, github_link, fb_link, ig_link 
+    const {
+      name, username, email,
+      img_profile, birth_date,
+      birth_place, about, company,
+      job, country, address, contact,
+      web_link, github_link, fb_link, ig_link
     } = req.body;
     const updatedUser = {
-      name, username, email, 
-      img_profile, birth_date, 
-      birth_place, about, company, 
-      job, country, address, contact, 
-      web_link, github_link, fb_link, ig_link 
+      name, username, email,
+      img_profile, birth_date,
+      birth_place, about, company,
+      job, country, address, contact,
+      web_link, github_link, fb_link, ig_link
     }
     User.findByPk(id)
       .then(data => {
         if (!data) {
-          res.status(404).json({ 
+          res.status(404).json({
             status: 'Failed',
             halaman: 'Profile',
-            message: 'Data Tidak Ditemukan!' 
+            message: 'Data Tidak Ditemukan!'
           })
         } else {
           data.update(updatedUser)
-          res.status(200).json({ 
+          res.status(200).json({
             status: 'Success',
             halaman: 'Profile',
             message: 'Data Berhasil Diupdate!',
@@ -95,14 +77,16 @@ class profileController {
         }
       })
       .catch(err => {
-        res.status(500).json({ 
+        res.status(500).json({
           status: 'Failed',
           halaman: 'Profile',
-          message: 'Something went wrong', 
-          error: err 
+          message: 'Something went wrong',
+          error: err
         })
       })
   }
+
+  
 }
 
 module.exports = profileController

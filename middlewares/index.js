@@ -44,13 +44,26 @@ const verifyToken = async (req, res, next) => {
   })
   .catch(err => {
     return res.status(500).json({
-      halaman: 'Middleware JWT',
       status: 'Something went wrong',
+      halaman: 'Middleware JWT',
       error: err
     });
   });
-
-  
 };
 
-module.exports = { verifyToken, route }; 
+const isAdminCheck = async (req, res, next) => {
+  const { user_role_id } = req.userData
+  console.log(user_role_id)
+  if (user_role_id == 1) {
+    next();
+  }
+  else {
+    return res.status(403).json({
+      status: 'Failed',
+      halaman: 'Middleware Admin',
+      message: 'Anda tidak memiliki izin untuk mengakses halaman ini.'
+    });
+  };
+};
+
+module.exports = { verifyToken, isAdminCheck, route }; 
