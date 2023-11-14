@@ -98,7 +98,7 @@ class postController {
   // halaman POST PEKERJAAN | GET all data user_posts by terbaru, from params url ( middlewares : JWT | login needed )
   static getPostByTerbaru(req, res, next) {
     
-    User_post.findOne({
+    User_post.findAll({
       order: [ [ 'id', 'DESC' ]],
     })
       .then(data => {
@@ -113,10 +113,10 @@ class postController {
           return res.status(200).json({
             status: 'Success',
             halaman: 'Post',
-            message: `Kategori Postingan Berdasarkan id terbaru ${data.createdAt}`,
+            message: `Kategori Postingan Berdasarkan id terbaru/terbesar`,
             data,
             
-          });
+          });  
         }
       })
       .catch(err => {
@@ -132,7 +132,7 @@ class postController {
   // halaman POST PEKERJAAN | GET all data user_posts by terlama, from params url ( middlewares : JWT | login needed )
   static getPostByTerlama(req, res, next) {
     
-    User_post.findOne({
+    User_post.findAll({
       order: [ [ 'id', 'ASC' ]],
     })
       .then(data => {
@@ -147,7 +147,7 @@ class postController {
           return res.status(200).json({
             status: 'Success',
             halaman: 'Post',
-            message: `Kategori Postingan Berdasarkan id terlama ${data.id}`,
+            message: `Kategori Postingan Berdasarkan id terlama/terkecil`,
             data,
             
           });
