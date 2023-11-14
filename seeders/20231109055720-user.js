@@ -1,6 +1,8 @@
 'use strict';
-const { v4: uuidv4 } = require('uuid');
 const bcrypt = require("bcrypt");
+// const { v4: uuidv4 } = require('uuid');
+const { uniqueId } = require('./factory/uniqueId');
+const users = uniqueId();
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -8,7 +10,7 @@ module.exports = {
     const addUsers = [
       {
         user_role_id: 1,
-        unique_id: uuidv4(),
+        unique_id: users.user1,
         name: 'Raie Aswajjillah',
         username: 'R41iee',
         email: 'rai@gmail.com',
@@ -19,7 +21,7 @@ module.exports = {
       },
       {
         user_role_id: 2,
-        unique_id: uuidv4(),
+        unique_id: users.user2,
         name: 'Ikhsan',
         username: 'death_vader32',
         email: 'ikhsan@gmail.com',
@@ -30,7 +32,7 @@ module.exports = {
       },
       {
         user_role_id: 2,
-        unique_id: uuidv4(),
+        unique_id: users.user3,
         name: 'Iffat',
         username: 'nbilIffat',
         email: 'nabil@gmail.com',
