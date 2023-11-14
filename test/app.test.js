@@ -57,8 +57,6 @@ test('GET ALL DATA USER', (done) => {
     .catch(done);
 });
 
-
-
 test('GET DATA USER PROFILE', (done) => {
   const token = global.testToken;
   if (!token) {
@@ -109,6 +107,24 @@ test('GET ALL DATA POSTINGAN', (done) => {
   }
   request(app)
     .get('/api/v1/post')
+    .set('Authorization', `${token}`)
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
+
+test('GET YOUR ALL DATA POST', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  request(app)
+    .get('/api/v1/post/mine')
     .set('Authorization', `${token}`)
     .expect('Content-Type', /json/)
     .expect(200)
