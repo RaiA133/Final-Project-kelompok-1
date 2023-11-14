@@ -71,7 +71,6 @@ test('UPDATE DATA USER PROFILE', (done) => {
     ig_link: "link instagram updated"
   }
   const filePath = path.join(__dirname, '../assets/img/unit-testing/orange.png');
-  fs.writeFileSync(filePath, 'This is a test file content');
 
   request(app)
     .put('/api/v1/profile/update')
@@ -133,7 +132,6 @@ test('GET ALL DATA POSTINGAN by CATEGORY', (done) => {
   request(app)
     .get('/api/v1/post/category/Design')
     .set('Authorization', `${token}`)
-    
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
