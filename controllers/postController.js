@@ -25,6 +25,41 @@ class postController {
       })
   }
 
+  // halaman POST PEKERJAAN | GET Yours all data user_posts ( middlewares : JWT | login needed )
+  static getYourPost(req, res, next) {
+    const { unique_id } = req.userData; // hasil decoded dari middleware verifyToken    
+    User_post.findAll({
+      where: {
+        unique_id
+      }
+    })
+      .then(data => {
+        if (!data) {
+          return res.status(404).json({
+            status: 'Failed',
+            halaman: 'Post',
+            message: 'Data Post Tidak Ditemukan!'
+          });
+        }
+        else {
+          return res.status(200).json({
+            status: 'Success',
+            halaman: 'Post',
+            message: `Semua Postinganmu Berdasarkan ${data.post_category}`,
+            data
+          });
+        }
+      })
+      .catch(err => {
+        return res.status(500).json({
+          status: 'Failed',
+          halaman: 'Post',
+          message: 'Something went wrong',
+          error: err
+        });
+      });
+  }
+
   // halaman POST PEKERJAAN | GET all data user_posts by category, from params url ( middlewares : JWT | login needed )
   static getPostByCategory(req, res, next) {
     const { post_category } = req.params;
@@ -53,7 +88,7 @@ class postController {
       .catch(err => {
         return res.status(500).json({
           status: 'Failed',
-          halaman: 'post',
+          halaman: 'Post',
           message: 'Something went wrong',
           error: err
         });
