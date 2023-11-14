@@ -8,6 +8,7 @@ route.get('/post/category/:post_category', middlewares.verifyToken, postControll
 route.get('/post/tags/:post_tags', middlewares.verifyToken, postController.getPostByTags)
 route.get('/post/terbaru', middlewares.verifyToken, postController.getPostByTerbaru)
 route.get('/post/terlama', middlewares.verifyToken, postController.getPostByTerlama)
+route.post('/post/create', middlewares.verifyToken, postController.createPostingan)
 
 
 module.exports = route

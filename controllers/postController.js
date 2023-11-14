@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { User_post } = require('../models')
+const { v4: uuidv4 } = require('uuid');
 
 class postController {
 
@@ -197,7 +198,39 @@ class postController {
         });
       });
   }
-  
+
+  static async createPostingan(req, res, next) {
+    try {
+      const { post_img, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing } = req.body;
+
+      const newUser_post = await User_post.create({
+       
+        unique_id: uuidv4(),
+        post_img: post_img,
+        post_title: post_title,
+        post_desc: post_desc,
+        post_category: post_category,
+        post_tags: post_tags,
+        post_deadline: post_deadline,
+        post_pricing: post_pricing,
+      });
+
+      res.status(201).json({
+        status: 'Success',
+        halaman: 'Post',
+        message: 'Postingan Berhasil ditambahkan!',
+        data: newUser_post
+      });
+    } catch (err) {
+      console.error('Postingan error:', err);
+      res.status(500).json({
+        status: 'Failed',
+        halaman: 'Post',
+        message: 'Gagal Posting',
+        error: err.message
+      });
+    }
+  }
 }
 
 module.exports = postController
