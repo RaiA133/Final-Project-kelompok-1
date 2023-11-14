@@ -1,3 +1,18 @@
+# # FINAL PROJECT | RAKAMIN ACADEMY | FSWD-5B
+
+## Kelompok 1
+
+- Raie Aswajjillah
+- Affan Maulana Zulkarnain
+- Muhammad Ikhsan Supriadi
+- Iffat Nabil Wiridana
+- Holid Muhamad Salman
+- Hadiyantrama Oscar Santoso
+
+```bash
+npm install
+```
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
