@@ -139,6 +139,26 @@ test('GET ALL DATA POSTINGAN by CATEGORY', (done) => {
     .catch(done);
 });
 
+test('GET ALL DATA POSTINGAN by TAGS', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  
+  request(app)
+    .get('/api/v1/post/tags/:post_tags')
+    .set('Authorization', `${token}`)
+    
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
+
 test('LOGOUT', (done) => {
   const token = global.testToken;
   if (!token) {
