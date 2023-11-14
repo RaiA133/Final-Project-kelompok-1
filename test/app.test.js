@@ -18,7 +18,7 @@ test('REGISTER', (done) => {
       done()
     })
     .catch(done)
-})
+});
 
 test('LOGIN', (done) => {
   const data = {
@@ -37,7 +37,7 @@ test('LOGIN', (done) => {
       done()
     })
     .catch(done)
-})
+});
 
 test('GET ALL DATA USER', (done) => {
   const token = global.testToken;
@@ -56,6 +56,8 @@ test('GET ALL DATA USER', (done) => {
     })
     .catch(done);
 });
+
+
 
 test('GET DATA USER PROFILE', (done) => {
   const token = global.testToken;
@@ -97,7 +99,45 @@ test('UPDATE DATA USER PROFILE', (done) => {
       done();
     })
     .catch(done);
-})
+});
+
+test('GET ALL DATA POSTINGAN', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  request(app)
+    .get('/api/v1/post')
+    .set('Authorization', `${token}`)
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
+
+test('GET ALL DATA POSTINGAN by CATEGORY', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  
+  request(app)
+    .get('/api/v1/post/category/Design')
+    .set('Authorization', `${token}`)
+    
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
 
 test('LOGOUT', (done) => {
   const token = global.testToken;
@@ -115,4 +155,5 @@ test('LOGOUT', (done) => {
       done();
     })
     .catch(done);
-})
+});
+

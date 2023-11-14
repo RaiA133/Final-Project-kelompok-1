@@ -113,7 +113,7 @@ class postController {
           return res.status(200).json({
             status: 'Success',
             halaman: 'Post',
-            message: `Kategori Postingan Berdasarkan id terbaru ${data.id}`,
+            message: `Kategori Postingan Berdasarkan id terbaru ${data.createdAt}`,
             data,
             
           });
