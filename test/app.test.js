@@ -147,7 +147,7 @@ test('GET ALL DATA POSTINGAN by TAGS', (done) => {
   }
   
   request(app)
-    .get('/api/v1/post/tags/:post_tags')
+    .get('/api/v1/post/tags/Art')
     .set('Authorization', `${token}`)
     
     .expect('Content-Type', /json/)
