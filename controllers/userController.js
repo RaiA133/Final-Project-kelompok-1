@@ -3,7 +3,7 @@ const { User } = require('../models')
 
 class profileController {
 
-  // halaman ADMIN | GET all data user ( middlewares : JWT is authenticated )
+  // halaman ADMIN | GET all data user ( middlewares : JWT | login needed )
   static getUser(req, res, next) {
     User.findAll()
       .then(data => {
@@ -24,7 +24,7 @@ class profileController {
       })
   }
 
-  // halaman PROFILE | GET data user by id ( middlewares : JWT is authenticated )
+  // halaman PROFILE | GET data user by id ( middlewares : JWT | login needed )
   static getUserById(req, res, next) {
     const { unique_id } = req.userData; // hasil decoded dari middleware verifyToken
     User.findOne({
@@ -59,7 +59,7 @@ class profileController {
     });
   }
 
-  // halaman EDIT PROFILE | UPDATE data user by id ( middlewares : JWT is authenticated )
+  // halaman EDIT PROFILE | UPDATE data user by id ( middlewares : JWT | login needed )
   static updateProfile(req, res, next) {
     const { id } = req.userData; // hasil decoded dari middleware verifyToken
     const { 

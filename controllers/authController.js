@@ -42,6 +42,7 @@ class authController {
   // halaman LOGIN | GET, POST & UPDATE data user
   static login(req, res, next) {
     const { email, password } = req.body
+    console.log(typeof(JWTtime))
     User.findOne({
       where: {
         email: email
@@ -64,11 +65,12 @@ class authController {
           });
         }
         else {
+          const JWTtime = process.env.JWT_EXPIRED_TIME
           const token = jwt.sign({ // data yang di encoded jadi JWT, diteruskan ke middleware JWT : middlewares/index.js
             id: data.id,
             unique_id: data.unique_id,
             email
-          }, secretKey, { expiresIn: process.env.JWT_EXPIRED_TIME });
+          }, secretKey, { expiresIn: JWTtime });
 
           data.update({ remember_token: token }) // UPDATE data token ke database
           return res.status(200).json({
@@ -89,7 +91,7 @@ class authController {
       });
   }
 
-  // halaman LOGOUT | GET & UPDATE data user
+  // halaman LOGOUT | GET & UPDATE data user ( middlewares : JWT | login needed )
   static logout(req, res, next) {
     const { id, unique_id, email } = req.userData;
     User.findOne({
