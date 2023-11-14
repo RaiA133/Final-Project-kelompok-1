@@ -199,6 +199,7 @@ class postController {
       });
   }
 
+  // halaman POST PEKERJAAN | POST create data user_posts, from params url ( middlewares : JWT | login needed )
   static async createPostingan(req, res, next) {
     try {
       const { post_img, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing } = req.body;
