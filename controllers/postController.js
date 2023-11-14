@@ -128,6 +128,41 @@ class postController {
         });
       });
   }
+
+  // halaman POST PEKERJAAN | GET all data user_posts by terlama, from params url ( middlewares : JWT | login needed )
+  static getPostByTerlama(req, res, next) {
+    
+    User_post.findOne({
+      order: [ [ 'id', 'ASC' ]],
+    })
+      .then(data => {
+        if (!data) {
+          return res.status(404).json({
+            status: 'Failed',
+            halaman: 'Post',
+            message: 'Data Post Tidak Ditemukan!'
+          });
+        }
+        else {
+          return res.status(200).json({
+            status: 'Success',
+            halaman: 'Post',
+            message: `Kategori Postingan Berdasarkan id terlama ${data.id}`,
+            data,
+            
+          });
+        }
+      })
+      .catch(err => {
+        return res.status(500).json({
+          status: 'Failed',
+          halaman: 'post',
+          message: 'Something went wrong',
+          error: err
+        });
+      });
+  }
+
 }
 
 module.exports = postController
