@@ -245,16 +245,31 @@ class postController {
     User_post.findByPk(req.params.id)
         .then(data => {
             if (!data){
-                throw ({status: 404, msg: "Data tidak ditemukan"})
+                res.status(404).json({
+                  status: 'Success',
+                  halaman: 'Post',
+                  message: 'Data tidak ditemukan!',
+                  data: updatedPostingan
+                });
             } else {
                 return User_post.update(updatedPostingan, {where: {id: req.params.id}})
             }
         })
         .then(data => {
-            res.status(200).json({data: updatedPostingan, message: 'Postingan berhasil di update!'})
+            res.status(200).json({
+              status: 'Success',
+              halaman: 'Post',
+              message: 'Postingan berhasil di update!',
+              data: updatedPostingan
+            });
         })
         .catch(err => {
-            res.status(500).json({message: "Something went wrong", error: err})
+            res.status(500).json({
+              status: 'Failed',
+              halaman: 'Post',
+              message: 'Something went wrong!',
+              error: err
+            });
         })
 }
   
