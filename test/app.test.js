@@ -156,6 +156,46 @@ test('GET ALL DATA POSTINGAN by TAGS', (done) => {
     .catch(done);
 });
 
+test('GET ALL DATA POSTINGAN by TERBARU', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  
+  request(app)
+    .get('/api/v1/post/terbaru')
+    .set('Authorization', `${token}`)
+    
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
+
+test('GET ALL DATA POSTINGAN by TERLAMA', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  
+  request(app)
+    .get('/api/v1/post/terlama')
+    .set('Authorization', `${token}`)
+    
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
+
 test('GET ALL DATA USER (ADMIN)', (done) => {
   const token = global.testToken;
   if (!token) {
