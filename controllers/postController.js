@@ -232,6 +232,32 @@ class postController {
       });
     }
   }
+
+  // halaman EDIT POSTINGAN | UPDATE data POSTINGAN by id ( middlewares : JWT | login needed )
+  static updatePostingan (req, res, next) {
+    
+    const {
+      post_img, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing
+    } = req.body;
+    const updatedPostingan = {
+      post_img, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing
+    }
+    User_post.findByPk(req.params.id)
+        .then(data => {
+            if (!data){
+                throw ({status: 404, msg: "Data tidak ditemukan"})
+            } else {
+                return User_post.update(updatedPostingan, {where: {id: req.params.id}})
+            }
+        })
+        .then(data => {
+            res.status(200).json({data: updatedPostingan, message: 'Postingan berhasil di update!'})
+        })
+        .catch(err => {
+            res.status(500).json({message: "Something went wrong", error: err})
+        })
+}
+  
 }
 
 module.exports = postController
