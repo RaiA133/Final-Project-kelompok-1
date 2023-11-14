@@ -1,5 +1,7 @@
 const request = require('supertest')
 const app = require('../app')
+const fs = require('fs');
+const path = require('path');
 
 test('REGISTER', (done) => {
   const data = {
@@ -68,10 +70,14 @@ test('UPDATE DATA USER PROFILE', (done) => {
     fb_link: "link facebook updated",
     ig_link: "link instagram updated"
   }
+  const filePath = path.join(__dirname, '../assets/img/unit-testing/orange.png');
+  fs.writeFileSync(filePath, 'This is a test file content');
+
   request(app)
     .put('/api/v1/profile/update')
     .set('Authorization', `${token}`)
-    .send(data)
+    .field(data)
+    .attach('file', filePath)
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
