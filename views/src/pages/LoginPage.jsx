@@ -14,18 +14,24 @@ function LoginPage() {
       <div className="h-screen flex justify-center items-center">
         <div className="card w-96 bg-base-100 shadow-xl">
 
-          <Toaster 
+          <Toaster
             toastOptions={{
               style: {
-                maxWidth:'600px'
+                maxWidth: '600px'
               }
             }}
           />
 
           <div className="card-body gap-0">
-            <h2 className="card-title text-2xl my-5">Login</h2>
+            <div className="card-actions justify-between mb-5">
+              <h2 className="card-title text-2xl">Login</h2>
+              <button className="btn btn-square btn-sm" onClick={() => navigate("/")}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
 
-            <form 
+            <form
+              className='mt-2'
               id="login-form"
               onSubmit={async (e) => {
 
@@ -36,11 +42,12 @@ function LoginPage() {
                     e.target.password.value
                   );
                   if (response.status[0] === 200) {
-                    window.location.href = "/" //redirect ke homepage
-                  } 
-                  window.localStorage.setItem("token", response.token);
-                  window.localStorage.setItem('loginSuccess', 'true');
-                } 
+                    const successMessage = response.message;
+                    window.localStorage.setItem('toastMessage', successMessage);
+                    window.localStorage.setItem("token", response.token);
+                    navigate("/")
+                  }
+                }
                 catch (error) {
                   let failedMessage = error.message // data message dari authController BE
                   toast.error(failedMessage, {
@@ -52,21 +59,22 @@ function LoginPage() {
 
               <div className="form-control w-full max-w-xs">
                 <label className="label"><span className="label-text">Email</span></label>
-                <input 
-                  className="input input-bordered w-full max-w-xs" 
-                  type="email" 
+                <input
+                  className="input input-bordered w-full max-w-xs"
+                  type="email"
                   name="email"
-                  placeholder="" 
+                  placeholder=""
                 />
               </div>
 
               <div className="form-control w-full max-w-xs">
                 <label className="label"><span className="label-text">Password</span></label>
-                <input 
-                  className="input input-bordered w-full max-w-xs" 
-                  type={showPassword ? 'text' : 'password'} 
+                <input
+                  className="input input-bordered w-full max-w-xs"
+                  autoComplete=''
+                  type={showPassword ? 'text' : 'password'}
                   name="password"
-                  placeholder="" 
+                  placeholder=""
                 />
                 <label className="label place-content-end">
                   <a onClick={togglePasswordVisibility} className="label-text-alt text-xs underline" style={{ cursor: 'pointer' }}>
@@ -76,12 +84,12 @@ function LoginPage() {
               </div>
 
               <div className="card-actions justify-center mt-4">
-                <button 
+                <button
                   className="btn btn-primary w-80"
-                  type="submit" 
+                  type="submit"
                   form="login-form"
                 >Login</button>
-                <p className='text-xs text-center'>Dont have account ? 
+                <p className='text-sm text-center'>Dont have account ?
                   <span className='underline text-sky-600 decoration-sky-600 ms-1' style={{ cursor: 'pointer' }} onClick={() => navigate("/register")}>Register</span>
                 </p>
               </div>

@@ -59,7 +59,12 @@ function RegisterPage() {
           />
 
           <div className="card-body gap-0">
-            <h2 className="card-title text-2xl my-5">Register</h2>
+            <div className="card-actions justify-between mb-5">
+              <h2 className="card-title text-2xl">Register</h2>
+              <button className="btn btn-square btn-sm" onClick={() => navigate("/")}>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
 
             <form onSubmit={handleSubmit} >
 
@@ -117,7 +122,7 @@ function RegisterPage() {
 
               <div className="card-actions justify-center mt-4">
                 <button className="btn btn-primary w-80" type="submit">Register</button>
-                <p className='text-xs text-center'>Already have account ?
+                <p className='text-sm text-center'>Already have account ?
                   <span className='underline text-sky-600 decoration-sky-600 ms-1' style={{ cursor: 'pointer' }} onClick={() => navigate("/login")}>Login</span>
                 </p>
               </div>

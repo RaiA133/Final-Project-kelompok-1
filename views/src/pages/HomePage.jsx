@@ -1,22 +1,32 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Partner from '../components/Partner';
 import toast, { Toaster } from 'react-hot-toast';
-import { useEffect } from 'react';
 
 function HomePage() {
   const navigate = useNavigate()
 
-  // TOAST Login berhasil : Muncul ketika proses login berhasil
   useEffect(() => {
-    const loginSuccess = localStorage.getItem('loginSuccess');
-    if (loginSuccess === 'true') {
-      const successMessage = 'Anda berhasil login';
-      toast.success(successMessage, {
+    const toastMessage = localStorage.getItem('toastMessage')
+
+    // TOAST Login berhasil : Muncul ketika proses login berhasil
+    if (toastMessage == 'Anda Berhasil Login') {
+      toast.success(toastMessage, {
         duration: 6000,
       });
-      localStorage.removeItem('loginSuccess');
+      localStorage.removeItem('toastMessage');
+    } 
+
+    // TOAST Logout berhasil : Muncul ketika proses logout berhasil
+    if (toastMessage == 'Berhasil Logout') {
+      toast(toastMessage, {
+        duration: 6000,
+        icon: '👏',
+      });
+      localStorage.removeItem('toastMessage');
     }
   }, []); 
+  
 
   return (
 
@@ -36,7 +46,7 @@ function HomePage() {
           <div className="max-w-md">
             <h1 className="mb-5 text-5xl font-bold">Halaman Home</h1>
             <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-            <button onClick={() => navigate('/post')} className="btn btn-primary">Get Started</button>
+            <button onClick={() => navigate('/post')} className="btn btn-primary">Post Now</button>
           </div>
         </div>
       </div>
