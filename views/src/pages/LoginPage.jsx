@@ -29,8 +29,6 @@ function LoginPage() {
               id="login-form"
               onSubmit={async (e) => {
 
-                // let toastMessage;
-
                 e.preventDefault();
                 try {
                   const response = await login(
@@ -38,13 +36,10 @@ function LoginPage() {
                     e.target.password.value
                   );
                   if (response.status[0] === 200) {
-                    const successMessage = response.message;
-                    toast.success(successMessage, {
-                      duration: 6000,
-                    });
-                    window.location.href = "/"
+                    window.location.href = "/" //redirect ke homepage
                   } 
                   window.localStorage.setItem("token", response.token);
+                  window.localStorage.setItem('loginSuccess', 'true');
                 } 
                 catch (error) {
                   let failedMessage = error.message // data message dari authController BE

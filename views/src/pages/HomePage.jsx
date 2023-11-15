@@ -1,9 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import Partner from '../components/Partner';
 import toast, { Toaster } from 'react-hot-toast';
+import { useEffect } from 'react';
 
 function HomePage() {
   const navigate = useNavigate()
+
+  // TOAST Login berhasil : Muncul ketika proses login berhasil
+  useEffect(() => {
+    const loginSuccess = localStorage.getItem('loginSuccess');
+    if (loginSuccess === 'true') {
+      const successMessage = 'Anda berhasil login';
+      toast.success(successMessage, {
+        duration: 6000,
+      });
+      localStorage.removeItem('loginSuccess');
+    }
+  }, []); 
+
   return (
 
     <div className="mx-3">

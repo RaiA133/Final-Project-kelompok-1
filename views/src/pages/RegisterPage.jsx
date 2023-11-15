@@ -17,8 +17,6 @@ function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let toastMessage;
-
     if (password !== confirmPassword) {
       return;
     }
@@ -31,13 +29,14 @@ function RegisterPage() {
       );
       if (response.status[0] === 201) {
         const successMessage = response.message;
-        toast.success(successMessage, {
+        toast.success(successMessage + ' Silahkan Login', {
           duration: 6000,
         });
       } 
     }
     catch (error) {
       let failedMessage = error.message // data message dari authController BE
+      console.error(failedMessage)
       toast.error(failedMessage, {
         duration: 6000,
       });
