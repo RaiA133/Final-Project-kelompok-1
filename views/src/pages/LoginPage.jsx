@@ -9,7 +9,7 @@ function LoginPage() {
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   return (
-    <div className='px-10'>
+    <div className='px-0'>
 
       <div className="h-screen flex justify-center items-center">
         <div className="card w-96 bg-base-100 shadow-xl">
@@ -39,10 +39,10 @@ function LoginPage() {
                   );
                   if (response.status[0] === 200) {
                     const successMessage = response.message;
-                    // navigate("/");
                     toast.success(successMessage, {
                       duration: 6000,
                     });
+                    window.location.href = "/"
                   } 
                   window.localStorage.setItem("token", response.token);
                 } 

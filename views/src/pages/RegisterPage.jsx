@@ -46,7 +46,7 @@ function RegisterPage() {
   }
 
   return (
-    <div className='px-10'>
+    <div className='px-0'>
 
       <div className="h-screen flex justify-center items-center">
         <div className="card w-96 bg-base-100 shadow-xl">
