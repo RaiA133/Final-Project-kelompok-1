@@ -83,7 +83,7 @@ function HomePage() {
         <div className="col-span-2 min-[640px]:text-xl min-[768px]:text-2xl min-[1024px]:text-3xl min-[1280px]:text-5xl font-bold">
           <div>
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book for research. <br />
-            <button className='btn lg:btn-lg max-[640px]:px-12  min-[640px]:px-16 min-[768px]:px-20 btn-primary mt-20'>Get Started</button>
+            <button className='btn lg:btn-lg max-[640px]:px-12  min-[640px]:px-16 min-[768px]:px-20 btn-primary mt-20' onClick={() => navigate("/post")}>Get Started</button>
           </div>
         </div>
 
