@@ -74,7 +74,7 @@ class authController {
 
           data.update({ remember_token: token }) // UPDATE data token ke database
           return res.status(200).json({
-            status: 'Success',
+            status: [200, 'Success'],
             halaman: 'Login',
             message: 'Anda Berhasil Login',
             token
