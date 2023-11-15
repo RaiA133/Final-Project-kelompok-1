@@ -6,6 +6,14 @@ const path = require('path')
 const routers = require('./routes')
 const errorHandler = require('./middlewares/error-handler');
 const port = process.env.PORT || 8050
+const cors = require('cors');
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+  methods: "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+  optionsSuccessStatus: 200
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))

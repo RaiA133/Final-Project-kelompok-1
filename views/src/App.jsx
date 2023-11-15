@@ -1,34 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
+import PostPage from './pages/PostPage';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
+import PrivateRoute from './components/PrivateRoute';
+import { useEffect, useState } from 'react';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  let location = useLocation();
+  const hideOnRegisterLogin = location.pathname !== '/register' && location.pathname !== '/login'; // location.pathname : untuk cek current url
+  
+  const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate()
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      setIsLogin(true);
+    }
+  }, [window.localStorage.getItem("token")]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container mx-auto bg-slate-100 pt-3" data-theme="light">
+
+      <div className="drawer">
+        <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+        <div className="drawer-content flex flex-col">
+
+          {/* Navbar */}
+          { hideOnRegisterLogin && <Navbar />}
+
+          {/* Page content here SEKALIGUS Define ROUTE URL*/}
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/register' element={<RegisterPage />} />
+            <Route path='/post' element={<PrivateRoute> <PostPage /> </PrivateRoute>} />
+          </Routes>
+
+        </div>
+        <div className="drawer-side">
+          <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
+          <ul className="menu p-4 w-80 min-h-full bg-base-200">
+
+            {/* Sidebar content here */}
+            <li><a onClick={() => navigate("/")}>Home</a></li>
+            {!isLogin && <li><a onClick={() => navigate("/login")}>Login</a></li>}
+            {!isLogin && <li><a onClick={() => navigate("/register")}>Register</a></li>}
+            {isLogin && <li><a onClick={() => navigate("/post")}>Post</a></li>}
+            
+          </ul>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+      {/* Footer */}
+      { hideOnRegisterLogin && <Footer />}
+
+    </div>
   )
 }
 
