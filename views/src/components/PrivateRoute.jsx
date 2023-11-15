@@ -21,7 +21,7 @@ function PrivateRoute({
       {isLogin ? (
         children
       ) : (
-        <></>
+        <>Anda Belum Login</>
       )}
     </div>
   )
