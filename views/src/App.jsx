@@ -10,7 +10,7 @@ import LoginPage from './pages/LoginPage';
 function App() {
   return (
     <Router>
-      <div className="container mx-auto px-4 bg-slate-100 pt-3">
+      <div className="container mx-auto px-4 bg-slate-100 pt-3" data-theme="light">
 
         <div className="drawer">
           <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />

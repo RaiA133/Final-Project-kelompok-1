@@ -16,6 +16,9 @@ function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let toastMessage;
+
     if (password !== confirmPassword) {
       return;
     }
@@ -29,14 +32,14 @@ function RegisterPage() {
       if (response.status[0] === 201) {
         const successMessage = response.message;
         toast.success(successMessage, {
-          duration: 10000,
+          duration: 6000,
         });
       } 
     }
     catch (error) {
-      console.error(error.message); // data message dari authController BE
-      toast.error('Email atau Username Sudah Terdaftar.', {
-        duration: 10000,
+      let failedMessage = error.message // data message dari authController BE
+      toast.error(failedMessage, {
+        duration: 6000,
       });
     }
       
@@ -48,7 +51,13 @@ function RegisterPage() {
       <div className="h-screen flex justify-center items-center">
         <div className="card w-96 bg-base-100 shadow-xl">
 
-          <Toaster />
+          <Toaster 
+            toastOptions={{
+              style: {
+                maxWidth:'600px'
+              }
+            }}
+          />
 
           <div className="card-body gap-0">
             <h2 className="card-title text-2xl my-5">Register</h2>
