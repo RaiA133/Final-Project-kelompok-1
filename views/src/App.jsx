@@ -10,7 +10,7 @@ import LoginPage from './pages/LoginPage';
 function App() {
   return (
     <Router>
-      <div class="container mx-auto px-4 bg-slate-100 pt-3">
+      <div className="container mx-auto px-4 bg-slate-100 pt-3">
 
         <div className="drawer">
           <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
@@ -39,6 +39,7 @@ function App() {
           </div>
         </div>
 
+      {/* Footer */}
       {window.location.pathname !== '/register' && window.location.pathname !== '/login' && <Footer />}
       
       </div>

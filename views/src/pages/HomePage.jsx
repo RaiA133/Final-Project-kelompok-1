@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import Partner from '../components/Partner';
+import toast, { Toaster } from 'react-hot-toast';
 
 function HomePage() {
   const navigate = useNavigate()
   return (
 
-    <div class="mx-3">
+    <div className="mx-3">
 
       <div className="hero min-h-screen" style={{ backgroundImage: 'url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg)' }}>
         <div className="hero-overlay bg-opacity-60"></div>

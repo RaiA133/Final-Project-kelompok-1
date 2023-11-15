@@ -23,7 +23,7 @@ class authController {
       });
 
       res.status(201).json({
-        status: 'Success',
+        status: [201, 'Success'],
         halaman: 'Register',
         message: 'Registrasi Berhasil!',
         data: newUser
@@ -31,7 +31,7 @@ class authController {
     } catch (err) {
       console.error('Registration error:', err);
       res.status(500).json({
-        status: 'Failed',
+        status: [500, 'Failed'],
         halaman: 'Register',
         message: 'Email atau Username Sudah Terdaftar',
         error: err.message

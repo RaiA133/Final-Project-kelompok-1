@@ -16,7 +16,7 @@ Setelah melakukan `npm install` , lakukan setup file config.json untuk mengatur 
 
 # Di Mohon jangan PUSH Langsung ke Branch "master"
 
-## Cara Branching
+## Cara Branching (BackEnd)
 
 - Jika kamu bermaksud untuk meng-_improve_ atau memperbaharui
 
@@ -29,6 +29,20 @@ Setelah melakukan `npm install` , lakukan setup file config.json untuk mengatur 
 - Jika kamu bermaksud untuk menambah _Feature_
 
   > `git checkout -b "feature/fitur-apa-yang-di-buat`
+
+## Cara Branching (FrontEnd)
+
+- Jika kamu bermaksud untuk meng-_improve_ atau memperbaharui
+
+  > `git checkout -b "FE/improvement/apa-yang-di-improve`
+
+- Jika kamu bermaksud untuk _Bug Fixing_
+
+  > `git checkout -b "FE/bugfix/apa-yang-di-fix`
+
+- Jika kamu bermaksud untuk menambah _Feature_
+
+  > `git checkout -b "FE/feature/fitur-apa-yang-di-buat`
 
 ## Cara Commit
 

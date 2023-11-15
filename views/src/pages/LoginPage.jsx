@@ -14,16 +14,16 @@ function LoginPage() {
           <div className="card-body gap-0">
             <h2 className="card-title text-2xl my-5">Login</h2>
 
-            <div class="form-control w-full max-w-xs">
-              <label class="label"><span class="label-text">Email</span></label>
-              <input type="email" placeholder="" class="input input-bordered w-full max-w-xs" />
+            <div className="form-control w-full max-w-xs">
+              <label className="label"><span className="label-text">Email</span></label>
+              <input type="email" placeholder="" className="input input-bordered w-full max-w-xs" />
             </div>
 
-            <div class="form-control w-full max-w-xs">
-              <label class="label"><span class="label-text">Password</span></label>
-              <input type={showPassword ? 'text' : 'password'} placeholder="" class="input input-bordered w-full max-w-xs" />
-              <label class="label place-content-end">
-                <a onClick={togglePasswordVisibility} class="label-text-alt text-xs underline" style={{ cursor: 'pointer' }}>
+            <div className="form-control w-full max-w-xs">
+              <label className="label"><span className="label-text">Password</span></label>
+              <input type={showPassword ? 'text' : 'password'} placeholder="" className="input input-bordered w-full max-w-xs" />
+              <label className="label place-content-end">
+                <a onClick={togglePasswordVisibility} className="label-text-alt text-xs underline" style={{ cursor: 'pointer' }}>
                   {showPassword ? 'Hide Password' : 'Show Password'}
                 </a>
               </label>
