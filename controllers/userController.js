@@ -42,7 +42,7 @@ class profileController {
   }
 
   // halaman EDIT PROFILE | UPDATE data user by id ( middlewares : JWT | login needed )
-  static updateProfile(req, res, next) {
+  static updateProfile(req, res, next, fileName) {
     const { id } = req.userData; // hasil decoded dari middleware verifyToken
     const {
       name, username, email,
@@ -51,9 +51,10 @@ class profileController {
       job, country, address, contact,
       web_link, github_link, fb_link, ig_link
     } = req.body;
+    const file = fileName; // menerima filenya yg sama dengan apa yang di simpan di assets
     const updatedUser = {
       name, username, email,
-      img_profile, birth_date,
+      img_profile: file, birth_date,
       birth_place, about, company,
       job, country, address, contact,
       web_link, github_link, fb_link, ig_link

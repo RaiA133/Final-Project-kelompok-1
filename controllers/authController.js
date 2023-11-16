@@ -23,7 +23,7 @@ class authController {
       });
 
       res.status(201).json({
-        status: 'Success',
+        status: [201, 'Success'],
         halaman: 'Register',
         message: 'Registrasi Berhasil!',
         data: newUser
@@ -31,7 +31,7 @@ class authController {
     } catch (err) {
       console.error('Registration error:', err);
       res.status(500).json({
-        status: 'Failed',
+        status: [500, 'Failed'],
         halaman: 'Register',
         message: 'Email atau Username Sudah Terdaftar',
         error: err.message
@@ -42,7 +42,6 @@ class authController {
   // halaman LOGIN | GET, POST & UPDATE data user
   static login(req, res, next) {
     const { email, password } = req.body
-    console.log(typeof(JWTtime))
     User.findOne({
       where: {
         email: email
@@ -74,7 +73,7 @@ class authController {
 
           data.update({ remember_token: token }) // UPDATE data token ke database
           return res.status(200).json({
-            status: 'Success',
+            status: [200, 'Success'],
             halaman: 'Login',
             message: 'Anda Berhasil Login',
             token
