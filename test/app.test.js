@@ -236,6 +236,25 @@ test('DELETE DATA USER PROFILE (ADMIN)', (done) => {
     .catch(done);
 });
 
+test('CREATE USER POSTINGAN', (done) => {
+  const data = {
+    name: "Test Name",
+    username: "Test Username",
+    email: "test@gmail.com",
+    password: "123"
+  }
+  request(app)
+    .post('/api/v1/post/create')
+    .send(data)
+    .expect('Content-Type', /json/)
+    .expect(201)
+    .then(response => {
+      expect(response.body.status[1]).toBe('Success')
+      done()
+    })
+    .catch(done)
+});
+
 test('LOGOUT', (done) => {
   const token = global.testToken;
   if (!token) {
