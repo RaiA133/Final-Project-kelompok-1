@@ -44,6 +44,7 @@ class profileController {
   // halaman EDIT PROFILE | UPDATE data user by id ( middlewares : JWT | login needed )
   static updateProfile(req, res, next, fileName) {
     const { id } = req.userData; // hasil decoded dari middleware verifyToken
+
     const {
       name, username, email,
       img_profile, birth_date,
@@ -67,7 +68,8 @@ class profileController {
             halaman: 'Profile',
             message: 'Data Tidak Ditemukan!'
           })
-        } else {
+        } 
+        else {
           data.update(updatedUser)
           res.status(200).json({
             status: [200, 'Success'],

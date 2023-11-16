@@ -4,12 +4,9 @@ const postController = require('../controllers/postController')
 const middlewares = require('../middlewares')
 const multer = require('multer')
 
-
-// route.put('/post/update/:id', middlewares.verifyToken, postController.updatePostingan)
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, '../assets/img/user_postingan')
+      cb(null, './assets/img/user_postingan')
   },
   filename: (req, file, cb) => {
     const fileName = file.originalname.toLowerCase().split(' ').join('-');
@@ -18,7 +15,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({
-storage: storage, limits: { fileSize: 2000000 } // 2MB limit
+  storage: storage, limits: { fileSize: 2000000 } // 2MB limit
 });
 
 route.get('/post', middlewares.verifyToken, postController.getPost)

@@ -12,7 +12,7 @@ class authController {
     try {
       const { name, username, email, password } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
-
+      
       const newUser = await User.create({
         user_role_id: 2,
         unique_id: uuidv4(),

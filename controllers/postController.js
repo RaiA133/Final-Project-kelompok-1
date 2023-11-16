@@ -1,8 +1,6 @@
 require('dotenv').config();
-const { FILE } = require('dns');
 const { User_post } = require('../models')
 const { v4: uuidv4 } = require('uuid');
-const { file } = require('@babel/types');
 
 class postController {
 
@@ -135,7 +133,6 @@ class postController {
 
   // halaman POST PEKERJAAN | GET all data user_posts by terbaru, from params url ( middlewares : JWT | login needed )
   static getPostByTerbaru(req, res, next) {
-    
     User_post.findAll({
       order: [ [ 'id', 'DESC' ]],
     })
@@ -168,9 +165,8 @@ class postController {
 
   // halaman POST PEKERJAAN | GET all data user_posts by terlama, from params url ( middlewares : JWT | login needed )
   static getPostByTerlama(req, res, next) {
-    
     User_post.findAll({
-      order: [ [ 'id', 'ASC' ]],
+      order: [[ 'id', 'ASC' ]],
     })
       .then(data => {
         if (!data) {
@@ -201,13 +197,15 @@ class postController {
   }
 
   // halaman POST PEKERJAAN | POST create data user_posts ( middlewares : JWT | login needed )
-  static async createPostingan(req, res, next) {
+  static async createPostingan(req, res, next, fileName) {
     try {
-      const { post_img, post_title, 
-        post_desc, post_category, 
-        post_tags, post_deadline, 
-        post_pricing 
+      const { 
+        post_title, post_desc, 
+        post_category, post_tags, 
+        post_deadline, post_pricing 
       } = req.body;
+      console.log(post_title)
+      return
 
       const file = fileName;
       const newUser_post = await User_post.create({
@@ -239,7 +237,7 @@ class postController {
   }
 
   // halaman EDIT POSTINGAN | UPDATE data POSTINGAN by id ( middlewares : JWT | login needed )
-  static updatePostingan (req, res, next) {
+  static updatePostingan (req, res, next, fileName) {
     const {
       post_img, post_title, 
       post_desc, post_category, 
@@ -256,6 +254,7 @@ class postController {
     User_post.findByPk(req.params.id)
         .then(data => {
             if (!data){
+              console.log(file)
                 res.status(404).json({
                   status: [404, 'Success'],
                   halaman: 'Post',
