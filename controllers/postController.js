@@ -1,6 +1,8 @@
 require('dotenv').config();
+const { FILE } = require('dns');
 const { User_post } = require('../models')
 const { v4: uuidv4 } = require('uuid');
+const { file } = require('@babel/types');
 
 class postController {
 
@@ -204,10 +206,10 @@ class postController {
     try {
       const { post_img, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing } = req.body;
 
+      const file = fileName;
       const newUser_post = await User_post.create({
-       
         unique_id: uuidv4(),
-        post_img: post_img,
+        post_img: file,
         post_title: post_title,
         post_desc: post_desc,
         post_category: post_category,
@@ -239,8 +241,9 @@ class postController {
     const {
       post_img, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing
     } = req.body;
+    const file = fileName;
     const updatedPostingan = {
-      post_img, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing
+      post_img: file, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing
     }
     User_post.findByPk(req.params.id)
         .then(data => {
@@ -271,8 +274,37 @@ class postController {
               error: err
             });
         })
-}
-  
+      }
+
+      static deletePostingan (req, res, next) {
+        User_post.findByPk(req.params.id)
+            .then(data => {
+                if (!data) {
+                  res.status(404).json({
+                    status: 'Success',
+                    halaman: 'Post',
+                    message: 'Data tidak ditemukan!',
+                  });
+                } else {
+                    return User_post.destroy({where: {id: req.params.id}})
+                }
+            })
+            .then(data => {
+              res.status(200).json({
+                status: 'Success',
+                halaman: 'Post',
+                message: 'Postingan berhasil di delete!',
+              });
+            })
+            .catch(err => {
+                res.status(500).json({
+                status: 'Failed',
+                halaman: 'Post',
+                message: 'Something went wrong!',
+                error: err
+              });
+            })
+    }
 }
 
 module.exports = postController

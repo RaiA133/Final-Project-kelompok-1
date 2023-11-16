@@ -15,7 +15,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   User_post.init({
     unique_id: DataTypes.STRING,
-    post_img: DataTypes.STRING,
+    post_img: {
+      type: DataTypes.STRING, 
+      defaultValue: 'default.png'
+    },
     post_title: DataTypes.STRING,
     post_desc: DataTypes.STRING,
     post_category: DataTypes.STRING,
