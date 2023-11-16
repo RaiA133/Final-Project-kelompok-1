@@ -204,8 +204,6 @@ class postController {
         post_category, post_tags, 
         post_deadline, post_pricing 
       } = req.body;
-      console.log(post_title)
-      return
 
       const file = fileName;
       const newUser_post = await User_post.create({
