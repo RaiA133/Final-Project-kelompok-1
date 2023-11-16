@@ -14,7 +14,7 @@ class profileController {
       .then(data => {
         if (!data) {
           return res.status(404).json({
-            status: 'Failed',
+            status: [404, 'Failed'],
             halaman: 'Profile',
             message: [
               'Anda Belum Login !', 
@@ -24,7 +24,7 @@ class profileController {
         }
         else {
           return res.status(200).json({
-            status: 'Success',
+            status: [200, 'Success'],
             halaman: 'Profile',
             message: 'Berhasil Masuk Ke Profile',
             data
@@ -33,7 +33,7 @@ class profileController {
       })
       .catch(err => {
         return res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'Profile',
           message: 'Something went wrong',
           error: err
@@ -63,14 +63,14 @@ class profileController {
       .then(data => {
         if (!data) {
           res.status(404).json({
-            status: 'Failed',
+            status: [404, 'Failed'],
             halaman: 'Profile',
             message: 'Data Tidak Ditemukan!'
           })
         } else {
           data.update(updatedUser)
           res.status(200).json({
-            status: 'Success',
+            status: [200, 'Success'],
             halaman: 'Profile',
             message: 'Data Berhasil Diupdate!',
             data: updatedUser
@@ -79,7 +79,7 @@ class profileController {
       })
       .catch(err => {
         res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'Profile',
           message: 'Something went wrong',
           error: err

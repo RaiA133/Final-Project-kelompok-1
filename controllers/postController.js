@@ -12,7 +12,7 @@ class postController {
     User_post.findAll()
       .then(data => {
         res.status(200).json({
-          status: 'Success',
+          status: [200, 'Success'],
           halaman: 'Home',
           message: 'Berhasil GET all Data User_posts',
           data,
@@ -20,7 +20,7 @@ class postController {
       })
       .catch(err => {
         res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'Home',
           message: 'Something went wrong',
           error: err
@@ -39,14 +39,14 @@ class postController {
       .then(data => {
         if (!data) {
           return res.status(404).json({
-            status: 'Failed',
+            status: [404, 'Failed'],
             halaman: 'Post',
             message: 'Data Post Tidak Ditemukan!'
           });
         }
         else {
           return res.status(200).json({
-            status: 'Success',
+            status: [200, 'Success'],
             halaman: 'Post',
             message: `Semua Postinganmu Berdasarkan ${data.post_category}`,
             data
@@ -55,7 +55,7 @@ class postController {
       })
       .catch(err => {
         return res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'Post',
           message: 'Something went wrong',
           error: err
@@ -74,14 +74,14 @@ class postController {
       .then(data => {
         if (!data) {
           return res.status(404).json({
-            status: 'Failed',
+            status: [404, 'Failed'],
             halaman: 'Post',
             message: 'Data Post Tidak Ditemukan!'
           });
         }
         else {
           return res.status(200).json({
-            status: 'Success',
+            status: [200, 'Success'],
             halaman: 'Post',
             message: `Kategori Postingan Berdasarkan ${data.post_category}`,
             data
@@ -90,7 +90,7 @@ class postController {
       })
       .catch(err => {
         return res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'Post',
           message: 'Something went wrong',
           error: err
@@ -109,14 +109,14 @@ class postController {
       .then(data => {
         if (!data) {
           return res.status(404).json({
-            status: 'Failed',
+            status: [404, 'Failed'],
             halaman: 'Post',
             message: 'Data Post Tidak Ditemukan!'
           });
         }
         else {
           return res.status(200).json({
-            status: 'Success',
+            status: [200, 'Success'],
             halaman: 'Post',
             message: `Kategori Postingan Berdasarkan ${data.post_tags}`,
             data
@@ -125,7 +125,7 @@ class postController {
       })
       .catch(err => {
         return res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'post',
           message: 'Something went wrong',
           error: err
@@ -142,24 +142,23 @@ class postController {
       .then(data => {
         if (!data) {
           return res.status(404).json({
-            status: 'Failed',
+            status: [404, 'Failed'],
             halaman: 'Post',
             message: 'Data Post Tidak Ditemukan!'
           });
         }
         else {
           return res.status(200).json({
-            status: 'Success',
+            status: [200, 'Success'],
             halaman: 'Post',
             message: `Kategori Postingan Berdasarkan id terbaru/terbesar`,
             data,
-            
           });  
         }
       })
       .catch(err => {
         return res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'post',
           message: 'Something went wrong',
           error: err
@@ -176,14 +175,14 @@ class postController {
       .then(data => {
         if (!data) {
           return res.status(404).json({
-            status: 'Failed',
+            status: [404, 'Failed'],
             halaman: 'Post',
             message: 'Data Post Tidak Ditemukan!'
           });
         }
         else {
           return res.status(200).json({
-            status: 'Success',
+            status: [200, 'Success'],
             halaman: 'Post',
             message: `Kategori Postingan Berdasarkan id terlama/terkecil`,
             data,
@@ -193,7 +192,7 @@ class postController {
       })
       .catch(err => {
         return res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'post',
           message: 'Something went wrong',
           error: err
@@ -201,10 +200,14 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | POST create data user_posts, from params url ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | POST create data user_posts ( middlewares : JWT | login needed )
   static async createPostingan(req, res, next) {
     try {
-      const { post_img, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing } = req.body;
+      const { post_img, post_title, 
+        post_desc, post_category, 
+        post_tags, post_deadline, 
+        post_pricing 
+      } = req.body;
 
       const file = fileName;
       const newUser_post = await User_post.create({
@@ -219,7 +222,7 @@ class postController {
       });
 
       res.status(201).json({
-        status: 'Success',
+        status: [201, 'Success'],
         halaman: 'Post',
         message: 'Postingan Berhasil ditambahkan!',
         data: newUser_post
@@ -227,7 +230,7 @@ class postController {
     } catch (err) {
       console.error('Postingan error:', err);
       res.status(500).json({
-        status: 'Failed',
+        status: [500, 'Failed'],
         halaman: 'Post',
         message: 'Gagal Posting',
         error: err.message
@@ -237,19 +240,24 @@ class postController {
 
   // halaman EDIT POSTINGAN | UPDATE data POSTINGAN by id ( middlewares : JWT | login needed )
   static updatePostingan (req, res, next) {
-    
     const {
-      post_img, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing
+      post_img, post_title, 
+      post_desc, post_category, 
+      post_tags, post_deadline, 
+      post_pricing
     } = req.body;
     const file = fileName;
     const updatedPostingan = {
-      post_img: file, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing
+      post_img: file, post_title, 
+      post_desc, post_category, 
+      post_tags, post_deadline, 
+      post_pricing
     }
     User_post.findByPk(req.params.id)
         .then(data => {
             if (!data){
                 res.status(404).json({
-                  status: 'Success',
+                  status: [404, 'Success'],
                   halaman: 'Post',
                   message: 'Data tidak ditemukan!',
                   data: updatedPostingan
@@ -260,7 +268,7 @@ class postController {
         })
         .then(data => {
             res.status(200).json({
-              status: 'Success',
+              status: [200, 'Success'],
               halaman: 'Post',
               message: 'Postingan berhasil di update!',
               data: updatedPostingan
@@ -268,7 +276,7 @@ class postController {
         })
         .catch(err => {
             res.status(500).json({
-              status: 'Failed',
+              status: [500, 'Failed'],
               halaman: 'Post',
               message: 'Something went wrong!',
               error: err
@@ -281,7 +289,7 @@ class postController {
             .then(data => {
                 if (!data) {
                   res.status(404).json({
-                    status: 'Success',
+                    status: [404, 'Success'],
                     halaman: 'Post',
                     message: 'Data tidak ditemukan!',
                   });
@@ -291,14 +299,14 @@ class postController {
             })
             .then(data => {
               res.status(200).json({
-                status: 'Success',
+                status: [200, 'Success'],
                 halaman: 'Post',
                 message: 'Postingan berhasil di delete!',
               });
             })
             .catch(err => {
                 res.status(500).json({
-                status: 'Failed',
+                status: [500, 'Failed'],
                 halaman: 'Post',
                 message: 'Something went wrong!',
                 error: err

@@ -16,7 +16,7 @@ test('REGISTER', (done) => {
     .expect('Content-Type', /json/)
     .expect(201)
     .then(response => {
-      expect(response.body.status).toBe('Success')
+      expect(response.body.status[1]).toBe('Success')
       done()
     })
     .catch(done)
@@ -35,7 +35,7 @@ test('LOGIN', (done) => {
     .then(response => {
       const token = response.body.token;
       global.testToken = token;
-      expect(response.body.status).toBe('Success')
+      expect(response.body.status[1]).toBe('Success')
       done()
     })
     .catch(done)
@@ -53,7 +53,7 @@ test('GET DATA USER PROFILE', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -80,7 +80,7 @@ test('UPDATE DATA USER PROFILE', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -98,7 +98,7 @@ test('GET ALL DATA POSTINGAN', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -116,7 +116,7 @@ test('GET YOUR ALL DATA POST', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -135,7 +135,7 @@ test('GET ALL DATA POSTINGAN by CATEGORY', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -154,7 +154,7 @@ test('GET ALL DATA POSTINGAN by TAGS', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -174,7 +174,7 @@ test('GET ALL DATA POSTINGAN by TERBARU', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -194,7 +194,7 @@ test('GET ALL DATA POSTINGAN by TERLAMA', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -248,7 +248,7 @@ test('LOGOUT', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
