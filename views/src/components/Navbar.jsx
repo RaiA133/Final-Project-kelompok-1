@@ -48,6 +48,7 @@ function Navbar() {
                 </a>
               </li>
               <li><a>Settings</a></li>
+              <li><a onClick={() => navigate("/administrator")}>Administrator</a></li>
               <li><a
                 onClick={() => {
                   setIsLogin(false);

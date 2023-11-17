@@ -7,6 +7,7 @@ import PostPage from './pages/PostPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
+import AdminPage from './pages/AdminPage';
 import { useEffect, useState } from 'react';
 
 
@@ -39,6 +40,7 @@ function App() {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/post' element={<PrivateRoute> <PostPage /> </PrivateRoute>} />
+            <Route path='/administrator' element={<PrivateRoute> <AdminPage /> </PrivateRoute>} />
           </Routes>
 
         </div>
