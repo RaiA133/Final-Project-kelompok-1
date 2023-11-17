@@ -200,42 +200,6 @@ test('GET ALL DATA POSTINGAN by TERLAMA', (done) => {
     .catch(done);
 });
 
-test('GET ALL DATA USER (ADMIN)', (done) => {
-  const token = global.testToken;
-  if (!token) {
-    done(new Error('Token not available. Run the LOGIN test first.'));
-    return;
-  }
-  request(app)
-    .get('/api/v1/administrator')
-    .set('Authorization', `${token}`)
-    .expect('Content-Type', /json/)
-    .expect(403)
-    .then((response) => {
-      expect(response.body.message).toBe('Anda tidak memiliki izin untuk mengakses halaman ini.');
-      done();
-    })
-    .catch(done);
-});
-
-test('DELETE DATA USER PROFILE (ADMIN)', (done) => {
-  const token = global.testToken;
-  if (!token) {
-    done(new Error('Token not available. Run the LOGIN test first.'));
-    return;
-  }
-  request(app)
-    .delete('/api/v1/administrator/ea1b4cc7-a1fa-4fe5-b2bd-8dcddddaefde') // delete use ikhsan
-    .set('Authorization', `${token}`)
-    .expect('Content-Type', /json/)
-    .expect(403)
-    .then((response) => {
-      expect(response.body.message).toBe('Anda tidak memiliki izin untuk mengakses halaman ini.');
-      done();
-    })
-    .catch(done);
-});
-
 test('CREATE USER POSTINGAN', (done) => {
   const token = global.testToken;
   if (!token) {
@@ -307,6 +271,42 @@ test('DELETE USER POSTINGAN by ID', (done) => {
     .expect(200)
     .then((response) => {
       expect(response.body.status[1]).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
+
+test('GET ALL DATA USER (ADMIN)', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  request(app)
+    .get('/api/v1/administrator')
+    .set('Authorization', `${token}`)
+    .expect('Content-Type', /json/)
+    .expect(403)
+    .then((response) => {
+      expect(response.body.message).toBe('Anda tidak memiliki izin untuk mengakses halaman ini.');
+      done();
+    })
+    .catch(done);
+});
+
+test('DELETE DATA USER PROFILE (ADMIN)', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  request(app)
+    .delete('/api/v1/administrator/ea1b4cc7-a1fa-4fe5-b2bd-8dcddddaefde') // delete use ikhsan
+    .set('Authorization', `${token}`)
+    .expect('Content-Type', /json/)
+    .expect(403)
+    .then((response) => {
+      expect(response.body.message).toBe('Anda tidak memiliki izin untuk mengakses halaman ini.');
       done();
     })
     .catch(done);
