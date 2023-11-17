@@ -265,6 +265,52 @@ test('CREATE USER POSTINGAN', (done) => {
     .catch(done);
 });
 
+test('UPDATE USER POSTINGAN by ID', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  const data = {
+    post_title: 'test title postingan Updated',
+    post_desc: 'Deskripsi Updated',
+    post_category: 'Food Updated',
+    post_tags: 'Makanan Updated',
+    post_deadline: '20 hari Updated',
+    post_pricing: 'Rp. 4.000.000 Updated',
+  };
+  const filePath = path.join(__dirname, '../assets/img/unit-testing/jepg.jpg');
+  request(app)
+    .put('/api/v1/post/update/1')
+    .set('Authorization', `${token}`)
+    .field(data)
+    .attach('file', filePath)
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status[1]).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
+
+test('DELETE USER POSTINGAN by ID', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  request(app)
+    .delete('/api/v1/post/delete/4')
+    .set('Authorization', `${token}`)
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status[1]).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
 
 test('LOGOUT', (done) => {
   const token = global.testToken;
