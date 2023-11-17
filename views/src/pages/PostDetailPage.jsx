@@ -5,7 +5,7 @@ function PostDetailPage() {
       return (
             <div class="flex-auto">
                   <div className="hero-content flex-col lg:flex-row ml-4">
-                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" className="w-56 shadow-2xl" />
+                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" className="w-56 mt-10 shadow-2xl" />
                         <div>
                               <div className="flex p-5">
                                     <div className="flex w-3/4">
@@ -30,12 +30,13 @@ function PostDetailPage() {
                   </div>
                   <div className="flex w-full lg:flex-row  mt-5">
                         <div className="flex w-32">
-                              <div>
-                                    <div className="w-36 rounded">
-                                          <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" className="w-32 ml-20 rounded-2xl shadow-2xl" />
+                              <div className="text-center">
+                                    <div className="w-28 rounded">
+                                          <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" className=" ml-20 rounded-2xl shadow-2xl" />
                                     </div>
+                                    <h3 className="font-bold">User 1</h3>
                                     <div>
-                                          <button className="btn btn-wide btn-neutral btn-sm mt-3 mx-4">Lihat Profile</button>
+                                          <button className="btn w-44 btn-neutral btn-xs mt-3 mx-12">Lihat Profile</button>
                                     </div>
                               </div>
                         </div>
