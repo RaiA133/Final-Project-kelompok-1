@@ -8,6 +8,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import PrivateRoute from './components/PrivateRoute';
 import { useEffect, useState } from 'react';
+import PostDetailPage from './pages/PostDetailPage';
 
 
 function App() {
@@ -39,6 +40,8 @@ function App() {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/post' element={<PrivateRoute> <PostPage /> </PrivateRoute>} />
+            <Route path='/post/detail' element={<PrivateRoute> <PostDetailPage /> </PrivateRoute>} />
+           
           </Routes>
 
         </div>
@@ -51,6 +54,7 @@ function App() {
             {!isLogin && <li><a onClick={() => navigate("/login")}>Login</a></li>}
             {!isLogin && <li><a onClick={() => navigate("/register")}>Register</a></li>}
             {isLogin && <li><a onClick={() => navigate("/post")}>Post</a></li>}
+            
             
           </ul>
         </div>
