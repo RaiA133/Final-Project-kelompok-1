@@ -2,8 +2,8 @@ const express = require('express')
 const route = express.Router()
 const userController = require('../controllers/userController')
 const middlewares = require('../middlewares') 
-
 const multer = require('multer')
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './assets/img/users')

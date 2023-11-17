@@ -12,7 +12,7 @@ class authController {
     try {
       const { name, username, email, password } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
-
+      
       const newUser = await User.create({
         user_role_id: 2,
         unique_id: uuidv4(),
@@ -50,7 +50,7 @@ class authController {
       .then(async data => {
         if (!data) {
           return res.status(404).json({
-            status: 'Failed',
+            status: [404, 'Failed'],
             halaman: 'Login',
             message: 'Email Salah atau Tidak Terdaftar!'
           });
@@ -58,7 +58,7 @@ class authController {
         const passwordMatch = await bcrypt.compare(password, data.password);
         if (!passwordMatch) {
           return res.status(400).json({
-            status: 'Failed',
+            status: [400, 'Failed'],
             halaman: 'Login',
             message: `Password Salah untuk email : ${data.email}`
           });
@@ -82,7 +82,7 @@ class authController {
       })
       .catch(err => {
         return res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'Login',
           message: 'Something went wrong',
           error: err
@@ -101,7 +101,7 @@ class authController {
       .then(data => {
         if (!data) {
           return res.status(404).json({
-            status: 'Failed',
+            status: [404, 'Failed'],
             halaman: 'Logout',
             message: 'Token Salah atau Anda Belum Login!'
           });
@@ -109,7 +109,7 @@ class authController {
         else {
           data.update({ remember_token: null }) // UPDATE to NULL data token ke database
           return res.status(200).json({
-            status: 'Success',
+            status: [200, 'Success'],
             halaman: 'Logout',
             message: 'Anda Berhasil Logout',
           });
@@ -117,7 +117,7 @@ class authController {
       })
       .catch(err => {
         return res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'Logout',
           message: 'Something went wrong',
           error: err

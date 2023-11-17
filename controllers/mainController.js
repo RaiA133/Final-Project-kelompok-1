@@ -2,7 +2,7 @@ class mainController {
   // halaman HEALTH-CHECK | Testing Routes
   static healthCheck(req, res, next) {
     res.status(200).json({
-      status: 'Success',
+      status: [200, 'Success'],
       halaman: 'Health-check',
       message: 'Routes berjalan dengan baik',
     })

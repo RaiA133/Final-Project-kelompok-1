@@ -7,7 +7,7 @@ class adminController {
     User.findAll()
       .then(data => {
         res.status(200).json({
-          status: 'Success',
+          status: [200, 'Success'],
           halaman: 'Home',
           message: 'Berhasil GET all Data Users',
           data,
@@ -15,7 +15,7 @@ class adminController {
       })
       .catch(err => {
         res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'Home',
           message: 'Something went wrong',
           error: err
@@ -34,7 +34,7 @@ class adminController {
       .then(data => {
         if (!data) {
           return res.status(404).json({
-            status: 'Failed',
+            status: [404, 'Failed'],
             halaman: 'Administrator',
             message: [
               'Anda Belum Login!',
@@ -44,7 +44,7 @@ class adminController {
         }
         else {
           return res.status(200).json({
-            status: 'Success',
+            status: [200, 'Success'],
             halaman: 'Administrator',
             message: `Data User Berhasil Dihapus`,
           });
@@ -52,7 +52,7 @@ class adminController {
       })
       .catch(err => {
         return res.status(500).json({
-          status: 'Failed',
+          status: [500, 'Failed'],
           halaman: 'Administrator',
           message: 'Something went wrong',
           error: err

@@ -16,7 +16,7 @@ test('REGISTER', (done) => {
     .expect('Content-Type', /json/)
     .expect(201)
     .then(response => {
-      expect(response.body.status).toBe('Success')
+      expect(response.body.status[1]).toBe('Success')
       done()
     })
     .catch(done)
@@ -35,7 +35,7 @@ test('LOGIN', (done) => {
     .then(response => {
       const token = response.body.token;
       global.testToken = token;
-      expect(response.body.status).toBe('Success')
+      expect(response.body.status[1]).toBe('Success')
       done()
     })
     .catch(done)
@@ -53,7 +53,7 @@ test('GET DATA USER PROFILE', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -80,7 +80,7 @@ test('UPDATE DATA USER PROFILE', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -98,7 +98,7 @@ test('GET ALL DATA POSTINGAN', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -116,7 +116,7 @@ test('GET YOUR ALL DATA POST', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -135,7 +135,7 @@ test('GET ALL DATA POSTINGAN by CATEGORY', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -154,7 +154,7 @@ test('GET ALL DATA POSTINGAN by TAGS', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -174,7 +174,7 @@ test('GET ALL DATA POSTINGAN by TERBARU', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -194,7 +194,7 @@ test('GET ALL DATA POSTINGAN by TERLAMA', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
@@ -236,6 +236,82 @@ test('DELETE DATA USER PROFILE (ADMIN)', (done) => {
     .catch(done);
 });
 
+test('CREATE USER POSTINGAN', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  const data = {
+    post_title: 'test title postingan',
+    post_desc: 'Deskripsi',
+    post_category: 'Food',
+    post_tags: 'Makanan',
+    post_deadline: '20 hari',
+    post_pricing: 'Rp. 1.000.000',
+  };
+  const filePath = path.join(__dirname, '../assets/img/unit-testing/jepg.jpg');
+  request(app)
+    .post('/api/v1/post/create')
+    .set('Authorization', `${token}`)
+    .field(data)
+    .attach('file', filePath)
+    .expect('Content-Type', /json/)
+    .expect(201)
+    .then((response) => {
+      expect(response.body.status[1]).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
+
+test('UPDATE USER POSTINGAN by ID', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  const data = {
+    post_title: 'test title postingan Updated',
+    post_desc: 'Deskripsi Updated',
+    post_category: 'Food Updated',
+    post_tags: 'Makanan Updated',
+    post_deadline: '20 hari Updated',
+    post_pricing: 'Rp. 4.000.000 Updated',
+  };
+  const filePath = path.join(__dirname, '../assets/img/unit-testing/jepg.jpg');
+  request(app)
+    .put('/api/v1/post/update/1')
+    .set('Authorization', `${token}`)
+    .field(data)
+    .attach('file', filePath)
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status[1]).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
+
+test('DELETE USER POSTINGAN by ID', (done) => {
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
+  }
+  request(app)
+    .delete('/api/v1/post/delete/4')
+    .set('Authorization', `${token}`)
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .then((response) => {
+      expect(response.body.status[1]).toBe('Success');
+      done();
+    })
+    .catch(done);
+});
+
 test('LOGOUT', (done) => {
   const token = global.testToken;
   if (!token) {
@@ -248,7 +324,7 @@ test('LOGOUT', (done) => {
     .expect('Content-Type', /json/)
     .expect(200)
     .then((response) => {
-      expect(response.body.status).toBe('Success');
+      expect(response.body.status[1]).toBe('Success');
       done();
     })
     .catch(done);
