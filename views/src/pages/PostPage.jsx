@@ -4,9 +4,13 @@ import Partner from '../components/Partner';
 import toast, { Toaster } from 'react-hot-toast';
 import { instance } from '../modules/axios/index.js';
 
-async function fetchPosts() {
+async function fetchPosts(token) {
   try {
-    const response = await instance.get('http://localhost:3000/api/v1/post');
+    const response = await instance.get('http://localhost:3000/api/v1/post', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || 'Something went wrong');
@@ -18,7 +22,13 @@ function PostPage() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetchPosts().then(data => {
+    const token = window.localStorage.getItem("token");
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    fetchPosts(token).then(data => {
       setPosts(data);
     }).catch(error => {
       toast.error(error.message);
