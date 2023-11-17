@@ -237,23 +237,34 @@ test('DELETE DATA USER PROFILE (ADMIN)', (done) => {
 });
 
 test('CREATE USER POSTINGAN', (done) => {
-  const data = {
-    name: "Test Name",
-    username: "Test Username",
-    email: "test@gmail.com",
-    password: "123"
+  const token = global.testToken;
+  if (!token) {
+    done(new Error('Token not available. Run the LOGIN test first.'));
+    return;
   }
+  const data = {
+    post_title: 'test title postingan',
+    post_desc: 'Deskripsi',
+    post_category: 'Food',
+    post_tags: 'Makanan',
+    post_deadline: '20 hari',
+    post_pricing: 'Rp. 1.000.000',
+  };
+  const filePath = path.join(__dirname, '../assets/img/unit-testing/jepg.jpg');
   request(app)
     .post('/api/v1/post/create')
-    .send(data)
+    .set('Authorization', `${token}`)
+    .field(data)
+    .attach('file', filePath)
     .expect('Content-Type', /json/)
     .expect(201)
-    .then(response => {
-      expect(response.body.status[1]).toBe('Success')
-      done()
+    .then((response) => {
+      expect(response.body.status[1]).toBe('Success');
+      done();
     })
-    .catch(done)
+    .catch(done);
 });
+
 
 test('LOGOUT', (done) => {
   const token = global.testToken;
