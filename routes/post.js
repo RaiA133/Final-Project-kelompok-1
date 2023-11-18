@@ -21,11 +21,12 @@ const upload = multer({
 
 route.get("/post", middlewares.verifyToken, postController.getPost);
 route.get("/post/mine", middlewares.verifyToken, postController.getYourPost);
-route.get("/post/:id", middlewares.verifyToken, postController.getPostById);
+
 route.get("/post/category/:post_category", middlewares.verifyToken, postController.getPostByCategory);
 route.get("/post/tags/:post_tags", middlewares.verifyToken, postController.getPostByTags);
 route.get("/post/terbaru", middlewares.verifyToken, postController.getPostByTerbaru);
 route.get("/post/terlama", middlewares.verifyToken, postController.getPostByTerlama);
+route.get("/post/:id", middlewares.verifyToken, postController.getPostById);
 route.post("/post/create", middlewares.verifyToken, upload.single("file"), (req, res, next) => {
       const fileName = req.file.filename;
       postController.createPostingan(req, res, next, fileName); // mengirim nama file yg sama ke userController.updateProfile
