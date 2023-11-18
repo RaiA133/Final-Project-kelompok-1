@@ -229,6 +229,24 @@ test('CREATE USER POSTINGAN', (done) => {
     .catch(done);
 });
 
+test("GET DATA POSTINGAN BY ID", (done) => {
+  const token = global.testToken;
+  if (!token) {
+        done(new Error("Token not available. Run the LOGIN test first."));
+        return;
+  }
+  request(app)
+        .get("/api/v1/post/2")
+        .set("Authorization", `${token}`)
+        .expect("Content-Type", /json/)
+        .expect(200)
+        .then((response) => {
+              expect(response.body.status[1]).toBe("Success");
+              done();
+        })
+        .catch(done);
+});
+
 test('UPDATE USER POSTINGAN by ID', (done) => {
   const token = global.testToken;
   if (!token) {

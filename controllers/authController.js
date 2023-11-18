@@ -28,14 +28,17 @@ class authController {
         message: 'Registrasi Berhasil!',
         data: newUser
       });
+
     } catch (err) {
       console.error('Registration error:', err);
+
       res.status(500).json({
         status: [500, 'Failed'],
         halaman: 'Register',
         message: 'Email atau Username Sudah Terdaftar',
         error: err.message
       });
+      
     }
   }
 

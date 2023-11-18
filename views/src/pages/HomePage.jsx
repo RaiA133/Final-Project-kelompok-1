@@ -46,7 +46,7 @@ function HomePage() {
           <div className="max-w-md">
             <h1 className="mb-5 text-5xl font-bold">Halaman Home</h1>
             <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-            <button onClick={() => navigate('/post')} className="btn px-12 btn-primary">Post Now</button>
+            <button onClick={() => navigate('/create-post')} className="btn px-12 btn-primary">Post Now</button>
           </div>
         </div>
       </div>

@@ -1,5 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import iconLocation from '../assets/icon/location.svg';
+import iconLocation from '../assets/icon/map-pin.svg';
+import iconGlobe from '../assets/icon/globe-alt.svg';
+import iconGithub from '../assets/icon/github.svg';
+import iconFacebook from '../assets/icon/facebook.svg';
+import iconInstagram from '../assets/icon/instagram.svg';
 import Partner from '../components/Partner';
 
 function ProfilePage() {
@@ -17,14 +21,20 @@ function ProfilePage() {
                   <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                 </div>
               </div>
+              <input type="file" className="file-input file-input-bordered file-input-sm w-60 xl:w-full max-w-xs mt-4" />
               <div className="mt-3 mb-1">
                 <p className="font-bold">Username</p>
               </div>
               <div className="mb-3 flex justify-center">
-                <img className='w-5' src={iconLocation} alt="Your SVG" />
+                <img className='w-5' src={iconLocation} alt="icon" />
                 <p className="text-sm">Bandung, Indonesia</p>
               </div>
-              <input type="file" className="file-input file-input-bordered file-input-sm w-60 xl:w-full max-w-xs mb-4" />
+              <div className='grid gap-2 grid-cols-4 my-4 justify-center items-center'>
+                <img src={iconGlobe} className='w-7 hover:cursor-pointer' alt="Personal Website" onClick={() => window.open("https://tailwindcss.com", "_blank") }/>
+                <img src={iconGithub} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open("https://tailwindcss.com", "_blank") } />
+                <img src={iconFacebook} className='w-6 hover:cursor-pointer' alt="Personal Facebook" onClick={() => window.open("https://tailwindcss.com", "_blank") } />
+                <img src={iconInstagram} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open("https://tailwindcss.com", "_blank") } />
+              </div>
               <div className="border rounded-xl bg-slate-200 p-5 text-sm w-60 xl:w-80 h-96">Tulisan</div>
             </div>
 

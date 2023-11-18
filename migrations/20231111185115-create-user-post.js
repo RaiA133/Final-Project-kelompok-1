@@ -37,7 +37,11 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
-      post_pricing: {
+      min_price: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      max_price: {
         allowNull: true,
         type: Sequelize.STRING
       },
