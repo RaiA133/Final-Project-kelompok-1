@@ -1,5 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import iconLocation from '../assets/icon/location.svg';
+import iconLocation from '../assets/icon/map-pin.svg';
+import iconGlobe from '../assets/icon/globe-alt.svg';
+import iconGithub from '../assets/icon/github.svg';
+import iconFacebook from '../assets/icon/facebook.svg';
+import iconInstagram from '../assets/icon/instagram.svg';
 import Partner from '../components/Partner';
 
 function ProfilePage() {
@@ -17,14 +21,24 @@ function ProfilePage() {
                   <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                 </div>
               </div>
+              <input 
+                className="file-input file-input-bordered file-input-sm w-60 xl:w-full max-w-xs mt-4" 
+                type="file"
+                name="img_profile" 
+              />
               <div className="mt-3 mb-1">
                 <p className="font-bold">Username</p>
               </div>
               <div className="mb-3 flex justify-center">
-                <img className='w-5' src={iconLocation} alt="Your SVG" />
+                <img className='w-5' src={iconLocation} alt="icon" />
                 <p className="text-sm">Bandung, Indonesia</p>
               </div>
-              <input type="file" className="file-input file-input-bordered file-input-sm w-60 xl:w-full max-w-xs mb-4" />
+              <div className='grid gap-2 grid-cols-4 my-4 justify-center items-center'>
+                <img src={iconGlobe} className='w-7 hover:cursor-pointer' alt="Personal Website" onClick={() => window.open("https://tailwindcss.com", "_blank") }/>
+                <img src={iconGithub} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open("https://tailwindcss.com", "_blank") } />
+                <img src={iconFacebook} className='w-6 hover:cursor-pointer' alt="Personal Facebook" onClick={() => window.open("https://tailwindcss.com", "_blank") } />
+                <img src={iconInstagram} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open("https://tailwindcss.com", "_blank") } />
+              </div>
               <div className="border rounded-xl bg-slate-200 p-5 text-sm w-60 xl:w-80 h-96">Tulisan</div>
             </div>
 
@@ -44,7 +58,7 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="text"
                     name="name"
-                    placeholder=""
+                    placeholder="Your Name"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -53,7 +67,7 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="text"
                     name="username"
-                    placeholder=""
+                    placeholder="Your Username"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -62,7 +76,7 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="email"
                     name="email"
-                    placeholder=""
+                    placeholder="Your Email"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -71,7 +85,7 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="password"
                     name="password"
-                    placeholder=""
+                    placeholder="Your Password"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -80,7 +94,7 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="text"
                     name="birth_place"
-                    placeholder=""
+                    placeholder="Your Birth Place"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -96,10 +110,10 @@ function ProfilePage() {
               <div className="form-control w-full">
                 <label className="label"><span className="label-text">About Me</span></label>
                 <textarea
-                  className="textarea textarea-bordered"
+                  className="textarea textarea-bordered h-40"
                   type="text"
-                  name="text"
-                  placeholder="Bio"
+                  name="about"
+                  placeholder="Your Bio"
                 />
               </div>
               <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 py-5'>
@@ -108,8 +122,8 @@ function ProfilePage() {
                   <input
                     className="input input-bordered w-full"
                     type="text"
-                    name="birth_place"
-                    placeholder=""
+                    name="job"
+                    placeholder="Your Job"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -118,7 +132,7 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="text"
                     name="company"
-                    placeholder=""
+                    placeholder="Current Company"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -127,7 +141,7 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="text"
                     name="address"
-                    placeholder=""
+                    placeholder="Your Address"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -136,7 +150,16 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="text"
                     name="country"
-                    placeholder=""
+                    placeholder="Your country"
+                  />
+                </div>
+                <div className="form-control w-full">
+                  <label className="label"><span className="label-text">Contact</span></label>
+                  <input
+                    className="input input-bordered w-full"
+                    type="text"
+                    name="contact"
+                    placeholder="Your Contact"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -145,7 +168,7 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="text"
                     name="github_link"
-                    placeholder=""
+                    placeholder="Your Github Link"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -154,7 +177,7 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="text"
                     name="web_link"
-                    placeholder=""
+                    placeholder="Your Personal Web Link"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -163,7 +186,7 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="text"
                     name="fb_link"
-                    placeholder=""
+                    placeholder="Your Facebook Link"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -172,7 +195,7 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="text"
                     name="ig_link"
-                    placeholder=""
+                    placeholder="Your Instagram Link"
                   />
                 </div>
               </div>
