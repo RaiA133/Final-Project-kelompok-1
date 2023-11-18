@@ -21,5 +21,15 @@ async function login(email, password) {
   }
 }
 
+//Function profile
+async function user(userId) {
+  try {
+    const response = await instance.get(`/user/${userId}/profile`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
 
-export { register, login };
+
+export { register, login, user };
