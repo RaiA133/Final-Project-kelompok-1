@@ -4,21 +4,35 @@ import Partner from '../components/Partner';
 import toast, { Toaster } from 'react-hot-toast';
 import { instance } from '../modules/axios/index.js';
 
-function PostDetailPage() {
+async function fetchPostDetail(token, postId) {
+  try {
+    const response = await instance.get(`http://localhost:3000/api/v1/post/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+function PostDetailPage({ match }) {
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
 
-  // Simulate fetching post detail
   useEffect(() => {
-    const postDetail = {
-      post_title: "Nama Projek",
-      post_img: "URL Gambar",
-      unique_id: "ID Unik",
-      post_desc: "Deskripsi Projek",
-      post_pricing: "Budget",
-      post_deadline: "Worktime",
-    };
-    setPost(postDetail);
+    const token = window.localStorage.getItem("token");
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    fetchPostDetail(token, match.params.id).then(data => {
+      setPost(data);
+    }).catch(error => {
+      toast.error(error.message);
+    });
   }, []);
 
   if (!post) return null;
