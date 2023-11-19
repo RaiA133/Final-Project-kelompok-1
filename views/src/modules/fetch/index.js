@@ -1,5 +1,16 @@
 import { instance } from '../axios/index';
 
+// Function for test-session user endpoint
+async function testSession() {
+  try {
+    const response = await instance.get('/test-session');
+    return response.data
+  } catch (error) {
+    const cekSesi = JSON.parse(error.request.response)
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | testSession | FETCH');
+  }
+}
+
 // Function for register user endpoint
 async function register(name, username, email, password) {
   try {
@@ -32,4 +43,26 @@ async function user(userId) {
 }
 
 
-export { register, login, user };
+// Function for create post endpoint
+async function createPost (formData) {
+  const formDataObject = Object.fromEntries(formData.entries());
+  try {
+    const response = await instance.post('/post/create', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  } 
+  catch (error) {
+    if (formDataObject.file.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
+      throw new Error('File Tidak Boleh Lebih Dari 2MB')
+    }
+    // console.error(error) // code dibawah didapat dari error Axios dari sini
+    const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | FETCH');
+  }
+}
+
+
+export { register, login, user createPost, testSession };
+
+

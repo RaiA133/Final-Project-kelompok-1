@@ -15,8 +15,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({
-      storage: storage,
-      limits: { fileSize: 2000000 }, // 2MB limit
+  storage: storage, limits: { fileSize: 2000000 }, // 2MB limit
 });
 
 route.get("/post", middlewares.verifyToken, postController.getPost);

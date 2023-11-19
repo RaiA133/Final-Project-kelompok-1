@@ -28,14 +28,17 @@ class authController {
         message: 'Registrasi Berhasil!',
         data: newUser
       });
+
     } catch (err) {
       console.error('Registration error:', err);
+
       res.status(500).json({
         status: [500, 'Failed'],
         halaman: 'Register',
         message: 'Email atau Username Sudah Terdaftar',
         error: err.message
       });
+      
     }
   }
 
@@ -64,6 +67,7 @@ class authController {
           });
         }
         else {
+          console.log(secretKey)
           const JWTtime = process.env.JWT_EXPIRED_TIME
           const token = jwt.sign({ // data yang di encoded jadi JWT, diteruskan ke middleware JWT : middlewares/index.js
             id: data.id,
@@ -85,7 +89,7 @@ class authController {
           status: [500, 'Failed'],
           halaman: 'Login',
           message: 'Something went wrong',
-          error: err
+          error: err.message
         });
       });
   }
