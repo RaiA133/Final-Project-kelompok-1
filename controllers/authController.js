@@ -89,7 +89,7 @@ class authController {
           status: [500, 'Failed'],
           halaman: 'Login',
           message: 'Something went wrong',
-          error: err
+          error: err.message
         });
       });
   }

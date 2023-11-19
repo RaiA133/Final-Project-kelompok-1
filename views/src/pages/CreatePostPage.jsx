@@ -51,10 +51,12 @@ async function handleSubmit(e) {
         </>,
         { duration: 6000 }
       )
+      e.target.reset(); // reset form ketika berhasil
     }
 
   } catch (error) {
     let failedMessage = error.message
+    console.log(error)
       console.error(failedMessage)
       toast.error(failedMessage, {
         duration: 6000,
