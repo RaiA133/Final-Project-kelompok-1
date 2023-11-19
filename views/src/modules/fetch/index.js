@@ -32,6 +32,16 @@ async function login(email, password) {
   }
 }
 
+//Function profile
+async function user(userId) {
+  try {
+    const response = await instance.get(`/user/${userId}/profile`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
 
 // Function for create post endpoint
 async function createPost (formData) {
@@ -53,4 +63,6 @@ async function createPost (formData) {
 }
 
 
-export { register, login, createPost, testSession };
+export { register, login, user createPost, testSession };
+
+
