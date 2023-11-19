@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({
-  storage: storage, limits: { fileSize: 2000000 } // 2MB limit
+  storage: storage, limits: { fileSize: 2000000 }, // 2MB limit
 });
 
 route.get('/post', middlewares.verifyToken, postController.getPost)
@@ -28,6 +28,19 @@ route.post('/post/create', middlewares.verifyToken, upload.single('file'), (req,
   const fileName = req.file.filename;
   postController.createPostingan(req, res, next, fileName); // mengirim nama file yg sama ke userController.updateProfile
 });
+// route.post('/post/create', middlewares.verifyToken, upload.single('file'), (req, res, next) => {
+//   try {
+//     const fileName = req.file.filename;
+//     postController.createPostingan(req, res, next, fileName);
+//   } catch (error) {
+//     res.status(400).json({
+//       status: [400, 'Failed'],
+//       halaman: 'Post',
+//       message: error.message,
+//       error: error,
+//     });
+//   }
+// });
 route.put('/post/update/:id', middlewares.verifyToken, upload.single('file'), (req, res, next) => {
   const fileName = req.file.filename;
   postController.updatePostingan(req, res, next, fileName); // mengirim nama file yg sama ke userController.updateProfile

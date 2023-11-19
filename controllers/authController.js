@@ -67,6 +67,7 @@ class authController {
           });
         }
         else {
+          console.log(secretKey)
           const JWTtime = process.env.JWT_EXPIRED_TIME
           const token = jwt.sign({ // data yang di encoded jadi JWT, diteruskan ke middleware JWT : middlewares/index.js
             id: data.id,

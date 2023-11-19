@@ -33,10 +33,6 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
-      post_deadline: {
-        allowNull: true,
-        type: Sequelize.STRING
-      },
       min_price: {
         allowNull: true,
         type: Sequelize.STRING
@@ -44,6 +40,14 @@ module.exports = {
       max_price: {
         allowNull: true,
         type: Sequelize.STRING
+      },
+      post_worktime: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      post_expired_in: {
+        allowNull: true,
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,

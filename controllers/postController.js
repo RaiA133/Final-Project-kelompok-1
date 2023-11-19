@@ -198,24 +198,33 @@ class postController {
 
   // halaman POST PEKERJAAN | POST create data user_posts ( middlewares : JWT | login needed )
   static async createPostingan(req, res, next, fileName) {
+    const { unique_id } = req.userData
     try {
       const { 
         post_title, post_desc, 
         post_category, post_tags, 
-        post_deadline, post_pricing 
+        min_price, max_price, post_worktime 
       } = req.body;
+
+      
+      const currentDate = new Date(); // Dapatkan tanggal saat ini
+      const expirationDate = new Date(); // Tambahkan 30 hari ke tanggal saat ini
+      expirationDate.setDate(currentDate.getDate() + 30);
 
       const file = fileName;
       const newUser_post = await User_post.create({
-        unique_id: uuidv4(),
+        unique_id,
         post_img: file,
-        post_title: post_title,
-        post_desc: post_desc,
-        post_category: post_category,
-        post_tags: post_tags,
-        post_deadline: post_deadline,
-        post_pricing: post_pricing,
+        post_title,
+        post_desc,
+        post_category,
+        post_tags,
+        min_price,
+        max_price,
+        post_worktime,
+        post_expired_in: expirationDate,
       });
+
 
       res.status(201).json({
         status: [201, 'Success'],

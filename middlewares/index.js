@@ -6,6 +6,7 @@ const secretKey = process.env.JWT_SECRET || 'defaultSecretKey';
 
 const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization;
+
   if (!token) {
     return res.status(401).json({
       status: 'Failed',
@@ -20,6 +21,7 @@ const verifyToken = async (req, res, next) => {
     }
   })
   .then(user => {
+    // console.log(user.dataValues)
     if (!user) {
       return res.status(401).json({
         status: 'Failed',
@@ -29,6 +31,7 @@ const verifyToken = async (req, res, next) => {
     }
     else {
       jwt.verify(token, secretKey, (err, decoded) => {
+        // console.log(token)
         if (err) {
             return res.status(401).json({ 
               status: 'Failed',
