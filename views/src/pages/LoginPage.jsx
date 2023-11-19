@@ -12,7 +12,7 @@ function LoginPage() {
   useEffect(() => {
     const toastMessage = localStorage.getItem('toastMessage')
     if (toastMessage) {
-      toast.success(toastMessage, {
+      toast.error(toastMessage, {
         duration: 6000,
       });
       localStorage.removeItem('toastMessage');

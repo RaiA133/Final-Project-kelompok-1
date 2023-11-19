@@ -30,14 +30,6 @@ async function handleSubmit(e) {
   
   const formData = new FormData(e.target);
   try {
-    formData.post_img = e.target.file.value;
-    formData.post_title = e.target.post_title.value;
-    formData.post_desc = e.target.post_desc.value;
-    formData.post_category = e.target.post_category.value;
-    formData.post_tags = e.target.post_tags.value;
-    formData.min_price = e.target.min_price.value;
-    formData.max_price = e.target.max_price.value;
-    formData.post_worktime = e.target.post_worktime.value;
     
     const response = await createPost(formData);
     setSelectedImage("");

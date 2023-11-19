@@ -203,7 +203,7 @@ class postController {
       const { 
         post_title, post_desc, 
         post_category, post_tags, 
-        min_price, max_price, post_worktime 
+        min_price, max_price, post_worktime, post_worktime_time
       } = req.body;
 
       
@@ -221,7 +221,7 @@ class postController {
         post_tags,
         min_price,
         max_price,
-        post_worktime,
+        post_worktime : post_worktime + ' ' + post_worktime_time,
         post_expired_in: expirationDate,
       });
 
