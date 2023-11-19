@@ -63,6 +63,6 @@ async function createPost (formData) {
 }
 
 
-export { register, login, user createPost, testSession };
+export { register, login, user, createPost, testSession };
 
 
