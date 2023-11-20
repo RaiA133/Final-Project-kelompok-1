@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from "../contexts/userContext";
+import { logout } from "../modules/fetch" 
 
 function Navbar() {
   const [isLogin, setIsLogin] = useState(false);
@@ -63,11 +64,19 @@ function Navbar() {
               </li>
               <li><a>Settings</a></li>
               <li><a
-                onClick={() => {
-                  setIsLogin(false);
-                  window.localStorage.setItem('toastMessage', 'Berhasil Logout');
-                  window.localStorage.removeItem("token");
-                  window.location.href = "/"
+                onClick={async () => {
+                  
+                  try {     
+                    const response = await logout()
+                    if (response.status[1] === 'Success') {
+                      setIsLogin(false);
+                      window.localStorage.setItem('toastMessage', 'Berhasil Logout');
+                      window.localStorage.removeItem("token");
+                      window.location.href = "/"
+                    }
+                  } catch (error) {
+                    console.error(error)
+                  }
                 }}
                 className="text-red-600 "
               >Logout</a></li>

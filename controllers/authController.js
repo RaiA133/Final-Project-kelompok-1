@@ -75,7 +75,10 @@ class authController {
             user_role_id: data.user_role_id
           }, secretKey, { expiresIn: JWTtime });
 
-          data.update({ remember_token: token }) // UPDATE data token ke database
+          data.update({ 
+            status: 'online',
+            remember_token: token, // UPDATE data token ke database
+           }) 
           return res.status(200).json({
             status: [200, 'Success'],
             halaman: 'Login',
@@ -111,7 +114,10 @@ class authController {
           });
         }
         else {
-          data.update({ remember_token: null }) // UPDATE to NULL data token ke database
+          data.update({ 
+            status: 'offline',
+            remember_token: null  // UPDATE to NULL data token ke database
+          }) 
           return res.status(200).json({
             status: [200, 'Success'],
             halaman: 'Logout',

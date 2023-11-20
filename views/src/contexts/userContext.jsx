@@ -10,17 +10,10 @@ export const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await userProfile(); // get semua data profile
-        if (response.status[0] === 200) {
+      const response = await userProfile(); // get semua data profile
+        if (response.status[1] === 'Success') {
           setUserState(response.data); //mengerim response get diatas ke react context
         }
-      } catch (error) {
-        console.error({
-          'Error fetching data': error.message,
-          'halaman': 'userContext'
-        });
-      }
     };
 
     fetchData();

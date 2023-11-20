@@ -62,7 +62,16 @@ async function createPost (formData) {
   }
 }
 
+async function logout() {
+  try {
+    const response = await instance.post('/logout');
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
 
-export { register, login, userProfile, createPost, testSession };
+
+export { register, login, userProfile, createPost, testSession, logout};
 
 

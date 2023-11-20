@@ -40,7 +40,7 @@ module.exports = {
       },
       status: {
         allowNull: true,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING
       },
 
       img_profile: {
