@@ -13,7 +13,7 @@ function Navbar() {
   }, [window.localStorage.getItem("token")]);
 
   return (
-    <div className="w-full navbar bg-white rounded-2xl">
+    <div className="w-full navbar rounded-2xl bg-base-100">
       <div className="flex-none lg:hidden">
         <label htmlFor="my-drawer-3" aria-label="open sidebar" className="btn btn-square btn-ghost">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -42,15 +42,24 @@ function Navbar() {
             </label>
             <ul tabIndex={0} className="mt-5 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
               <li>
+                <div className="avatar" onClick={() => navigate("/profile")}>
+                  <div className="w-8 rounded-full">
+                    <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  </div>
+                  <span>
+                    <p className="text-xs font-bold"> username </p>
+                    <p className="text-xs"> email@gmail.com </p>
+                  </span>
+                </div>
+              </li>
+              <li>
                 <a className="justify-between" onClick={() => navigate("/create-post")}>
                   Create Post
-                  {/* <span className="badge">New</span> */}
                 </a>
               </li>
               <li>
-                <a className="justify-between" onClick={() => navigate("/profile")}>
-                  Profile
-                  {/* <span className="badge">New</span> */}
+                <a className="justify-between" onClick={() => navigate("/chat")}>
+                  Chat
                 </a>
               </li>
               <li><a>Settings</a></li>
@@ -61,6 +70,7 @@ function Navbar() {
                   window.localStorage.removeItem("token");
                   window.location.href = "/"
                 }}
+                className="text-red-600 "
               >Logout</a></li>
             </ul>
           </div>

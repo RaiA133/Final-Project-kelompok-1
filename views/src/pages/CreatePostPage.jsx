@@ -77,7 +77,7 @@ return (
             }}
           />
 
-          <div className="ms-6 flex flex-col text-xl items-center py-10 bg-white card shadow-md">
+          <div className="ms-6 flex flex-col text-xl items-center py-10 bg-base-100 card shadow-md">
             <div className="avatar">
               <div className="w-60 xl:w-80 rounded-xl">
                 <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
@@ -97,10 +97,10 @@ return (
               <img src={iconInstagram} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open("https://tailwindcss.com", "_blank")} />
             </div>
             <button className='btn btn-primary mb-3 w-60 xl:w-80' onClick={() => navigate("/profile")}>Edit Profile</button>
-            <div className="border rounded-xl bg-slate-200 p-5 text-sm w-60 xl:w-80 h-96">Tulisan</div>
+            <div className="rounded-xl bg-base-200 p-5 text-sm w-60 xl:w-80 h-96">Tulisan</div>
           </div>
 
-          <div className="col-span-2 p-10 bg-white card shadow-md">
+          <div className="col-span-2 p-10 bg-base-100 card shadow-md">
 
             <div className="flex justify-between">
               <p className="text-4xl font-bold">Tambah Postingan</p>

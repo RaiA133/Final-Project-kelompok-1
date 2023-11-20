@@ -9,6 +9,7 @@ import HomePage from './pages/HomePage';
 import PostPage from './pages/PostPage';
 import ProfilePage from './pages/ProfilePage';
 import CreatePostPage from './pages/CreatePostPage';
+import ChatPage from './pages/ChatPage';
 import { useEffect, useState } from 'react';
 
 
@@ -26,11 +27,11 @@ function App() {
   }, [window.localStorage.getItem("token")]);
 
   return (
-    <div className="container mx-auto bg-slate-100 pt-3" data-theme="light">
+    <div className="container mx-auto bg-base-300 pt-3" data-theme="light">
 
       <div className="drawer">
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col">
+        <div className="drawer-content flex flex-col bg-base-300">
 
           {/* Navbar */}
           { hideOnRegisterLogin && <Navbar />}
@@ -43,6 +44,7 @@ function App() {
             <Route path='/post' element={<PrivateRoute> <PostPage /> </PrivateRoute>} />
             <Route path='/profile' element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
             <Route path='/create-post' element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
+            <Route path='/chat' element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
           </Routes>
 
         </div>
@@ -56,6 +58,7 @@ function App() {
             {!isLogin && <li><a onClick={() => navigate("/register")}>Register</a></li>}
             {isLogin && <li><a onClick={() => navigate("/create-post")}>Create Post</a></li>}
             {isLogin && <li><a onClick={() => navigate("/post")}>Post</a></li>}
+            {isLogin && <li><a onClick={() => navigate("/chat")}>Chat</a></li>}
             
           </ul>
         </div>

@@ -13,6 +13,7 @@ function PrivateRoute({
     const checkLoginStatus = async () => {
       try {
         const token = window.localStorage.getItem("token");
+        
         if (!token) {
           navigate("/login");
           return;
@@ -31,6 +32,7 @@ function PrivateRoute({
         // toast yang dikirim ke halaman login jika sesi login berakhir
         const successMessage = error.message;
         window.localStorage.setItem('toastMessage', successMessage);
+        window.localStorage.removeItem('token');
         console.error('Error checking login status:', error);
         navigate("/login");
       }

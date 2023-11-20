@@ -15,7 +15,7 @@ function ProfilePage() {
         <form action="">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
 
-            <div className="ms-6 flex flex-col text-xl items-center py-10 bg-white card shadow-md">
+            <div className="ms-6 flex flex-col text-xl items-center py-10 bg-base-100 card shadow-md">
               <div className="avatar">
                 <div className="w-60 xl:w-80 rounded-xl">
                   <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
@@ -39,10 +39,10 @@ function ProfilePage() {
                 <img src={iconFacebook} className='w-6 hover:cursor-pointer' alt="Personal Facebook" onClick={() => window.open("https://tailwindcss.com", "_blank") } />
                 <img src={iconInstagram} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open("https://tailwindcss.com", "_blank") } />
               </div>
-              <div className="border rounded-xl bg-slate-200 p-5 text-sm w-60 xl:w-80 h-96">Tulisan</div>
+              <div className="rounded-xl bg-base-200 p-5 text-sm w-60 xl:w-80 h-96">Tulisan</div>
             </div>
 
-            <div className="col-span-2 p-10 bg-white card shadow-md">
+            <div className="col-span-2 p-10 bg-base-100 card shadow-md">
               <div className="flex justify-between">
                 <p className="text-4xl font-bold">Edit Profile</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
