@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { testSession } from "../modules/fetch";
+
+export const tokenDecodedContext = createContext();
 
 function PrivateRoute({
   children,
@@ -9,20 +11,19 @@ function PrivateRoute({
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
 
+  const [TokenDecodedState, setTokenDecodedState] = useState()
+
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
         const token = window.localStorage.getItem("token");
-        
         if (!token) {
           navigate("/login");
           return;
         }
-
-        // memanggil test session di fetch untuk menjalankan testSession di backend dengan middleware yg sudah dibuat
-        const response = await testSession()
-
+        const response = await testSession() // memanggil test session di fetch untuk menjalankan testSession di backend dengan middleware yg sudah dibuat
         if (response.status[1] === 'Success') {
+          setTokenDecodedState(response.tokenDecoded) // mengirim hasil decoded dari token ke halaman yg di private dengan ReactContext
           setIsLogin(true);
         } else {
           navigate("/login");
@@ -41,13 +42,16 @@ function PrivateRoute({
     checkLoginStatus();
   }, [navigate]);
 
+
   return (
     <div>
-      {isLogin ? (
-        children
-      ) : (
-        <></>
-      )}
+      <tokenDecodedContext.Provider value={{ TokenDecodedState, setTokenDecodedState }}>
+        {isLogin ? (
+          children
+        ) : (
+          <></>
+        )}
+      </tokenDecodedContext.Provider>
     </div>
   );
 }

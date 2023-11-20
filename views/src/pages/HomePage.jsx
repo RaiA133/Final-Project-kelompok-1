@@ -12,7 +12,7 @@ function HomePage() {
     // TOAST Login berhasil : Muncul ketika proses login berhasil
     if (toastMessage == 'Anda Berhasil Login') {
       toast.success(toastMessage, {
-        duration: 6000,
+        duration: 2500,
       });
       localStorage.removeItem('toastMessage');
     } 
@@ -20,7 +20,7 @@ function HomePage() {
     // TOAST Logout berhasil : Muncul ketika proses logout berhasil
     if (toastMessage == 'Berhasil Logout') {
       toast(toastMessage, {
-        duration: 6000,
+        duration: 2500,
         icon: '👏',
       });
       localStorage.removeItem('toastMessage');

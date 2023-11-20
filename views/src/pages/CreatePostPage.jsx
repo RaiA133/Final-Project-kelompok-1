@@ -23,7 +23,7 @@ async function handleSubmit(e) {
       <>
         <span className='leading-normal'>{successMessage}</span>
       </>,
-      { duration: 6000 }
+      { duration: 2500 }
     );
     return
   }
@@ -41,7 +41,7 @@ async function handleSubmit(e) {
           <span className='leading-normal'>{successMessage}</span>
           <button className='ms-4 btn btn-xs my-0' onClick={() => navigate("/post")}>Lihat</button>
         </>,
-        { duration: 6000 }
+        { duration: 2500 }
       )
       e.target.reset(); // reset form ketika berhasil
     }
@@ -51,7 +51,7 @@ async function handleSubmit(e) {
     console.log(error)
       console.error(failedMessage)
       toast.error(failedMessage, {
-        duration: 6000,
+        duration: 2500,
       });
   }
 }

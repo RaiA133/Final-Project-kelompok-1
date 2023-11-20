@@ -1,16 +1,31 @@
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ChatFriendContext } from '../App'
+import { useContext, useEffect } from 'react';
+import { ChatFriendContext } from '../contexts/ChatContext'
+import { tokenDecodedContext } from '../components/PrivateRoute';
+import toast, { Toaster } from 'react-hot-toast';
+import socket from '../modules/socket';
 
 function ChatPage() {
-  const navigate = useNavigate()
   const { ChatFriendList, setChatFriendList } = useContext(ChatFriendContext)
+  const { TokenDecodedState, setTokenDecodedState } = useContext(tokenDecodedContext)
+
+  // useEffect(() => {
+  //   console.log(TokenDecodedState)
+  // }, [])
 
   async function AddFriend(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formDataObject = Object.fromEntries(formData);
-    console.log(formDataObject);
+    socket.emit("add_friend", formDataObject.friendName, ({ errMsg, done }) => {
+      if (done) {
+        toast.success('Berhasil Menambahkan Pesan', {
+          duration: 2500,
+        });
+      }
+      toast.error(errMsg, {
+        duration: 2500,
+      });
+    })
   }
 
   return (
@@ -18,11 +33,19 @@ function ChatPage() {
       <div className="px-5 mb-5">
         <div className="grid grid-cols-1 md:grid-cols-3">
 
+          <Toaster
+            toastOptions={{
+              style: {
+                maxWidth: '600px'
+              }
+            }}
+          />
+
           {/* USER BOX */}
           <div className='col-span-1'>
             <div role="tablist" className="tabs tabs-lifted mt-5">
 
-              <input type="radio" name="my_tabs_2" role="tab" className="tab font-bold w-20 lg:w-40" aria-label="Friend" defaultChecked />
+              <input type="radio" name="my_tabs_2" role="tab" className="tab font-bold w-20 xl:w-40" aria-label="Friend" defaultChecked />
               <div role="tabpanel" className="tab-content bg-base-100 rounded-box p-5 h-96 overflow-auto">
 
                 {ChatFriendList
@@ -89,7 +112,7 @@ function ChatPage() {
                         type="text" 
                         placeholder="Type here" 
                         className="input input-bordered w-full" 
-                        name='username'
+                        name='friendName'
                         autoComplete='off'
                         />
                       {/* <label className="label">

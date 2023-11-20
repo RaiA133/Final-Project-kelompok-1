@@ -71,7 +71,8 @@ class authController {
           const token = jwt.sign({ // data yang di encoded jadi JWT, diteruskan ke middleware JWT : middlewares/index.js
             id: data.id,
             unique_id: data.unique_id,
-            user_role_id: data.user_role_id
+            username: data.username,
+            // user_role_id: data.user_role_id,
           }, secretKey, { expiresIn: JWTtime });
 
           data.update({ remember_token: token }) // UPDATE data token ke database
@@ -127,6 +128,7 @@ class authController {
         });
       });
   }
+  
 }
 
 module.exports = authController

@@ -86,6 +86,7 @@ function ProfilePage() {
                     type="password"
                     name="password"
                     placeholder="Your Password"
+                    autoComplete='off'
                   />
                 </div>
                 <div className="form-control w-full">
