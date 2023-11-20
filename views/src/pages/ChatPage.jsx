@@ -11,42 +11,56 @@ function ChatPage() {
           <div className='col-span-1'>
             <div role="tablist" className="tabs tabs-lifted mt-5">
 
-              <input type="radio" name="my_tabs_2" role="tab" className="tab font-bold" aria-label="Friend" checked />
+              <input type="radio" name="my_tabs_2" role="tab" className="tab font-bold w-44" aria-label="Friend" checked />
               <div role="tabpanel" className="tab-content bg-base-100 rounded-box p-5 h-96 overflow-auto">
 
-                <div className="col-span-1 p-3 px-5 bg-base-200 card shadow mt-2 pb-1">
-                  <div>
+                <div className="col-span-1 py-2 px-5 bg-base-200 card shadow mt-2">
+                  <div className='join'>
                     <div className="avatar online">
                       <div className="w-12 rounded-full">
                         <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                       </div>
                     </div>
+                    <div className='ms-4 overflow-hidden '>
+                      <p className='font-bold'>Username</p>
+                      <p className='h-6'>last Message</p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="col-span-1 p-3 px-5 bg-base-200 card shadow mt-2 pb-1">
-                  <div>
+                <div className="col-span-1 py-2 px-5 bg-base-200 card shadow mt-2">
+                  <div className='join'>
                     <div className="avatar offline">
                       <div className="w-12 rounded-full">
                         <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                       </div>
+                    </div>
+                    <div className='ms-4 overflow-hidden '>
+                      <p className='font-bold'>Username</p>
+                      <p className='h-6'>Last Message</p>
                     </div>
                   </div>
                 </div>
 
               </div>
 
-              <input type="radio" name="my_tabs_2" role="tab" className="tab font-bold" aria-label="Direct Message" />
+              <input type="radio" name="my_tabs_2" role="tab" className="tab font-bold w-44" aria-label="Direct Message" />
               <div role="tabpanel" className="tab-content bg-base-100 rounded-box p-5 h-96 overflow-auto">
-                <div className="col-span-1 p-3 px-5 bg-base-200 card shadow mt-2 pb-1">
-                  <div>
+
+              <div className="col-span-1 py-2 px-5 bg-base-200 card shadow mt-2">
+                  <div className='join'>
                     <div className="avatar offline">
                       <div className="w-12 rounded-full">
                         <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                       </div>
                     </div>
+                    <div className='ms-4 overflow-hidden '>
+                      <p className='font-bold'>Username</p>
+                      <p className='h-6'>Last Message</p>
+                    </div>
                   </div>
                 </div>
+
               </div>
 
             </div>
@@ -56,13 +70,17 @@ function ChatPage() {
           <div className="col-span-2 bg-base-100 card shadow-md md:ms-5 mt-5 h-[40rem]">
 
             <div>
-              <div className="col-span-1 p-3 px-5 bg-base-200 card shadow mt-0 pb-1">
-                <div>
+              <div className="col-span-1 py-2 px-5 bg-base-200 card shadow mt-0">
+                <div className='join'> 
                   <div className="avatar online">
                     <div className="w-12 rounded-full">
                       <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                     </div>
                   </div>
+                  <div className='ms-4'>
+                      <p className='font-bold'>Username</p>
+                      <p className=''>online</p>
+                    </div>
                 </div>
               </div>
             </div>
