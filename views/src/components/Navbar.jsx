@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from "../contexts/userContext";
 
 function Navbar() {
   const [isLogin, setIsLogin] = useState(false);
@@ -11,6 +13,8 @@ function Navbar() {
       setIsLogin(true);
     }
   }, [window.localStorage.getItem("token")]);
+
+  const { userState, setUserState } = useContext(UserContext)
 
   return (
     <div className="w-full navbar rounded-2xl bg-base-100">
@@ -46,9 +50,9 @@ function Navbar() {
                   <div className="w-8 rounded-full">
                     <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                   </div>
-                  <span>
-                    <p className="text-xs font-bold"> username </p>
-                    <p className="text-xs"> email@gmail.com </p>
+                  <span className="overflow-hidden">
+                    <p className="text-xs font-bold"> {userState.username || 'username'} </p>
+                    <p className="text-xs"> {userState.email || 'email@gmail.com'}  </p>
                   </span>
                 </div>
               </li>

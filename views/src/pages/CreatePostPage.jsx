@@ -49,10 +49,10 @@ async function handleSubmit(e) {
   } catch (error) {
     let failedMessage = error.message
     console.log(error)
-      console.error(failedMessage)
-      toast.error(failedMessage, {
-        duration: 6000,
-      });
+    console.error(failedMessage)
+    toast.error(failedMessage, {
+      duration: 6000,
+    });
   }
 }
 

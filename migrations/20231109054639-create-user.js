@@ -71,6 +71,10 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+      city: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       address: {
         allowNull: true,
         type: Sequelize.STRING
