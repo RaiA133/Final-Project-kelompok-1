@@ -10,8 +10,9 @@ import PostPage from './pages/PostPage';
 import ProfilePage from './pages/ProfilePage';
 import CreatePostPage from './pages/CreatePostPage';
 import ChatPage from './pages/ChatPage';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
+export const ChatFriendContext = createContext();
 
 function App() {
   let location = useLocation();
@@ -26,6 +27,12 @@ function App() {
     }
   }, [window.localStorage.getItem("token")]);
 
+  const [ChatFriendList, setChatFriendList] = useState([
+    { username: 'Alex', status: 'online', friend: true, lastMessage: 'Hallo bro !!' },
+    { username: 'Johnny', status: 'offline', friend: true, lastMessage: 'Aku sedang Diluar ini tolong chat nanti lagi ya' },
+    { username: 'Irwan', status: 'offline', friend: false, lastMessage: 'Tgl 30 paling bisanya' },
+  ]);
+
   return (
     <div className="container mx-auto bg-base-300 pt-3" data-theme="light">
 
@@ -36,6 +43,7 @@ function App() {
           {/* Navbar */}
           { hideOnRegisterLogin && <Navbar />}
 
+          <ChatFriendContext.Provider value={{ ChatFriendList, setChatFriendList }}>
           {/* Page content here SEKALIGUS Define ROUTE URL*/}
           <Routes>
             <Route path='/' element={<HomePage />} />
@@ -46,6 +54,8 @@ function App() {
             <Route path='/create-post' element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
             <Route path='/chat' element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
           </Routes>
+
+          </ChatFriendContext.Provider>
 
         </div>
         <div className="drawer-side">
