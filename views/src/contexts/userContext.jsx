@@ -7,6 +7,7 @@ export const UserContext = createContext();
 export const UserContextProvider = ({ children }) => {
   const navigate = useNavigate()
   const [userState, setUserState] = useState({});
+  const [img_profile_link, set_img_profile_link] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,12 +16,11 @@ export const UserContextProvider = ({ children }) => {
           setUserState(response.data); //mengerim response get diatas ke react context
         }
     };
-
     fetchData();
   }, [navigate]) // ini artinya akan berjalan tanpa refresh
 
   return (
-    <UserContext.Provider value={{ userState, setUserState }}>
+    <UserContext.Provider value={{ userState, setUserState, img_profile_link, set_img_profile_link }}>
       {children}
     </UserContext.Provider>
   );

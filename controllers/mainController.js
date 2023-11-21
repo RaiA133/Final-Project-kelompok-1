@@ -8,17 +8,21 @@ class mainController {
     })
   }
 
-  // halaman test token | Testing Routes
+  // halaman test token | Testing Routes | juga mengembalikan hasil decoded dari token
   static testSession(req, res, next) {
+    const { id, unique_id, user_role_id } = req.userData;         // tanpa dikirim ke socket.io
+    // const data = req.io.decodedData                            // dari socket.io
     try {
-    res.status(200).json({
-      status: [200, 'Success'],
-      halaman: 'Test-Session-Login',
-      message: 'Routes berjalan dengan baik',
-    })
+      res.status(200).json({
+        status: [200, 'Success'],
+        halaman: 'Test-Session-Login',
+        message: 'Routes berjalan dengan baik',
+        // tokenDecoded: data,
+        tokenDecoded: { id, unique_id, user_role_id } ,
+      })
     }
     catch (error) {
-      return res.status(401).json({ 
+      return res.status(401).json({
         status: 'Failed',
         halaman: 'Test-Session-login',
         message: 'Sesi Login Berakhir.',
@@ -26,6 +30,7 @@ class mainController {
       });
     }
   }
+
 }
 
 module.exports = mainController

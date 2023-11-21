@@ -11,9 +11,7 @@ import { UserContext } from '../contexts/userContext';
 
 function ProfilePage() {
   const navigate = useNavigate()
-  const { userState, setUserState } = useContext(UserContext)
-  const profilePicture = "http://localhost:3000/profile/picture/" + userState.img_profile || "http://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg";
-  console.log(userState)
+  const { userState, setUserState, img_profile_link } = useContext(UserContext)
   return (
     <>
       <div className="p-5">
@@ -25,7 +23,7 @@ function ProfilePage() {
               <div className="avatar">
                 <div className="w-60 xl:w-80 rounded-xl">
                 
-                  <img src={profilePicture} />
+                  <img src={img_profile_link} />
                 </div>
               </div>
               <input 

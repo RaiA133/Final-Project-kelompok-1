@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { testSession } from "../modules/fetch";
+
+export const DecodedTokenContext = createContext();
 
 function PrivateRoute({
   children,
@@ -8,6 +10,7 @@ function PrivateRoute({
 }) {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
+  const [decodedTokenState, setDecodedTokenState] = useState()
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -17,20 +20,17 @@ function PrivateRoute({
           navigate("/login");
           return;
         }
-
-        // memanggil test session di fetch untuk menjalankan testSession di backend dengan middleware yg sudah dibuat
-        const response = await testSession()
-
+        const response = await testSession() // memanggil test session di fetch untuk menjalankan testSession di backend dengan middleware yg sudah dibuat
         if (response.status[1] === 'Success') {
+          setDecodedTokenState(response.tokenDecoded) // mengirim hasil decoded dari token ke halaman yg di private dengan ReactContext
           setIsLogin(true);
         } else {
           navigate("/login");
         }
       } catch (error) {
-
-        // toast yang dikirim ke halaman login jika sesi login berakhir
         const successMessage = error.message;
-        window.localStorage.setItem('toastMessage', successMessage);
+        window.localStorage.setItem('toastMessage', successMessage); // toast yang dikirim ke halaman login jika sesi login berakhir
+        window.localStorage.removeItem('token');
         console.error('Error checking login status:', error);
         navigate("/login");
       }
@@ -39,13 +39,16 @@ function PrivateRoute({
     checkLoginStatus();
   }, [navigate]);
 
+
   return (
     <div>
-      {isLogin ? (
-        children
-      ) : (
-        <></>
-      )}
+      <DecodedTokenContext.Provider value={{ decodedTokenState, setDecodedTokenState }}>
+        {isLogin ? (
+          children
+        ) : (
+          <></>
+        )}
+      </DecodedTokenContext.Provider>
     </div>
   );
 }
