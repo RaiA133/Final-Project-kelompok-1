@@ -65,34 +65,34 @@ class postController {
   static getPostById(req, res, next) {
     const { id } = req.params; // hasil decoded dari middleware verifyToken
     User_post.findOne({
-          where: {
-                id,
-          },
+      where: {
+        id,
+      },
     })
-          .then((data) => {
-                if (!data) {
-                      return res.status(404).json({
-                            status: [404, "Failed"],
-                            halaman: "Post",
-                            message: "Data Post Tidak Ditemukan!",
-                      });
-                } else {
-                      return res.status(200).json({
-                            status: [200, "Success"],
-                            halaman: "Post",
-                            message: `Semua Postinganmu Berdasarkan Id ${data.id}`,
-                            data,
-                      });
-                }
-          })
-          .catch((err) => {
-                return res.status(500).json({
-                      status: [500, "Failed"],
-                      halaman: "Post",
-                      message: "Something went wrong",
-                      error: err,
-                });
+      .then((data) => {
+        if (!data) {
+          return res.status(404).json({
+            status: [404, "Failed"],
+            halaman: "Post",
+            message: "Data Post Tidak Ditemukan!",
           });
+        } else {
+          return res.status(200).json({
+            status: [200, "Success"],
+            halaman: "Post",
+            message: `Semua Postinganmu Berdasarkan Id ${data.id}`,
+            data,
+          });
+        }
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          status: [500, "Failed"],
+          halaman: "Post",
+          message: "Something went wrong",
+          error: err,
+        });
+      });
   }
 
   // halaman POST PEKERJAAN | GET all data user_posts by category, from params url ( middlewares : JWT | login needed )
