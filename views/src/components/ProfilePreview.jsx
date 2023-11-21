@@ -25,10 +25,10 @@ function ProfilePreview() {
         {location.pathname == '/profile' &&
           <details className="dropdown absolute">
             <summary className="m-1 btn btn-sm btn-neutral">Edit</summary>
-            <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-36 overflow-hidden">
+            <ul className="ms-1 p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-36 overflow-hidden">
               <li>
                 <input
-                  className="file-input file-input-md w-30"
+                  className="file-input file-input-md w-[130px]"
                   type="file"
                   name="img_profile"
                 />

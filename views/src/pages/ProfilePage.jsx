@@ -1,5 +1,5 @@
 // require('dotenv').config()
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ProfilePriview from '../components/ProfilePreview'
 import Partner from '../components/Partner';
 import { useContext } from 'react';
@@ -7,8 +7,7 @@ import { UserContext } from '../contexts/UserContext';
 
 function ProfilePage() {
   const navigate = useNavigate()
-  let location = useLocation();
-  const { userState, setUserState, img_profile_link } = useContext(UserContext)
+  const { userState } = useContext(UserContext)
   return (
     <>
       <div className="p-5">
