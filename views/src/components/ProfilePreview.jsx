@@ -9,6 +9,7 @@ import { UserContext } from '../contexts/UserContext';
 
 function ProfilePreview() {
   let location = useLocation();
+  const navigate = useNavigate();
   const { userState, img_profile_link } = useContext(UserContext)
   return (
     
@@ -37,6 +38,11 @@ function ProfilePreview() {
               <li><a>Remove Photo</a></li>
             </ul>
           </details>
+        }
+        {location.pathname == '/create-post' && 
+          <div className='absolute m-2'>
+            <button className='btn btn-sm btn-neutral' onClick={() => navigate("/profile")} >Edit Profile</button>
+          </div>
         }
       </div>
 

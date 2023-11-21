@@ -46,7 +46,10 @@ function PrivateRoute({
         {isLogin ? (
           children
         ) : (
-          <></>
+          // loading animation
+          <div className="flex justify-center items-center h-screen">
+            <span className="loading loading-spinner loading-lg"></span> 
+          </div>
         )}
       </DecodedTokenContext.Provider>
     </div>

@@ -16,6 +16,8 @@ function ChatPage() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formDataObject = Object.fromEntries(formData);
+    console.log(formDataObject)
+    return
     socket.emit("add_friend", formDataObject.friendName, ({ errMsg, done }) => {
       if (done) {
         toast.success('Berhasil Menambahkan Pesan', {
@@ -112,7 +114,7 @@ function ChatPage() {
                         type="text" 
                         placeholder="Type here" 
                         className="input input-bordered w-full" 
-                        name='friendName'
+                        name='searchUserToChat'
                         autoComplete='off'
                         />
                       {/* <label className="label">

@@ -20,7 +20,12 @@ export const UserContextProvider = ({ children }) => {
   }, [navigate]) // ini artinya akan berjalan tanpa refresh
 
   return (
-    <UserContext.Provider value={{ userState, setUserState, img_profile_link, set_img_profile_link }}>
+    <UserContext.Provider value={{ 
+      userState, 
+      setUserState, 
+      img_profile_link, 
+      set_img_profile_link,
+    }}>
       {children}
     </UserContext.Provider>
   );

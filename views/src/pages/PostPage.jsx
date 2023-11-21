@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom"
 import { DecodedTokenContext } from "../components/PrivateRoute"
 
 function PostPage() {
-  const { tokenDecodedState, setTokenDecodedState } = useContext(DecodedTokenContext)
-  console.log(tokenDecodedState)
   const navigate = useNavigate()
+  const { decodedTokenState } = useContext(DecodedTokenContext)
+  // console.log(decodedTokenState)
   return (
     <div className="mx-6">
       <div className='h-screen'>
