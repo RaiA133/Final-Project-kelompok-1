@@ -1,17 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { createPost } from "../modules/fetch";
-import iconLocation from '../assets/icon/map-pin.svg';
-import iconGlobe from '../assets/icon/globe-alt.svg';
-import iconGithub from '../assets/icon/github.svg';
-import iconFacebook from '../assets/icon/facebook.svg';
-import iconInstagram from '../assets/icon/instagram.svg';
 import Partner from '../components/Partner';
-import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../contexts/userContext';
+import { useEffect, useState } from 'react';
+import ProfilePriview from '../components/ProfilePreview'
 
 function CreatePostPage({ PostForm }) {
-  const { img_profile_link } = useContext(UserContext)
   const navigate = useNavigate()
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -79,30 +73,9 @@ function CreatePostPage({ PostForm }) {
               }}
             />
 
-            <div className="ms-6 flex flex-col text-xl items-center py-10 bg-white card shadow-md">
-              <div className="avatar">
-                <div className="w-60 xl:w-80 rounded-xl">
-                  <img src={img_profile_link} />
-                </div>
-              </div>
-              <div className="mt-3 mb-1">
-                <p className="font-bold">Username</p>
-              </div>
-              <div className="mb-3 flex justify-center">
-                <img className='w-5' src={iconLocation} alt="Your SVG" />
-                <p className="text-sm">Bandung, Indonesia</p>
-              </div>
-              <div className='grid gap-2 grid-cols-4 my-4 justify-center items-center'>
-                <img src={iconGlobe} className='w-7 hover:cursor-pointer' alt="Personal Website" onClick={() => window.open("https://tailwindcss.com", "_blank")} />
-                <img src={iconGithub} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open("https://tailwindcss.com", "_blank")} />
-                <img src={iconFacebook} className='w-6 hover:cursor-pointer' alt="Personal Facebook" onClick={() => window.open("https://tailwindcss.com", "_blank")} />
-                <img src={iconInstagram} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open("https://tailwindcss.com", "_blank")} />
-              </div>
-              <button className='btn btn-primary mb-3 w-60 xl:w-80' onClick={() => navigate("/profile")}>Edit Profile</button>
-              <div className="border rounded-xl bg-slate-200 p-5 text-sm w-60 xl:w-80 h-96">Tulisan</div>
-            </div>
+            <ProfilePriview />
 
-            <div className="col-span-2 p-10 bg-white card shadow-md">
+            <div className="col-span-2 p-10 bg-base-100 card shadow-md">
 
               <div className="flex justify-between">
                 <p className="text-4xl font-bold">Tambah Postingan</p>
