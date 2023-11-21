@@ -74,7 +74,7 @@ function LoginPage() {
                   className="input input-bordered w-full max-w-xs"
                   type="email"
                   name="email"
-                  placeholder=""
+                  placeholder="Your Email"
                 />
               </div>
 
@@ -82,10 +82,11 @@ function LoginPage() {
                 <label className="label"><span className="label-text">Password</span></label>
                 <input
                   className="input input-bordered w-full max-w-xs"
-                  autoComplete=''
                   type={showPassword ? 'text' : 'password'}
                   name="password"
-                  placeholder=""
+                  autoComplete=''
+                  placeholder="Your Password"
+                  required
                 />
                 <label className="label place-content-end">
                   <a onClick={togglePasswordVisibility} className="label-text-alt text-xs underline" style={{ cursor: 'pointer' }}>

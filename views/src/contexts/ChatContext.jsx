@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 
-export const ChatFriendContext = createContext();
+export const ChatContext = createContext();
 
 export const ChatContextProvider = ({ children }) => {
   const [ChatFriendList, setChatFriendList] = useState([
@@ -9,9 +9,9 @@ export const ChatContextProvider = ({ children }) => {
     { username: 'Irwan', status: 'offline', friend: false, lastMessage: 'Tgl 30 paling bisanya' },
   ]);
   return (
-    <ChatFriendContext.Provider value={{ ChatFriendList, setChatFriendList }}>
+    <ChatContext.Provider value={{ ChatFriendList, setChatFriendList }}>
       {children}
-    </ChatFriendContext.Provider>
+    </ChatContext.Provider>
   )
 }
 

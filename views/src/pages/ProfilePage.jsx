@@ -1,48 +1,24 @@
-import { useNavigate } from 'react-router-dom';
-import iconLocation from '../assets/icon/map-pin.svg';
-import iconGlobe from '../assets/icon/globe-alt.svg';
-import iconGithub from '../assets/icon/github.svg';
-import iconFacebook from '../assets/icon/facebook.svg';
-import iconInstagram from '../assets/icon/instagram.svg';
+// require('dotenv').config()
+import { useNavigate, useLocation } from 'react-router-dom';
+import ProfilePriview from '../components/ProfilePreview'
 import Partner from '../components/Partner';
+import { useContext } from 'react';
+import { UserContext } from '../contexts/UserContext';
 
 function ProfilePage() {
   const navigate = useNavigate()
+  let location = useLocation();
+  const { userState, setUserState, img_profile_link } = useContext(UserContext)
   return (
     <>
       <div className="p-5">
-
+        
         <form action="">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
 
-            <div className="ms-6 flex flex-col text-xl items-center py-10 bg-base-100 card shadow-md">
-              <div className="avatar">
-                <div className="w-60 xl:w-80 rounded-xl">
-                  <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                </div>
-              </div>
-              <input 
-                className="file-input file-input-bordered file-input-sm w-60 xl:w-full max-w-xs mt-4" 
-                type="file"
-                name="img_profile" 
-              />
-              <div className="mt-3 mb-1">
-                <p className="font-bold">Username</p>
-              </div>
-              <div className="mb-3 flex justify-center">
-                <img className='w-5' src={iconLocation} alt="icon" />
-                <p className="text-sm">Bandung, Indonesia</p>
-              </div>
-              <div className='grid gap-2 grid-cols-4 my-4 justify-center items-center'>
-                <img src={iconGlobe} className='w-7 hover:cursor-pointer' alt="Personal Website" onClick={() => window.open("https://tailwindcss.com", "_blank") }/>
-                <img src={iconGithub} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open("https://tailwindcss.com", "_blank") } />
-                <img src={iconFacebook} className='w-6 hover:cursor-pointer' alt="Personal Facebook" onClick={() => window.open("https://tailwindcss.com", "_blank") } />
-                <img src={iconInstagram} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open("https://tailwindcss.com", "_blank") } />
-              </div>
-              <div className="rounded-xl bg-base-200 p-5 text-sm w-60 xl:w-80 h-96">Tulisan</div>
-            </div>
-
-            <div className="col-span-2 p-10 bg-base-100 card shadow-md">
+            <ProfilePriview />
+            
+            <div className="row-span-3 col-span-2 p-10 bg-base-100 card shadow-md">
               <div className="flex justify-between">
                 <p className="text-4xl font-bold">Edit Profile</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -51,7 +27,9 @@ function ProfilePage() {
                 </div>
               </div>
 
-              <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 py-5'>
+              <div className='divider'/>
+
+              <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 pb-5'>
                 <div className="form-control w-full">
                   <label className="label"><span className="label-text">Name</span></label>
                   <input
@@ -59,6 +37,7 @@ function ProfilePage() {
                     type="text"
                     name="name"
                     placeholder="Your Name"
+                    defaultValue={userState.name}
                   />
                 </div>
                 <div className="form-control w-full">
@@ -68,6 +47,7 @@ function ProfilePage() {
                     type="text"
                     name="username"
                     placeholder="Your Username"
+                    defaultValue={userState.username}
                   />
                 </div>
                 <div className="form-control w-full">
@@ -77,6 +57,17 @@ function ProfilePage() {
                     type="email"
                     name="email"
                     placeholder="Your Email"
+                    defaultValue={userState.email}
+                  />
+                </div>
+                <div className="form-control w-full">
+                  <label className="label"><span className="label-text">Address</span></label>
+                  <input
+                    className="input input-bordered w-full"
+                    type="text"
+                    name="address"
+                    placeholder="Your Address"
+                    defaultValue={userState.address}
                   />
                 </div>
                 <div className="form-control w-full">
@@ -85,17 +76,16 @@ function ProfilePage() {
                     className="input input-bordered w-full"
                     type="password"
                     name="password"
-                    placeholder="Your Password"
-                    autoComplete='off'
+                    placeholder="Change Your Password"
                   />
                 </div>
                 <div className="form-control w-full">
-                  <label className="label"><span className="label-text">Birth Place</span></label>
+                  <label className="label"><span className="label-text">Confirm Password</span></label>
                   <input
                     className="input input-bordered w-full"
-                    type="text"
-                    name="birth_place"
-                    placeholder="Your Birth Place"
+                    type="password"
+                    name="password"
+                    placeholder="Confirm Password Change"
                   />
                 </div>
                 <div className="form-control w-full">
@@ -105,6 +95,17 @@ function ProfilePage() {
                     type="date"
                     name="birth_date"
                     placeholder=""
+                    defaultValue={userState.birth_date}
+                  />
+                </div>
+                <div className="form-control w-full">
+                  <label className="label"><span className="label-text">Birth Place</span></label>
+                  <input
+                    className="input input-bordered w-full"
+                    type="text"
+                    name="birth_place"
+                    placeholder="Your Birth Place"
+                    defaultValue={userState.birth_place}
                   />
                 </div>
               </div>
@@ -115,6 +116,7 @@ function ProfilePage() {
                   type="text"
                   name="about"
                   placeholder="Your Bio"
+                  defaultValue={userState.about}
                 />
               </div>
               <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 py-5'>
@@ -125,6 +127,7 @@ function ProfilePage() {
                     type="text"
                     name="job"
                     placeholder="Your Job"
+                    defaultValue={userState.job}
                   />
                 </div>
                 <div className="form-control w-full">
@@ -134,15 +137,7 @@ function ProfilePage() {
                     type="text"
                     name="company"
                     placeholder="Current Company"
-                  />
-                </div>
-                <div className="form-control w-full">
-                  <label className="label"><span className="label-text">Address</span></label>
-                  <input
-                    className="input input-bordered w-full"
-                    type="text"
-                    name="address"
-                    placeholder="Your Address"
+                    defaultValue={userState.company}
                   />
                 </div>
                 <div className="form-control w-full">
@@ -152,6 +147,7 @@ function ProfilePage() {
                     type="text"
                     name="country"
                     placeholder="Your country"
+                    defaultValue={userState.country}
                   />
                 </div>
                 <div className="form-control w-full">
@@ -161,6 +157,7 @@ function ProfilePage() {
                     type="text"
                     name="contact"
                     placeholder="Your Contact"
+                    defaultValue={userState.contact}
                   />
                 </div>
                 <div className="form-control w-full">
@@ -170,6 +167,7 @@ function ProfilePage() {
                     type="text"
                     name="github_link"
                     placeholder="Your Github Link"
+                    defaultValue={userState.github_link}
                   />
                 </div>
                 <div className="form-control w-full">
@@ -179,6 +177,7 @@ function ProfilePage() {
                     type="text"
                     name="web_link"
                     placeholder="Your Personal Web Link"
+                    defaultValue={userState.web_link}
                   />
                 </div>
                 <div className="form-control w-full">
@@ -188,6 +187,7 @@ function ProfilePage() {
                     type="text"
                     name="fb_link"
                     placeholder="Your Facebook Link"
+                    defaultValue={userState.fb_link}
                   />
                 </div>
                 <div className="form-control w-full">
@@ -197,6 +197,7 @@ function ProfilePage() {
                     type="text"
                     name="ig_link"
                     placeholder="Your Instagram Link"
+                    defaultValue={userState.ig_link}
                   />
                 </div>
               </div>

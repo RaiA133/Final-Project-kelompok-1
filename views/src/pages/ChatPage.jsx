@@ -1,12 +1,12 @@
 import { useContext, useEffect } from 'react';
-import { ChatFriendContext } from '../contexts/ChatContext'
-import { tokenDecodedContext } from '../components/PrivateRoute';
+import { DecodedTokenContext } from '../components/PrivateRoute';
 import toast, { Toaster } from 'react-hot-toast';
 import socket from '../modules/socket';
+import { ChatContext } from '../contexts/ChatContext';
 
 function ChatPage() {
-  const { ChatFriendList, setChatFriendList } = useContext(ChatFriendContext)
-  const { TokenDecodedState, setTokenDecodedState } = useContext(tokenDecodedContext)
+  const { ChatFriendList, setChatFriendList } = useContext(ChatContext)
+  const { decodedTokenState, setDecodedTokenState } = useContext(DecodedTokenContext)
 
   // useEffect(() => {
   //   console.log(TokenDecodedState)
