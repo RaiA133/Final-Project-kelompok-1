@@ -9,7 +9,7 @@ function ChatPage() {
   const { decodedTokenState, setDecodedTokenState } = useContext(DecodedTokenContext)
 
   // useEffect(() => {
-  //   console.log(TokenDecodedState)
+  //   console.log(decodedTokenState)
   // }, [])
 
   async function AddFriend(e) {
