@@ -11,7 +11,8 @@ function ProfilePreview() {
   let location = useLocation();
   const { userState, img_profile_link } = useContext(UserContext)
   return (
-    <div className="row-span-2 ms-6 flex flex-col text-xl items-center pt-6 pb-10 bg-base-100 card shadow-md h-fit">
+    
+    <div className={`row-span-2 flex flex-col text-xl items-center pt-6 pb-10 bg-base-100 card shadow-md h-fit ${location.pathname === '/profile' ? 'ms-6' : ''}`}>
       <div className="flex justify-center w-80">
         <p className="text-2xl font-bold">Profile Preview</p>
       </div>

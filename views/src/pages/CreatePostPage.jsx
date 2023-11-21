@@ -73,8 +73,6 @@ function CreatePostPage({ PostForm }) {
               }}
             />
 
-            <ProfilePriview />
-
             <div className="col-span-2 p-10 bg-base-100 card shadow-md">
 
               <div className="flex justify-between">
@@ -198,6 +196,8 @@ function CreatePostPage({ PostForm }) {
               </div>
 
             </div>
+
+            <ProfilePriview />
 
           </div>
 
