@@ -11,10 +11,15 @@ export const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await userProfile(); // get semua data profile
+      try {
+        const response = await userProfile(); // get semua data profile
         if (response.status[1] === 'Success') {
           setUserState(response.data); //mengerim response get diatas ke react context
         }
+      }
+      catch (err) {
+        // console.log(err)
+      }
     };
     fetchData();
   }, [navigate]) // ini artinya akan berjalan tanpa refresh
