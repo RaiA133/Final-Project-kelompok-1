@@ -71,6 +71,7 @@ async function getUserbyId(id) {
 // Function for create post endpoint
 async function createPost(formData) {
   const formDataObject = Object.fromEntries(formData.entries());
+
   try {
     const response = await instance.post('/post/create', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },

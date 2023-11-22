@@ -21,7 +21,7 @@ function PostPage() {
       }, [userState]);
 
       return (
-            <div className="grid grid-cols-4 gap-4 mx-6">
+            <div className="flex-auto grid-cols gap-4 mx-5 mt-5">
                   <div className="bg-gray-200 p-4 rounded-lg shadow-md">
                         <h2 className="text-xl font-bold mb-4">Kategori</h2>
                         <ul>
@@ -35,7 +35,7 @@ function PostPage() {
                         </ul>
                   </div>
                   <div className="col-span-3">
-                        <div className="grid grid-cols gap-4 ">
+                        <div className="flex-auto grid grid-cols gap-4 mt-5">
                               {postState.length > 0 &&
                                     postState.map((post, id) => (
                                           <div key={id} className="bg-white p-4 mb-4 rounded-lg shadow-md">
