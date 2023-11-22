@@ -33,9 +33,9 @@ async function login(email, password) {
 }
 
 //Function profile
-async function user(userId) {
+async function userProfile() {
   try {
-    const response = await instance.get(`/user/${userId}/profile`);
+    const response = await instance.get(`/profile`);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || 'Something went wrong');
@@ -62,7 +62,16 @@ async function createPost (formData) {
   }
 }
 
+async function logout() {
+  try {
+    const response = await instance.post('/logout');
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
 
-export { register, login, user, createPost, testSession };
+
+export { register, login, userProfile, createPost, testSession, logout};
 
 

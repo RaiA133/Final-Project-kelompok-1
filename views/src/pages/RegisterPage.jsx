@@ -30,7 +30,7 @@ function RegisterPage() {
       if (response.status[0] === 201) {
         const successMessage = response.message;
         toast.success(successMessage + ' Silahkan Login', {
-          duration: 6000,
+          duration: 2500,
         });
       } 
     }
@@ -38,7 +38,7 @@ function RegisterPage() {
       let failedMessage = error.message // data message dari authController BE
       console.error(failedMessage)
       toast.error(failedMessage, {
-        duration: 6000,
+        duration: 2500,
       });
         
         // Redirect ke halaman login setelah registrasi berhasil
@@ -75,17 +75,32 @@ function RegisterPage() {
 
               <div className="form-control w-full max-w-xs">
                 <label className="label"><span className="label-text">Name</span></label>
-                <input type="text" placeholder="" className="input input-bordered w-full max-w-xs" name="name" />
+                <input 
+                  className="input input-bordered w-full max-w-xs" 
+                  type="text" 
+                  name="name" 
+                  placeholder="Name" 
+                  />
               </div>
 
               <div className="form-control w-full max-w-xs">
                 <label className="label"><span className="label-text">Username</span></label>
-                <input type="text" placeholder="" className="input input-bordered w-full max-w-xs" name="username" />
+                <input 
+                  className="input input-bordered w-full max-w-xs" 
+                  type="text" 
+                  name="username" 
+                  placeholder="Username" 
+                  />
               </div>
 
               <div className="form-control w-full max-w-xs">
                 <label className="label"><span className="label-text">Email</span></label>
-                <input type="email" placeholder="" className="input input-bordered w-full max-w-xs" name="email" />
+                <input 
+                  className="input input-bordered w-full max-w-xs" 
+                  type="email" 
+                  name="email" 
+                  placeholder="Email" 
+                />
               </div>
 
               <div className="form-control w-full max-w-xs">
@@ -95,8 +110,8 @@ function RegisterPage() {
                   type={showPassword ? 'text' : 'password'}
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
-                  autoComplete='on'
-                  placeholder=""
+                  autoComplete='off'
+                  placeholder="Password"
                 />
                 <label className="label place-content-end">
                   <a onClick={togglePasswordVisibility} className="label-text-alt text-xs underline" style={{ cursor: 'pointer' }}>
@@ -112,8 +127,8 @@ function RegisterPage() {
                   type={showConfirmPassword ? 'text' : 'password'}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   value={confirmPassword}
-                  autoComplete='on'
-                  placeholder=""
+                  autoComplete='off'
+                  placeholder="Confirm Password"
                 />
                 <label className="label place-content-end">
                   {password !== confirmPassword && (

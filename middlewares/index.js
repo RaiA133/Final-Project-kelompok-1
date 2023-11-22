@@ -40,8 +40,8 @@ const verifyToken = async (req, res, next) => {
               err: err.message
             });
         }
-        // Proses Decoded Token dari authController.login, diteruskan ke semua controller
-        req.userData = decoded;
+        req.io.decodedData = decoded; // Kirim hasil decoded ke client melalui Socket.IO
+        req.userData = decoded; // Proses Decoded Token dari authController.login, diteruskan ke semua controller
         next();
     });
     }
