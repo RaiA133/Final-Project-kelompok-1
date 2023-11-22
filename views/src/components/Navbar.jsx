@@ -20,10 +20,10 @@ function Navbar() {
   // mengirim img_profile_link dari isi userState di Context itu sendiri tapi di edit dengan link static
   useEffect(() => {
     if (userState.img_profile) {
-       const link = "http://localhost:3000/profile/picture/" + userState.img_profile
+       const link = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/` + userState.img_profile
        set_img_profile_link(link)
     } else {
-      const link = "http://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg";
+      const link = import.meta.env.VITE_PROFILE_DEFAULT
       set_img_profile_link(link)
     }
   }, [userState])
