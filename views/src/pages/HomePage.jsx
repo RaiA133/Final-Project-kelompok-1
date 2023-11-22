@@ -59,22 +59,22 @@ function HomePage() {
           <div className="avatar-group -space-x-6 rtl:space-x-reverse pb-10 min-[768px]:ms-16 min-[1024px]:ms-20 min-[1280px]:ms-24 mt-5">
             <div className="avatar">
               <div className="w-16">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src={import.meta.env.VITE_PROFILE_DEFAULT} />
               </div>
             </div>
             <div className="avatar">
               <div className="w-16">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src={import.meta.env.VITE_PROFILE_DEFAULT} />
               </div>
             </div>
             <div className="avatar">
               <div className="w-16">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src={import.meta.env.VITE_PROFILE_DEFAULT} />
               </div>
             </div>
             <div className="avatar">
               <div className="w-16">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src={import.meta.env.VITE_PROFILE_DEFAULT} />
               </div>
             </div>
           </div>

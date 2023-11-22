@@ -7,7 +7,7 @@ async function testSession() {
     return response.data
   } catch (error) {
     const cekSesi = JSON.parse(error.request.response)
-    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | testSession | FETCH');
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
   }
 }
 
@@ -58,7 +58,7 @@ async function createPost (formData) {
     }
     // console.error(error) // code dibawah didapat dari error Axios dari sini
     const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
-    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | FETCH');
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
   }
 }
 

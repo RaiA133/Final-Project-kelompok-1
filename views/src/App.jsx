@@ -25,6 +25,8 @@ function App() {
     }
   }, [window.localStorage.getItem("token")]);
 
+  // console.log(import.meta.env.VITE_BACKEND_BASEURL);
+  // console.log(import.meta.env.VITE_PROFILE_DEFAULT);
 
   return (
     <div className="container mx-auto bg-base-300 pt-3" data-theme="light">
