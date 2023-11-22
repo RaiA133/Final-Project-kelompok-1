@@ -1,39 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getAllPostingan } from "../modules/fetch";
+import { useContext } from "react";
+import { postContext } from "../contexts/postcontext";
 
-function PostPage({ id, unique_id, post_img, post_title, post_desc, post_category, post_tags, post_deadline, post_pricing }) {
+function PostPage() {
       const navigate = useNavigate();
-      const [posts, setPosts] = useState([]);
-
-      useEffect(() => {
-            const fetchPosts = async () => {
-                  try {
-                        const data = await getAllPostingan();
-                        setPosts(data); // Set data dari backend ke state posts
-                  } catch (error) {
-                        // Handle error jika fetch data gagal
-                  }
-            };
-
-            fetchPosts();
-      }, []);
+      const { postState } = useContext(postContext);
 
       return (
             <div className="grid grid-cols-4 gap-4 mx-6">
                   <div className="bg-gray-200 p-4 rounded-lg shadow-md">
                         <h2 className="text-xl font-bold mb-4">Kategori</h2>
                         <ul>
-                              {posts.map((post) => (
-                                    <li key={posts.id}>
-                                          <h2>{posts.post_title}</h2>
-                                          <p>{post.content}</p>
-                                          {/* Tambahkan elemen lain sesuai data dari backend */}
-                                    </li>
-                              ))}
-                              <li className="cursor-pointer hover:underline text-blue-500" onClick={() => navigate("/kategori1")}>
-                                    {post_category}
-                              </li>
+                              <li className="cursor-pointer hover:underline text-blue-500" onClick={() => navigate("/kategori1")}></li>
                               <li className="cursor-pointer hover:underline text-blue-500" onClick={() => navigate("/kategori2")}>
                                     Kategori 2
                               </li>
@@ -46,7 +24,7 @@ function PostPage({ id, unique_id, post_img, post_title, post_desc, post_categor
                         <div className="grid grid-cols gap-4 ">
                               <div>
                                     <div className="bg-white p-4 mb-4 rounded-lg shadow-md">
-                                          <h2 className="text-xl font-bold mb-2">{posts.post_title}</h2>
+                                          <h2 className="text-xl font-bold mb-2" defaultValue={postState.post_title}></h2>
 
                                           <div className="flex items-center mb-2">
                                                 <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="gambar projek" className="w-16 h-16 object-cover rounded-full" />
@@ -55,7 +33,7 @@ function PostPage({ id, unique_id, post_img, post_title, post_desc, post_categor
                                           <p>Deskripsi projek</p>
                                           <div className="mt-4">
                                                 <span>Budget :</span>
-                                                {post_pricing}
+
                                                 <p>Budget: $1000</p>
                                                 <p>Project Status: On Going</p>
                                                 <p>Worktime: 2 weeks</p>
@@ -76,7 +54,7 @@ function PostPage({ id, unique_id, post_img, post_title, post_desc, post_categor
                                           <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="gambar projek" className="w-16 h-16 object-cover rounded-full" />
                                           <p className="ml-2">Nama User</p>
                                     </div>
-                                    <p>{post_desc}</p>
+                                    <p>{postState.post_desc}</p>
                                     <div className="mt-4">
                                           <p>Budget: $1000</p>
                                           <p>Project Status: On Going</p>
