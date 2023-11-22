@@ -1,13 +1,24 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { PostContext } from "../contexts/postcontext";
-import { DecodedTokenContext } from "../components/PrivateRoute";
+import { UserContext } from "../contexts/UserContext";
 
 function PostPage() {
       const navigate = useNavigate();
       const { postState } = useContext(PostContext);
-      const { decodedTokenState } = useContext(DecodedTokenContext);
-      console.log(decodedTokenState);
+      console.log(postState);
+      const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext);
+
+      useEffect(() => {
+            if (userState.img_profile) {
+                  const link = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/` + userState.img_profile;
+                  set_img_profile_link(link);
+            } else {
+                  const link = import.meta.env.VITE_PROFILE_DEFAULT;
+                  set_img_profile_link(link);
+            }
+      }, [userState]);
 
       return (
             <div className="grid grid-cols-4 gap-4 mx-6">
@@ -32,22 +43,22 @@ function PostPage() {
 
                                                 <div className="flex items-center mb-2">
                                                       <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="gambar projek" className="w-16 h-16 object-cover rounded-full" />
-                                                      <p className="ml-2">{post.unique_id}</p>
+                                                      <p>{userState.username || "username"}</p>
                                                 </div>
 
                                                 <p>{post.post_desc}</p>
 
                                                 <div className="mt-4">
                                                       <span>Budget :</span>
-                                                      {post.post_pricing}
+                                                      {post.max_price}
                                                       <p>Project Status: On Going</p>
-                                                      <p>Worktime: {post.post_deadline}</p>
+                                                      <p>Worktime: {post.post_worktime}</p>
                                                 </div>
 
                                                 <div className="mt-4">
                                                       <button className="btn btn-primary mr-2">Chat Owner</button>
                                                       <button className="btn btn-primary mr-2">Ambil Pekerjaan</button>
-                                                      <button onClick={() => navigate("/post/detail")} className="btn btn-primary">
+                                                      <button onClick={() => navigate(`/post/${post.id}`)} className="btn btn-primary">
                                                             View
                                                       </button>
                                                 </div>

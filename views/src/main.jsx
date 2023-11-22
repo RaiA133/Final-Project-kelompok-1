@@ -6,6 +6,7 @@ import "./index.css";
 import { ChatContextProvider } from "./contexts/ChatContext.jsx";
 import { UserContextProvider } from "./contexts/UserContext.jsx";
 import { PostContextProvider } from "./contexts/postcontext.jsx";
+// import { PostDetailContextProvider } from "./contexts/postdetailContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
       <React.StrictMode>
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                   <ChatContextProvider>
                         <UserContextProvider>
                               <PostContextProvider>
+                                    {/* <PostDetailContextProvider> */}
                                     <App />
+                                    {/* </PostDetailContextProvider> */}
                               </PostContextProvider>
                         </UserContextProvider>
                   </ChatContextProvider>

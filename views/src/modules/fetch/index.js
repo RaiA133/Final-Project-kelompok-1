@@ -40,14 +40,14 @@ async function getAllPostingan() {
   }
 }
 
-async function getPostDetailById(id) {
-  try {
-    const response = await instance.get(`/post/${id}`);
-    return response.data;
-  } catch (error) {
-    throw new Error(error.response.data.message || "Something went wrong");
-  }
-}
+// async function getPostDetailById() {
+//   try {
+//     const response = await instance.get(`/post/:id`);
+//     return response.data;
+//   } catch (error) {
+//     throw new Error(error.response.data.message || "Something went wrong");
+//   }
+// }
 
 //Function profile
 async function userProfile() {
@@ -97,4 +97,4 @@ async function logout() {
 }
 
 
-export { register, login, userProfile, getUserbyId, getAllPostingan, getPostDetailById, createPost, testSession, logout };
+export { register, login, userProfile, getUserbyId, getAllPostingan, createPost, testSession, logout };
