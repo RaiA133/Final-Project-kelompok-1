@@ -3,27 +3,27 @@ const { User_post } = require("../models");
 const { v4: uuidv4 } = require("uuid");
 
 class postController {
-      // halaman POST PEKERJAAN | GET all data user_posts ( middlewares : JWT | login needed )
-      static getPost(req, res, next) {
-            // console.log(User_post)
-            User_post.findAll()
-                  .then((data) => {
-                        res.status(200).json({
-                              status: [200, "Success"],
-                              halaman: "Home",
-                              message: "Berhasil GET all Data User_posts",
-                              data,
-                        });
-                  })
-                  .catch((err) => {
-                        res.status(500).json({
-                              status: [500, "Failed"],
-                              halaman: "Home",
-                              message: "Something went wrong",
-                              error: err,
-                        });
-                  });
-      }
+  // halaman POST PEKERJAAN | GET all data user_posts ( middlewares : JWT | login needed )
+  static getPost(req, res, next) {
+    // console.log(User_post)
+    User_post.findAll()
+      .then((data) => {
+        res.status(200).json({
+          status: [200, "Success"],
+          halaman: "Home",
+          message: "Berhasil GET all Data User_posts",
+          data,
+        });
+      })
+      .catch((err) => {
+        res.status(500).json({
+          status: [500, "Failed"],
+          halaman: "Home",
+          message: "Something went wrong",
+          error: err,
+        });
+      });
+  }
 
   // halaman POST PEKERJAAN | GET Yours all data user_posts ( middlewares : JWT | login needed )
   static getYourPost(req, res, next) {
@@ -94,73 +94,73 @@ class postController {
       });
   }
 
-      // halaman POST PEKERJAAN | GET all data user_posts by category, from params url ( middlewares : JWT | login needed )
-      static getPostByCategory(req, res, next) {
-            const { post_category } = req.params;
-            User_post.findOne({
-                  where: {
-                        post_category,
-                  },
-            })
-                  .then((data) => {
-                        if (!data) {
-                              return res.status(404).json({
-                                    status: [404, "Failed"],
-                                    halaman: "Post",
-                                    message: "Data Post Tidak Ditemukan!",
-                              });
-                        } else {
-                              return res.status(200).json({
-                                    status: [200, "Success"],
-                                    halaman: "Post",
-                                    message: `Kategori Postingan Berdasarkan Kategori ${data.post_category}`,
-                                    data,
-                              });
-                        }
-                  })
-                  .catch((err) => {
-                        return res.status(500).json({
-                              status: [500, "Failed"],
-                              halaman: "Post",
-                              message: "Something went wrong",
-                              error: err,
-                        });
-                  });
-      }
+  // halaman POST PEKERJAAN | GET all data user_posts by category, from params url ( middlewares : JWT | login needed )
+  static getPostByCategory(req, res, next) {
+    const { post_category } = req.params;
+    User_post.findOne({
+      where: {
+        post_category,
+      },
+    })
+      .then((data) => {
+        if (!data) {
+          return res.status(404).json({
+            status: [404, "Failed"],
+            halaman: "Post",
+            message: "Data Post Tidak Ditemukan!",
+          });
+        } else {
+          return res.status(200).json({
+            status: [200, "Success"],
+            halaman: "Post",
+            message: `Kategori Postingan Berdasarkan Kategori ${data.post_category}`,
+            data,
+          });
+        }
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          status: [500, "Failed"],
+          halaman: "Post",
+          message: "Something went wrong",
+          error: err,
+        });
+      });
+  }
 
-      // halaman POST PEKERJAAN | GET all data user_posts by tags, from params url ( middlewares : JWT | login needed )
-      static getPostByTags(req, res, next) {
-            const { post_tags } = req.params;
-            User_post.findOne({
-                  where: {
-                        post_tags,
-                  },
-            })
-                  .then((data) => {
-                        if (!data) {
-                              return res.status(404).json({
-                                    status: [404, "Failed"],
-                                    halaman: "Post",
-                                    message: "Data Post Tidak Ditemukan!",
-                              });
-                        } else {
-                              return res.status(200).json({
-                                    status: [200, "Success"],
-                                    halaman: "Post",
-                                    message: `Kategori Postingan Berdasarkan ${data.post_tags}`,
-                                    data,
-                              });
-                        }
-                  })
-                  .catch((err) => {
-                        return res.status(500).json({
-                              status: [500, "Failed"],
-                              halaman: "post",
-                              message: "Something went wrong",
-                              error: err,
-                        });
-                  });
-      }
+  // halaman POST PEKERJAAN | GET all data user_posts by tags, from params url ( middlewares : JWT | login needed )
+  static getPostByTags(req, res, next) {
+    const { post_tags } = req.params;
+    User_post.findOne({
+      where: {
+        post_tags,
+      },
+    })
+      .then((data) => {
+        if (!data) {
+          return res.status(404).json({
+            status: [404, "Failed"],
+            halaman: "Post",
+            message: "Data Post Tidak Ditemukan!",
+          });
+        } else {
+          return res.status(200).json({
+            status: [200, "Success"],
+            halaman: "Post",
+            message: `Kategori Postingan Berdasarkan ${data.post_tags}`,
+            data,
+          });
+        }
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          status: [500, "Failed"],
+          halaman: "post",
+          message: "Something went wrong",
+          error: err,
+        });
+      });
+  }
 
   // halaman POST PEKERJAAN | GET all data user_posts by terbaru, from params url ( middlewares : JWT | login needed )
   static getPostByTerbaru(req, res, next) {
@@ -257,22 +257,22 @@ class postController {
       });
 
 
-                  res.status(201).json({
-                        status: [201, "Success"],
-                        halaman: "Post",
-                        message: "Postingan Berhasil ditambahkan!",
-                        data: newUser_post,
-                  });
-            } catch (err) {
-                  console.error("Postingan error:", err);
-                  res.status(500).json({
-                        status: [500, "Failed"],
-                        halaman: "Post",
-                        message: "Gagal Posting",
-                        error: err.message,
-                  });
-            }
-      }
+      res.status(201).json({
+        status: [201, "Success"],
+        halaman: "Post",
+        message: "Postingan Berhasil ditambahkan!",
+        data: newUser_post,
+      });
+    } catch (err) {
+      console.error("Postingan error:", err);
+      res.status(500).json({
+        status: [500, "Failed"],
+        halaman: "Post",
+        message: "Gagal Posting",
+        error: err.message,
+      });
+    }
+  }
 
   // halaman EDIT POSTINGAN | UPDATE data POSTINGAN by id ( middlewares : JWT | login needed )
   static updatePostingan(req, res, next, fileName) {
