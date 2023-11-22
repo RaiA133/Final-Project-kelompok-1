@@ -28,14 +28,17 @@ class authController {
         message: 'Registrasi Berhasil!',
         data: newUser
       });
+
     } catch (err) {
       console.error('Registration error:', err);
+
       res.status(500).json({
         status: [500, 'Failed'],
         halaman: 'Register',
         message: 'Email atau Username Sudah Terdaftar',
         error: err.message
       });
+      
     }
   }
 
@@ -68,10 +71,14 @@ class authController {
           const token = jwt.sign({ // data yang di encoded jadi JWT, diteruskan ke middleware JWT : middlewares/index.js
             id: data.id,
             unique_id: data.unique_id,
-            user_role_id: data.user_role_id
+            username: data.username,
+            // user_role_id: data.user_role_id,
           }, secretKey, { expiresIn: JWTtime });
 
-          data.update({ remember_token: token }) // UPDATE data token ke database
+          data.update({ 
+            status: 'online',
+            remember_token: token, // UPDATE data token ke database
+           }) 
           return res.status(200).json({
             status: [200, 'Success'],
             halaman: 'Login',
@@ -85,7 +92,7 @@ class authController {
           status: [500, 'Failed'],
           halaman: 'Login',
           message: 'Something went wrong',
-          error: err
+          error: err.message
         });
       });
   }
@@ -107,7 +114,10 @@ class authController {
           });
         }
         else {
-          data.update({ remember_token: null }) // UPDATE to NULL data token ke database
+          data.update({ 
+            status: 'offline',
+            remember_token: null  // UPDATE to NULL data token ke database
+          }) 
           return res.status(200).json({
             status: [200, 'Success'],
             halaman: 'Logout',
@@ -124,6 +134,7 @@ class authController {
         });
       });
   }
+  
 }
 
 module.exports = authController

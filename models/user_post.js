@@ -23,9 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     post_desc: DataTypes.STRING,
     post_category: DataTypes.STRING,
     post_tags: DataTypes.STRING,
-    post_deadline: DataTypes.STRING,
-    post_pricing: DataTypes.STRING,
-    createdAt: DataTypes.DATE
+    min_price: DataTypes.STRING,
+    max_price: DataTypes.STRING,
+    post_worktime: DataTypes.STRING,
+    post_expired_in: DataTypes.DATE,
   }, {
     sequelize,
     modelName: 'User_post',
