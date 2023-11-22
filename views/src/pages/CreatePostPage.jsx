@@ -114,8 +114,9 @@ function CreatePostPage({ PostForm }) {
                     className="select select-bordered w-full max-w-xs"
                     name="post_category"
                     required
+                    defaultValue=""
                   >
-                    <option value="" disabled selected>Post Category</option>
+                    <option value="" disabled hidden>Post Category</option>
                     <option value="Application">Application</option>
                     <option value="Website">Website</option>
                     <option value="Video Editing">Video Editing</option>
