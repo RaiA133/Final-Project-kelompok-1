@@ -20,12 +20,22 @@ async function login(email, password) {
       }
 }
 
+// async function getAllPostingan() {
+//       try {
+//             const response = await instance.get("/post");
+//             return response.data;
+//       } catch (error) {
+//             throw new Error(error.response.data.message || "Something went wrong");
+//       }
+// }
+
 async function getAllPostingan() {
       try {
-            const response = await instance.get("/post");
-            return response.data;
+            const response = await instance.get("/post"); // Adjust the endpoint accordingly
+            return response.data; // Assuming response.data contains the necessary data
       } catch (error) {
-            throw new Error(error.response.data.message || "Something went wrong");
+            console.error("Error fetching data:", error);
+            throw error;
       }
 }
 

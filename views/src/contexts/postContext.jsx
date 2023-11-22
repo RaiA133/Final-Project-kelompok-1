@@ -13,9 +13,8 @@ export const PostContextProvider = ({ children }) => {
             const fetchData = async () => {
                   try {
                         const response = await getAllPostingan(); // Fetch data
-                        console.log(response); // Log the response to check its structure
-
                         // Check if response status is 'Success' or something else
+                        console.log(response);
                         if (response && response.status === "Success") {
                               setPostState(response.data); // Set state if the response is successful
                         }
