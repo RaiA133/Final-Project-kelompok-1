@@ -6,7 +6,7 @@ import { instance } from '../modules/axios/index.js';
 
 async function fetchPostDetail(token, postId) {
   try {
-    const response = await instance.get(`http://localhost:3000/api/v1/post/${postId}`, {
+    const response = await instance.get(`${import.meta.env.VITE_BACKEND_BASEURL}/api/v1/post/${postId}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

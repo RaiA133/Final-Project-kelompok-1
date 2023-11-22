@@ -15,16 +15,12 @@ export const PostContextProvider = ({ children }) => {
                         if (response.status[1] === "Success") {
                               setPostState(response.data); // Set state if the response is successful
                         }
-                  } 
-                  catch (error) {
-                        console.error("Error fetching data:", error);
+                  } catch (err) {
+                        // console.log(err)
                   }
             };
-
             fetchData();
       }, [navigate]); // Re-fetch data when navigate changes
 
-      return (
-            <PostContext.Provider value={{ postState, setPostState }}>{children}</PostContext.Provider>
-      );
+      return <PostContext.Provider value={{ postState, setPostState }}>{children}</PostContext.Provider>;
 };
