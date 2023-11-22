@@ -2,23 +2,21 @@ import { createContext, useEffect, useState } from "react";
 import { getAllPostingan } from "../modules/fetch";
 import { useNavigate } from "react-router-dom";
 
-export const postContext = createContext();
+export const PostContext = createContext();
 
 export const PostContextProvider = ({ children }) => {
       const navigate = useNavigate();
       const [postState, setPostState] = useState({});
-      const [post_title, set_post_title] = useState("");
 
       useEffect(() => {
             const fetchData = async () => {
                   try {
                         const response = await getAllPostingan(); // Fetch data
-                        // Check if response status is 'Success' or something else
-                        console.log(response);
-                        if (response && response.status === "Success") {
+                        if (response.status[1] === "Success") {
                               setPostState(response.data); // Set state if the response is successful
                         }
-                  } catch (error) {
+                  } 
+                  catch (error) {
                         console.error("Error fetching data:", error);
                   }
             };
@@ -26,5 +24,7 @@ export const PostContextProvider = ({ children }) => {
             fetchData();
       }, [navigate]); // Re-fetch data when navigate changes
 
-      return <postContext.Provider value={{ postState, setPostState, post_title, set_post_title }}>{children}</postContext.Provider>;
+      return (
+            <PostContext.Provider value={{ postState, setPostState }}>{children}</PostContext.Provider>
+      );
 };
