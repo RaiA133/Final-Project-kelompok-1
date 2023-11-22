@@ -1,7 +1,24 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getPostDetailById } from "../modules/fetch";
 
 function PostDetailPage() {
+      const [post, setPost] = useState(true);
+      const { id } = useParams();
       const navigate = useNavigate();
+
+      useEffect(() => {
+            const fetchPost = async () => {
+                  try {
+                        const response = await getPostDetailById(id);
+                        setPost(response.post);
+                  } catch (e) {
+                        console.log(e);
+                  }
+            };
+            fetchPost();
+      }, [id]);
+
       return (
             <div class="flex-auto">
                   <div className="hero-content flex-col lg:flex-row ml-4">
@@ -9,7 +26,10 @@ function PostDetailPage() {
                         <div>
                               <div className="flex p-5">
                                     <div className="flex w-3/4">
-                                          <h2 className="text-2xl font-bold">Tittle Postingan!</h2>
+                                          <h2 className=" text-2xl font-bold">
+                                                Tittle Postingan!
+                                                {post.post_title}
+                                          </h2>
                                     </div>
                                     <div className="flex-auto w-32">
                                           <button onClick={() => navigate("/")} className="btn btn-neutral btn-sm me-5">
