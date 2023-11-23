@@ -14,6 +14,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       unique_id: {
+        unique: true,
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -40,7 +41,7 @@ module.exports = {
       },
       status: {
         allowNull: true,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING
       },
 
       img_profile: {
@@ -68,6 +69,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       country: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      city: {
         allowNull: true,
         type: Sequelize.STRING
       },

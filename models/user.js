@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     username: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    status: DataTypes.BOOLEAN,
+    status: DataTypes.STRING,
     img_profile: {
       type: DataTypes.STRING, 
       defaultValue: 'default.png'
@@ -34,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     company: DataTypes.STRING,
     job: DataTypes.STRING,
     country: DataTypes.STRING,
+    city: DataTypes.STRING,
     address: DataTypes.STRING,
     contact: DataTypes.STRING,
     web_link: DataTypes.STRING,

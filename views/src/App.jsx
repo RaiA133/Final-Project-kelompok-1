@@ -1,15 +1,17 @@
 import './App.css'
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import PostPage from './pages/PostPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
-import PrivateRoute from './components/PrivateRoute';
+import HomePage from './pages/HomePage';
+import PostPage from './pages/PostPage';
+import ProfilePage from './pages/ProfilePage';
+import CreatePostPage from './pages/CreatePostPage';
+import ChatPage from './pages/ChatPage';
 import AdminPage from './pages/AdminPage';
 import { useEffect, useState } from 'react';
-
 
 function App() {
   let location = useLocation();
@@ -24,12 +26,13 @@ function App() {
     }
   }, [window.localStorage.getItem("token")]);
 
+
   return (
-    <div className="container mx-auto bg-slate-100 pt-3" data-theme="light">
+    <div className="container mx-auto bg-base-300 pt-3" data-theme="light">
 
       <div className="drawer">
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col">
+        <div className="drawer-content flex flex-col bg-base-300">
 
           {/* Navbar */}
           { hideOnRegisterLogin && <Navbar />}
@@ -41,6 +44,9 @@ function App() {
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/post' element={<PrivateRoute> <PostPage /> </PrivateRoute>} />
             <Route path='/administrator' element={<PrivateRoute> <AdminPage /> </PrivateRoute>} />
+            <Route path='/profile' element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
+            <Route path='/create-post' element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
+            <Route path='/chat' element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
           </Routes>
 
         </div>
@@ -52,7 +58,9 @@ function App() {
             <li><a onClick={() => navigate("/")}>Home</a></li>
             {!isLogin && <li><a onClick={() => navigate("/login")}>Login</a></li>}
             {!isLogin && <li><a onClick={() => navigate("/register")}>Register</a></li>}
+            {isLogin && <li><a onClick={() => navigate("/create-post")}>Create Post</a></li>}
             {isLogin && <li><a onClick={() => navigate("/post")}>Post</a></li>}
+            {isLogin && <li><a onClick={() => navigate("/chat")}>Chat</a></li>}
             
           </ul>
         </div>
