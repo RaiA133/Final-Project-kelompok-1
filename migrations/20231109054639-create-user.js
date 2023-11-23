@@ -40,7 +40,7 @@ module.exports = {
       },
       status: {
         allowNull: true,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING
       },
 
       img_profile: {
@@ -68,6 +68,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       country: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      city: {
         allowNull: true,
         type: Sequelize.STRING
       },

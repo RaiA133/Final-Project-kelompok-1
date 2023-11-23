@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import PostPage from './pages/PostPage';
 import ProfilePage from './pages/ProfilePage';
+import CreatePostPage from './pages/CreatePostPage';
 import { useEffect, useState } from 'react';
 
 
@@ -41,6 +42,7 @@ function App() {
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/post' element={<PrivateRoute> <PostPage /> </PrivateRoute>} />
             <Route path='/profile' element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
+            <Route path='/create-post' element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
           </Routes>
 
         </div>
@@ -52,6 +54,7 @@ function App() {
             <li><a onClick={() => navigate("/")}>Home</a></li>
             {!isLogin && <li><a onClick={() => navigate("/login")}>Login</a></li>}
             {!isLogin && <li><a onClick={() => navigate("/register")}>Register</a></li>}
+            {isLogin && <li><a onClick={() => navigate("/create-post")}>Create Post</a></li>}
             {isLogin && <li><a onClick={() => navigate("/post")}>Post</a></li>}
             
           </ul>

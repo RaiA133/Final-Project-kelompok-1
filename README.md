@@ -58,7 +58,10 @@ Setelah melakukan `npm install` , lakukan setup file config.json untuk mengatur 
 
   > `git commit -m "feature: fitur apa yang di buat`
 
-## Setup .env
+## Setup .env & config.json
+Duplicate file `.env.example` jadi `.env` dan `config.example.json`  di folder config jadi `config.json`, lalu atur isi dari
+kedua file tersebut sesuai dengan environment variable local mu.
+
 Jika ingin melakukan `npm run start` ubah `NODE_ENV` pada file .env menjadi `NODE_ENV=development`. Jika `NODE_ENV=test` maka proses listening dari server tidak akan berjalan.
 
 ## Step Setup Database Utama*
@@ -84,7 +87,7 @@ jika ada data lain misal data yang ingin ditampilan sertakan diakhir. misalnya s
 <img src="assets/img/readme/contoh-endpoint-return-1.png" height="120" title="hover text">
 <img src="assets/img/readme/contoh-endpoint-return-2.png" height="120" alt="accessibility text">
 
-## Develop Custom Script
+## Developer Custom Script
 ```npm run fresh```  
 
 untuk menjalankan `db:migrate:undo:all` , `db:migrate` dan `db:seed:all ` secara bersamaan pada sequelize, atau yang disebut refresh database. Atur `NODE_ENV` di .env menjadi `development` atau `test`.

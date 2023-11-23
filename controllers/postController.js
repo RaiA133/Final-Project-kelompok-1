@@ -61,6 +61,40 @@ class postController {
       });
   }
 
+  // halaman POST PEKERJAAN | GET data user_posts by id ( middlewares : JWT | login needed )
+  static getPostById(req, res, next) {
+    const { id } = req.params; // hasil decoded dari middleware verifyToken
+    User_post.findOne({
+          where: {
+                id,
+          },
+    })
+          .then((data) => {
+                if (!data) {
+                      return res.status(404).json({
+                            status: [404, "Failed"],
+                            halaman: "Post",
+                            message: "Data Post Tidak Ditemukan!",
+                      });
+                } else {
+                      return res.status(200).json({
+                            status: [200, "Success"],
+                            halaman: "Post",
+                            message: `Semua Postinganmu Berdasarkan Id ${data.id}`,
+                            data,
+                      });
+                }
+          })
+          .catch((err) => {
+                return res.status(500).json({
+                      status: [500, "Failed"],
+                      halaman: "Post",
+                      message: "Something went wrong",
+                      error: err,
+                });
+          });
+  }
+
   // halaman POST PEKERJAAN | GET all data user_posts by category, from params url ( middlewares : JWT | login needed )
   static getPostByCategory(req, res, next) {
     const { post_category } = req.params;
@@ -134,7 +168,7 @@ class postController {
   // halaman POST PEKERJAAN | GET all data user_posts by terbaru, from params url ( middlewares : JWT | login needed )
   static getPostByTerbaru(req, res, next) {
     User_post.findAll({
-      order: [ [ 'id', 'DESC' ]],
+      order: [['id', 'DESC']],
     })
       .then(data => {
         if (!data) {
@@ -150,7 +184,7 @@ class postController {
             halaman: 'Post',
             message: `Kategori Postingan Berdasarkan id terbaru/terbesar`,
             data,
-          });  
+          });
         }
       })
       .catch(err => {
@@ -166,7 +200,7 @@ class postController {
   // halaman POST PEKERJAAN | GET all data user_posts by terlama, from params url ( middlewares : JWT | login needed )
   static getPostByTerlama(req, res, next) {
     User_post.findAll({
-      order: [[ 'id', 'ASC' ]],
+      order: [['id', 'ASC']],
     })
       .then(data => {
         if (!data) {
@@ -182,7 +216,7 @@ class postController {
             halaman: 'Post',
             message: `Kategori Postingan Berdasarkan id terlama/terkecil`,
             data,
-            
+
           });
         }
       })
@@ -198,24 +232,33 @@ class postController {
 
   // halaman POST PEKERJAAN | POST create data user_posts ( middlewares : JWT | login needed )
   static async createPostingan(req, res, next, fileName) {
+    const { unique_id } = req.userData
     try {
-      const { 
-        post_title, post_desc, 
-        post_category, post_tags, 
-        post_deadline, post_pricing 
+      const {
+        post_title, post_desc,
+        post_category, post_tags,
+        min_price, max_price, post_worktime, post_worktime_time
       } = req.body;
+
+
+      const currentDate = new Date(); // Dapatkan tanggal saat ini
+      const expirationDate = new Date(); // Tambahkan 30 hari ke tanggal saat ini
+      expirationDate.setDate(currentDate.getDate() + 30);
 
       const file = fileName;
       const newUser_post = await User_post.create({
-        unique_id: uuidv4(),
+        unique_id,
         post_img: file,
-        post_title: post_title,
-        post_desc: post_desc,
-        post_category: post_category,
-        post_tags: post_tags,
-        post_deadline: post_deadline,
-        post_pricing: post_pricing,
+        post_title,
+        post_desc,
+        post_category,
+        post_tags,
+        min_price,
+        max_price,
+        post_worktime: post_worktime + ' ' + post_worktime_time,
+        post_expired_in: expirationDate,
       });
+
 
       res.status(201).json({
         status: [201, 'Success'],
@@ -235,81 +278,81 @@ class postController {
   }
 
   // halaman EDIT POSTINGAN | UPDATE data POSTINGAN by id ( middlewares : JWT | login needed )
-  static updatePostingan (req, res, next, fileName) {
+  static updatePostingan(req, res, next, fileName) {
     const {
-      post_img, post_title, 
-      post_desc, post_category, 
-      post_tags, post_deadline, 
+      post_img, post_title,
+      post_desc, post_category,
+      post_tags, post_deadline,
       post_pricing
     } = req.body;
     const file = fileName;
     const updatedPostingan = {
-      post_img: file, post_title, 
-      post_desc, post_category, 
-      post_tags, post_deadline, 
+      post_img: file, post_title,
+      post_desc, post_category,
+      post_tags, post_deadline,
       post_pricing
     }
     User_post.findByPk(req.params.id)
-        .then(data => {
-            if (!data){
-              console.log(file)
-                res.status(404).json({
-                  status: [404, 'Success'],
-                  halaman: 'Post',
-                  message: 'Data tidak ditemukan!',
-                  data: updatedPostingan
-                });
-            } else {
-                return User_post.update(updatedPostingan, {where: {id: req.params.id}})
-            }
-        })
-        .then(data => {
-            res.status(200).json({
-              status: [200, 'Success'],
-              halaman: 'Post',
-              message: 'Postingan berhasil di update!',
-              data: updatedPostingan
-            });
-        })
-        .catch(err => {
-            res.status(500).json({
-              status: [500, 'Failed'],
-              halaman: 'Post',
-              message: 'Something went wrong!',
-              error: err
-            });
-        })
-      }
+      .then(data => {
+        if (!data) {
+          console.log(file)
+          res.status(404).json({
+            status: [404, 'Success'],
+            halaman: 'Post',
+            message: 'Data tidak ditemukan!',
+            data: updatedPostingan
+          });
+        } else {
+          return User_post.update(updatedPostingan, { where: { id: req.params.id } })
+        }
+      })
+      .then(data => {
+        res.status(200).json({
+          status: [200, 'Success'],
+          halaman: 'Post',
+          message: 'Postingan berhasil di update!',
+          data: updatedPostingan
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'Post',
+          message: 'Something went wrong!',
+          error: err
+        });
+      })
+  }
 
-      static deletePostingan (req, res, next) {
-        User_post.findByPk(req.params.id)
-            .then(data => {
-                if (!data) {
-                  res.status(404).json({
-                    status: [404, 'Success'],
-                    halaman: 'Post',
-                    message: 'Data tidak ditemukan!',
-                  });
-                } else {
-                    return User_post.destroy({where: {id: req.params.id}})
-                }
-            })
-            .then(data => {
-              res.status(200).json({
-                status: [200, 'Success'],
-                halaman: 'Post',
-                message: 'Postingan berhasil di delete!',
-              });
-            })
-            .catch(err => {
-                res.status(500).json({
-                status: [500, 'Failed'],
-                halaman: 'Post',
-                message: 'Something went wrong!',
-                error: err
-              });
-            })
-    }
+  static deletePostingan(req, res, next) {
+    User_post.findByPk(req.params.id)
+      .then(data => {
+        if (!data) {
+          res.status(404).json({
+            status: [404, 'Success'],
+            halaman: 'Post',
+            message: 'Data tidak ditemukan!',
+          });
+        } else {
+          return User_post.destroy({ where: { id: req.params.id } })
+        }
+      })
+      .then(data => {
+        res.status(200).json({
+          status: [200, 'Success'],
+          halaman: 'Post',
+          message: 'Postingan berhasil di delete!',
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'Post',
+          message: 'Something went wrong!',
+          error: err
+        });
+      })
+  }
 }
 
 module.exports = postController

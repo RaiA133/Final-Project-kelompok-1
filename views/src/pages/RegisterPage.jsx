@@ -15,7 +15,7 @@ function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // menghilankan refresh halaman jika tombol simpan di klik
 
     if (password !== confirmPassword) {
       return;
@@ -30,7 +30,7 @@ function RegisterPage() {
       if (response.status[0] === 201) {
         const successMessage = response.message;
         toast.success(successMessage + ' Silahkan Login', {
-          duration: 6000,
+          duration: 2500,
         });
       } 
     }
@@ -38,8 +38,13 @@ function RegisterPage() {
       let failedMessage = error.message // data message dari authController BE
       console.error(failedMessage)
       toast.error(failedMessage, {
-        duration: 6000,
+        duration: 2500,
       });
+        
+        // Redirect ke halaman login setelah registrasi berhasil
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
     }
       
   }

@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from "../contexts/userContext";
+import { logout } from "../modules/fetch" 
 
 function Navbar() {
+  const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext)
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate()
 
@@ -12,8 +16,14 @@ function Navbar() {
     }
   }, [window.localStorage.getItem("token")]);
 
+  // mengirim img_profile_link dari isi userState di Context itu sendiri tapi di edit dengan link static
+  useEffect(() => {
+    const link = "http://localhost:3000/profile/picture/" + userState.img_profile || "http://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg";
+    set_img_profile_link(link)
+  }, [userState])
+
   return (
-    <div className="w-full navbar bg-white rounded-2xl">
+    <div className="w-full navbar rounded-2xl bg-base-100">
       <div className="flex-none lg:hidden">
         <label htmlFor="my-drawer-3" aria-label="open sidebar" className="btn btn-square btn-ghost">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -37,24 +47,43 @@ function Navbar() {
           <div className="dropdown dropdown-end me-5">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img alt="Tailwind CSS Navbar component" src={img_profile_link} />
               </div>
             </label>
             <ul tabIndex={0} className="mt-5 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
               <li>
-                <a className="justify-between" onClick={() => navigate("profile")}>
-                  Profile
-                  {/* <span className="badge">New</span> */}
+                <div className="avatar" onClick={() => navigate("/profile")}>
+                  <div className="w-8 rounded-full">
+                    <img src={img_profile_link} />
+                  </div>
+                  <span className="overflow-hidden">
+                    <p className="text-xs font-bold"> {userState.username || 'username'} </p>
+                    <p className="text-xs"> {userState.email || 'email@gmail.com'}  </p>
+                  </span>
+                </div>
+              </li>
+              <li>
+                <a className="justify-between" onClick={() => navigate("/create-post")}>
+                  Create Post
                 </a>
               </li>
               <li><a>Settings</a></li>
               <li><a
-                onClick={() => {
-                  setIsLogin(false);
-                  window.localStorage.setItem('toastMessage', 'Berhasil Logout');
-                  window.localStorage.removeItem("token");
-                  window.location.href = "/"
+                onClick={async () => {
+                  
+                  try {     
+                    const response = await logout()
+                    if (response.status[1] === 'Success') {
+                      setIsLogin(false);
+                      window.localStorage.setItem('toastMessage', 'Berhasil Logout');
+                      window.localStorage.removeItem("token");
+                      window.location.href = "/"
+                    }
+                  } catch (error) {
+                    console.error(error)
+                  }
                 }}
+                className="text-red-600 "
               >Logout</a></li>
             </ul>
           </div>

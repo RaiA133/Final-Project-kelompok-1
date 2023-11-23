@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from "../modules/fetch";
 import toast, { Toaster } from 'react-hot-toast';
@@ -7,6 +7,17 @@ function LoginPage() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
+  // toast akan muncul jika sesi login jwt berhakhir | ubah JWT_EXPIRED_TIME di .env untuk test
+  useEffect(() => {
+    const toastMessage = localStorage.getItem('toastMessage')
+    if (toastMessage) {
+      toast.error(toastMessage, {
+        duration: 2500,
+      });
+      localStorage.removeItem('toastMessage');
+    } 
+  }, []); 
 
   return (
     <div className='px-0'>
@@ -51,7 +62,7 @@ function LoginPage() {
                 catch (error) {
                   let failedMessage = error.message // data message dari authController BE
                   toast.error(failedMessage, {
-                    duration: 6000,
+                    duration: 2500,
                   });
                 }
               }}

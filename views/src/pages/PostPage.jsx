@@ -1,6 +1,10 @@
+import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import { DecodedTokenContext } from "../components/PrivateRoute"
 
 function PostPage() {
+  const { tokenDecodedState, setTokenDecodedState } = useContext(DecodedTokenContext)
+  console.log(tokenDecodedState)
   const navigate = useNavigate()
   return (
     <div className="mx-6">
