@@ -1,6 +1,7 @@
 import './App.css'
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import RegisterPage from './pages/RegisterPage';
@@ -28,7 +29,7 @@ function App() {
 
 
   return (
-    <div className="container mx-auto bg-base-300 pt-3" data-theme="light">
+    <div className="mx-auto bg-base-300 pt-3" data-theme="light">
 
       <div className="drawer">
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
@@ -43,10 +44,10 @@ function App() {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/post' element={<PrivateRoute> <PostPage /> </PrivateRoute>} />
-            <Route path='/administrator' element={<PrivateRoute> <AdminPage /> </PrivateRoute>} />
             <Route path='/profile' element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
             <Route path='/create-post' element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
             <Route path='/chat' element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
+            <Route path='/administrator' element={<PrivateRoute> <AdminRoute> <AdminPage /> `</AdminRoute> </PrivateRoute>} />
           </Routes>
 
         </div>

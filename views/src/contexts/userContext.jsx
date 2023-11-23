@@ -11,7 +11,7 @@ export const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await userProfile(); // get semua data profile
+      const response = await userProfile(); // get semua data profile mu
         if (response.status[1] === 'Success') {
           setUserState(response.data); //mengerim response get diatas ke react context
         }

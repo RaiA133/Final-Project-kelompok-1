@@ -1,5 +1,7 @@
 require('dotenv').config();
 const { User } = require('../models')
+const { User_role } = require('../models')
+
 
 class adminController {
   // halaman ADMIN | GET all data user ( middlewares : JWT | login needed )
@@ -10,6 +12,60 @@ class adminController {
           status: [200, 'Success'],
           halaman: 'Home',
           message: 'Berhasil GET all Data Users',
+          data,
+        })
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'Home',
+          message: 'Something went wrong',
+          error: err
+        })
+      })
+  }
+
+  static getUserByUniqueId(req, res, next) {
+    const { unique_id } = req.params; // hasil decoded dari middleware verifyToken
+    User.findOne({
+      where: {
+        unique_id
+      }
+    })
+      .then(data => {
+        if (!data) {
+          return res.status(404).json({
+            status: [404, 'Failed'],
+            halaman: 'getUserByUniqueId',
+            message: `Data User dengan unique_id ${unique_id} Tidak Ditemukan`,
+          });
+        }
+        else {
+          return res.status(200).json({
+            status: [200, 'Success'],
+            halaman: 'getUserByUniqueId',
+            message: `Data User dengan unique_id ${unique_id} ditemukan`,
+            data
+          });
+        }
+      })
+      .catch(err => {
+        return res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'getUserByUniqueId',
+          message: 'Something went wrong',
+          error: err
+        });
+      });
+  }
+
+  static getUserRole(req, res, next) {
+    User_role.findAll()
+      .then(data => {
+        res.status(200).json({
+          status: [200, 'Success'],
+          halaman: 'Home',
+          message: 'Berhasil GET all Data Role',
           data,
         })
       })

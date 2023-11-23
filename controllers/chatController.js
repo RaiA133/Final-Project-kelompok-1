@@ -129,7 +129,6 @@ class chatController {
     try {
       const { chat_unique_id, text } = req.body
       const { unique_id: sender_unique_id  } = req.userData
-      console.log(sender_unique_id)
       const newMessage = await Message.create({
         chat_unique_id,
         sender_unique_id,
