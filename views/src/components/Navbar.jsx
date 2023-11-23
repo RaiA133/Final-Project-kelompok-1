@@ -5,7 +5,7 @@ import { logout } from "../modules/fetch"
 import { UserContext } from "../contexts/UserContext";
 
 function Navbar() {
-  const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext)
+  const { userState, img_profile_link, set_img_profile_link, isAdmin } = useContext(UserContext)
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate()
 
@@ -78,7 +78,9 @@ function Navbar() {
                 </a>
               </li>
               <li><a>Settings</a></li>
-              <li><a onClick={() => navigate("/administrator")}>Administrator</a></li>
+              {isAdmin && (
+                <li><a onClick={() => navigate("/administrator")}>Administrator</a></li>
+              )}
               <li><a
                 onClick={async () => {
                   

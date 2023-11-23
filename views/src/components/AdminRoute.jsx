@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { DecodedTokenContext } from "./PrivateRoute";
-import { getAllDataUserAdmin, getUserByUniqueId, getUserRoleAdmin } from "../modules/fetch";
+import { getAllDataUserAdmin, getUserRoleAdmin } from "../modules/fetch";
 
 export const AllUserContext = createContext();
 

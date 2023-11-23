@@ -12,12 +12,14 @@ import ProfilePage from './pages/ProfilePage';
 import CreatePostPage from './pages/CreatePostPage';
 import ChatPage from './pages/ChatPage';
 import AdminPage from './pages/AdminPage';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { UserContext } from './contexts/UserContext';
 
 function App() {
   let location = useLocation();
   const hideOnRegisterLogin = location.pathname !== '/register' && location.pathname !== '/login'; // location.pathname : untuk cek current url
-  
+  const { isAdmin } = useContext(UserContext)
+
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate()
   useEffect(() => {
@@ -60,6 +62,7 @@ function App() {
             {!isLogin && <li><a onClick={() => navigate("/login")}>Login</a></li>}
             {!isLogin && <li><a onClick={() => navigate("/register")}>Register</a></li>}
             {isLogin && <li><a onClick={() => navigate("/create-post")}>Create Post</a></li>}
+            {isAdmin && <li><a onClick={() => navigate("/administrator")}>Administrator</a></li>}
             {isLogin && <li><a onClick={() => navigate("/post")}>Post</a></li>}
             {isLogin && <li><a onClick={() => navigate("/chat")}>Chat</a></li>}
             

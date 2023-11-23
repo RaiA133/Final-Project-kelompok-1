@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { userProfile } from '../modules/fetch';
+import { getAllDataUserAdmin, userProfile } from '../modules/fetch';
 import { useNavigate } from 'react-router-dom';
 
 export const UserContext = createContext();
@@ -8,9 +8,16 @@ export const UserContextProvider = ({ children }) => {
   const navigate = useNavigate()
   const [userState, setUserState] = useState({});
   const [img_profile_link, set_img_profile_link] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
+      const response2 = await getAllDataUserAdmin()
+        if (response2.status[1] === 'Success') {
+          setIsAdmin(true)
+        } else {
+          navigate("/");
+        }
       const response = await userProfile(); // get semua data profile mu
         if (response.status[1] === 'Success') {
           setUserState(response.data); //mengerim response get diatas ke react context
@@ -25,6 +32,7 @@ export const UserContextProvider = ({ children }) => {
       setUserState, 
       img_profile_link, 
       set_img_profile_link,
+      isAdmin, setIsAdmin,
     }}>
       {children}
     </UserContext.Provider>
