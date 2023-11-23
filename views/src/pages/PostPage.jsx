@@ -6,6 +6,7 @@ function PostPage() {
   const navigate = useNavigate()
   const { decodedTokenState } = useContext(DecodedTokenContext)
   // console.log(decodedTokenState)
+  
   return (
     <div className="mx-6">
       <div className='h-screen'>

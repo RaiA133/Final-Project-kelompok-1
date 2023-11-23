@@ -24,5 +24,7 @@ route.put('/profile/update', middlewares.verifyToken, upload.single('file'), (re
   userController.updateProfile(req, res, next, fileName); // mengirim nama file yg sama ke userController.updateProfile
 });
 
+route.get('/profile/:unique_id', middlewares.verifyToken, userController.getUserByUniqueId)
+
 
 module.exports = route

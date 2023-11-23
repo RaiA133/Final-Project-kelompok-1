@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require('uuid');
 
 class chatController {
 
-  //  /chat/find-or-create | buat obrolan chat jika yg di input di body tidak ada / ada salah satu yg tidak ada
+  //  /chats/find-or-create | buat obrolan chat jika yg di input di body tidak ada / ada salah satu yg tidak ada
   static createUserChat(req, res, next) {
     const { userone_unique_id, usertwo_unique_id } = req.body
     Chat.findOne({
@@ -47,7 +47,7 @@ class chatController {
       });
   }
 
-  //  /chat/find-all | cari semua obrolan chat yang ada kitanya , untuk user box
+  //  /chats/find-all | cari semua obrolan chat yang ada kitanya , untuk user box
   static findAllUserChats(req, res, next) {
     // const { chat_unique_id } = req.params  // ubah route juga jika ingin pakai params
     const { unique_id: chat_unique_id  } = req.userData
@@ -87,7 +87,7 @@ class chatController {
       });
   }
 
-  //  /chat/find/:userone_unique_id/:usertwo_unique_id | cari obrolan chat yg spesifik
+  //  /chats/find/:userone_unique_id/:usertwo_unique_id | cari obrolan chat yg spesifik
   static findUserChat(req, res, next) {
     const { userone_unique_id, usertwo_unique_id } = req.params
     Chat.findOne({

@@ -23,6 +23,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      friend: {
+        allowNull: true,
+        type: Sequelize.BOOLEAN
+      },
+      last_message: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

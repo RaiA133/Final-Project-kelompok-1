@@ -77,6 +77,16 @@ function HomePage() {
                 <img src={import.meta.env.VITE_PROFILE_DEFAULT} />
               </div>
             </div>
+            <div className="avatar">
+              <div className="w-16">
+                <img src={import.meta.env.VITE_PROFILE_DEFAULT} />
+              </div>
+            </div>
+            <div className="avatar">
+              <div className="w-16">
+                <img src={import.meta.env.VITE_PROFILE_DEFAULT} />
+              </div>
+            </div>
           </div>
         </div>
 

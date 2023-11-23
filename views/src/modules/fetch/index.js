@@ -21,7 +21,6 @@ async function register(name, username, email, password) {
   }
 }
 
-
 // Function for login user endpoint
 async function login(email, password) {
   try {
@@ -42,6 +41,14 @@ async function userProfile() {
   }
 }
 
+async function getUserByUniqueId(unique_id) {
+  try {
+    const response = await instance.get(`/profile/${unique_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
 
 // Function for create post endpoint
 async function createPost (formData) {
@@ -62,6 +69,16 @@ async function createPost (formData) {
   }
 }
 
+//Function for chat endoint
+async function findAllUserChats() {
+  try {
+    const response = await instance.get(`/chats/find-all`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
 async function logout() {
   try {
     const response = await instance.post('/logout');
@@ -72,6 +89,6 @@ async function logout() {
 }
 
 
-export { register, login, userProfile, createPost, testSession, logout};
+export { register, login, userProfile, getUserByUniqueId, createPost, testSession, findAllUserChats, logout};
 
 
