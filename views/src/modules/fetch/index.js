@@ -32,6 +32,15 @@ async function login(email, password) {
 }
 
 //Function profile
+async function getAllUser() {
+  try {
+    const response = await instance.get(`/user/all`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
 async function userProfile() {
   try {
     const response = await instance.get(`/profile`);
@@ -89,6 +98,6 @@ async function logout() {
 }
 
 
-export { register, login, userProfile, getUserByUniqueId, createPost, testSession, findAllUserChats, logout};
+export { testSession, register, login, getAllUser, userProfile, getUserByUniqueId, createPost, findAllUserChats, logout};
 
 

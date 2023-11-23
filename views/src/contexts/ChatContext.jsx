@@ -1,10 +1,10 @@
 import { createContext, useEffect, useState } from 'react';
-import { findAllUserChats } from '../modules/fetch';
+import { findAllUserChats, getAllUser } from '../modules/fetch';
 import { useNavigate } from 'react-router-dom';
 
 export const ChatContext = createContext();
 
-export const ChatContextProvider = ({ children }) => {
+export const ChatContextProvider = ({ children, user }) => {
   const navigate = useNavigate()
   const [ChatFriendList, setChatFriendList] = useState([
     { username: 'Alex', status: 'online', friend: true, lastMessage: 'Hallo bro !!' },
@@ -12,7 +12,24 @@ export const ChatContextProvider = ({ children }) => {
     { username: 'Irwan', status: 'offline', friend: false, lastMessage: 'Tgl 30 paling bisanya' },
   ]);
 
-  const [useChats, setUserChats] = useState()
+  const [userChats, setUserChats] = useState() // get your user data
+  const [potentialChats, setPotentialChats] = useState([])
+  // console.log(userChats)
+
+  // useEffect(() => {
+  //   const getUsers = async () => {
+  //     const response = await getAllUser();
+  //     if (response.error) {
+  //       return console.log("Error fetch users", response)
+  //     }
+  //     const pChats = response.filter((u) => {
+  //       let isChatCreated = false
+  //       // if ()
+  //     })
+  //   }
+  //   getUsers()
+  // }, [])
+
 
   useEffect(() => {
     const getAllUserChat = async () => {
@@ -30,7 +47,7 @@ export const ChatContextProvider = ({ children }) => {
   }, [navigate])
 
   return (
-    <ChatContext.Provider value={{ ChatFriendList, setChatFriendList, useChats }}>
+    <ChatContext.Provider value={{ ChatFriendList, setChatFriendList, userChats }}>
       {children}
     </ChatContext.Provider>
   )
@@ -40,4 +57,4 @@ export const ChatContextProvider = ({ children }) => {
 
 /* LIST STATE REACT CONTEXT */
 // ChatFriendList | Menampung data yang dibutuhkan di Chat Box : masih data dummy
-// useChats | /chats/find-all | Cari semua obrolan chat yang ada kitanya , untuk user box
+// userChats | /chats/find-all | Cari semua obrolan chat yang ada kitanya , untuk user box

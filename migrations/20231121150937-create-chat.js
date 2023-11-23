@@ -15,13 +15,9 @@ module.exports = {
         unique: true,
         type: Sequelize.STRING
       },
-      userone_unique_id: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      usertwo_unique_id: {
-        allowNull: false,
-        type: Sequelize.STRING
+      members: {
+        allowNull: true,
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       friend: {
         allowNull: true,

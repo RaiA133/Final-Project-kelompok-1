@@ -8,8 +8,7 @@ module.exports = {
     const addChat = [
       {
         chat_unique_id: "asd1-dsa",
-        userone_unique_id: users.user1,
-        usertwo_unique_id: users.user2,
+        members: [users.user1, users.user2],
         friend: true,
         last_message: 'hallo bang',
         createdAt: new Date(),
@@ -17,8 +16,7 @@ module.exports = {
       },
       {
         chat_unique_id: "asd2-asd",
-        userone_unique_id: users.user2,
-        usertwo_unique_id: users.user3,
+        members: [users.user2, users.user3],
         friend: true,
         last_message: 'paling di kirim lewat email',
         createdAt: new Date(),
@@ -26,8 +24,7 @@ module.exports = {
       },
       {
         chat_unique_id: "asd3-dsa",
-        userone_unique_id: users.user3,
-        usertwo_unique_id: users.user1,
+        members: [users.user3, users.user1],
         friend: false,
         last_message: 'hai ini siapa ??',
         createdAt: new Date(),

@@ -12,7 +12,7 @@ function ChatPage() {
   return (
     <>
       <div className="px-5 mb-5">
-        <div className="grid grid-cols-1 md:grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3">
 
           <Toaster
             toastOptions={{

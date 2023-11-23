@@ -2,6 +2,7 @@ const route = require('express').Router()
 const adminController = require('../controllers/adminController')
 const middlewares = require('../middlewares') 
 
+route.get('/user/all', middlewares.verifyToken, adminController.getUser)
 route.get('/administrator', middlewares.verifyToken, middlewares.isAdminCheck, adminController.getUser)
 route.delete('/administrator/:unique_id', middlewares.verifyToken, middlewares.isAdminCheck, adminController.deleteUserByUniqueId)
 

@@ -5,10 +5,10 @@ import UserBoxModal from "./components/UserBoxModal"
 import UserBoxChat from "./components/UserBoxChat";
 
 function UserBox() {
-  const { ChatFriendList, useChats } = useContext(ChatContext)
+  const { ChatFriendList, userChats } = useContext(ChatContext)
   const { userState } = useContext(UserContext)
   // console.log('table user unique_id', userState.unique_id)
-  // console.log('table chat', useChats)
+  // console.log('table chat', userChats)
 
   return (
     <div className='col-span-1'>
@@ -18,9 +18,9 @@ function UserBox() {
         <div role="tabpanel" className="tab-content bg-base-100 rounded-box p-5 h-96 overflow-auto">
 
           {/* FRIEND BOX */}
-          {useChats?.map((chat, index) => (
+          {userChats?.map((chat, index) => (
             <div key={index}>
-              <UserBoxChat chat={chat} our_unique_id={userState.unique_id}/>
+              <UserBoxChat chat={chat} user={userState} />
             </div>
           ))}
 
@@ -32,18 +32,27 @@ function UserBox() {
           {ChatFriendList
             .filter(friend => friend.friend === false)
             .map(filteredFriend => (
-              <div className="col-span-1 py-2 px-5 bg-base-200 card shadow mt-2" key={filteredFriend.username}>
-                <div className='join'>
-                  <div className={`avatar ${filteredFriend.status === 'online' ? 'online' : 'offline'}`}>
-                    <div className="w-12 rounded-full">
-                      <img src={import.meta.env.VITE_PROFILE_DEFAULT} alt="avatar" />
+              <div className="indicator w-full col-span-1 py-2 px-3 bg-base-200 card shadow mt-2" key={filteredFriend.username}>
+                <span className="indicator-item badge badge-success"></span> 
+                <button className="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50">
+                  <div className="flex items-center">
+                    <img className="rounded-full items-start flex-shrink-0 mr-3" src={import.meta.env.VITE_PROFILE_DEFAULT} width="32" height="32" alt="Byrne McKenzie" />
+                    <div className="overflow-hidden w-full">
+                      <h4 className="text-sm font-semibold text-gray-900 truncate ...">
+                        <span>{filteredFriend.username}</span>
+                      </h4>
+                      <div className="text-[13px] flex justify-between">
+                        <span className="truncate">{filteredFriend.lastMessage}</span>
+                        <span className="ms-2">14/12/2021</span>
+                      </div>
+                    </div>
+                    <div className="avatar placeholder ms-2">
+                      <div className="bg-neutral text-neutral-content rounded-full w-6">
+                        <span className="text-xs">1</span>
+                      </div>
                     </div>
                   </div>
-                  <div className='ms-4 overflow-hidden'>
-                    <p className='font-bold'>{filteredFriend.username}</p>
-                    <p className='h-6'>{filteredFriend.lastMessage}</p>
-                  </div>
-                </div>
+                </button>
               </div>
             ))}
 

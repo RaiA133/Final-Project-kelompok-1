@@ -8,12 +8,11 @@ class chatController {
   //  /chats/find-or-create | buat obrolan chat jika yg di input di body tidak ada / ada salah satu yg tidak ada
   static createUserChat(req, res, next) {
     const { userone_unique_id, usertwo_unique_id } = req.body
-    Chat.findOne({
-      where: {
-        userone_unique_id, 
-        usertwo_unique_id,
-      }
-    })
+      Chat.findOne({
+        where: {
+          members: [userone_unique_id, usertwo_unique_id]
+        }
+      })
       .then(async data => {
         if (data) {
           return res.status(200).json({
@@ -26,8 +25,7 @@ class chatController {
         else {
           const newChat = await Chat.create({
             chat_unique_id: uuidv4(),
-            userone_unique_id,
-            usertwo_unique_id,
+            members: [userone_unique_id, usertwo_unique_id],
           });
           res.status(201).json({
             status: [201, 'Success'],
@@ -51,11 +49,11 @@ class chatController {
   static findAllUserChats(req, res, next) {
     // const { chat_unique_id } = req.params  // ubah route juga jika ingin pakai params
     const { unique_id: chat_unique_id  } = req.userData
+    console.log(chat_unique_id)
     Chat.findAll({
       where: {
-        [Op.or]: {
-          userone_unique_id: chat_unique_id, 
-          usertwo_unique_id: chat_unique_id,
+        members: {
+          [Op.contains]: [chat_unique_id],
         }
       }
     })
@@ -92,8 +90,7 @@ class chatController {
     const { userone_unique_id, usertwo_unique_id } = req.params
     Chat.findOne({
       where: {
-        userone_unique_id, 
-        usertwo_unique_id,
+        members: [userone_unique_id, usertwo_unique_id],
       }
     })
       .then(async data => {
