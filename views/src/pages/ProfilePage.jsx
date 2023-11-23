@@ -4,10 +4,63 @@ import ProfilePriview from '../components/ProfilePreview'
 import Partner from '../components/Partner';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import toast, { Toaster } from 'react-hot-toast';
+import { createPost } from "../modules/fetch";
+import { useEffect, useState } from 'react';
+import ProfilePriview from '../components/ProfilePreview'
 
 function ProfilePage() {
   const navigate = useNavigate()
   const { userState } = useContext(UserContext)
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!selectedImage) {
+      const successMessage = "Masukan File yang Berbeda";
+      toast.error(
+        <>
+          <span className='leading-normal'>{successMessage}</span>
+        </>,
+        { duration: 2500 }
+      );
+      return
+    }
+
+    const formData = new FormData(e.target);
+    try {
+
+      const response = await createPost(formData);
+      setSelectedImage("");
+
+      if (response.status[0] === 201) {
+        const successMessage = response.message;
+        toast.success(
+          <>
+            <span className='leading-normal'>{successMessage}</span>
+            <button className='ms-4 btn btn-xs my-0' onClick={() => navigate("/post")}>Lihat</button>
+          </>,
+          { duration: 2500 }
+        )
+        e.target.reset(); // reset form ketika berhasil
+      }
+
+    } catch (error) {
+      let failedMessage = error.message
+      console.log(error)
+      console.error(failedMessage)
+      toast.error(failedMessage, {
+        duration: 2500,
+      });
+    }
+  }
+
+  useEffect(() => {
+    if (PostForm?.image) {
+      setSelectedImage(`http://localhost:8000/${PostForm?.image}`);
+    }
+  }, [PostForm]);
+
   return (
     <>
       <div className="p-5">
