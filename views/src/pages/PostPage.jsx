@@ -36,10 +36,12 @@ function PostPage() {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = postState
-    .filter((post) => selectedCategory === null || post.post_category === selectedCategory)
-    .filter((post) => selectedTags === null || post.post_tags === selectedTags)
-    .slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = Array.isArray(postState)
+    ? postState
+        .filter((post) => selectedCategory === null || post.post_category === selectedCategory)
+        .filter((post) => selectedTags === null || post.post_tags === selectedTags)
+        .slice(indexOfFirstItem, indexOfLastItem)
+    : [];
 
   return (
     <div className="flex-auto grid-cols gap-4 mx-5 mt-5">
