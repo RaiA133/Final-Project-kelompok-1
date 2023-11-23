@@ -8,15 +8,15 @@ import { UserContextProvider } from "./contexts/UserContext.jsx";
 import { PostContextProvider } from "./contexts/postcontext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-      <React.StrictMode>
-            <Router>
-                  <ChatContextProvider>
-                        <UserContextProvider>
-                              <PostContextProvider>
-                                    <App />
-                              </PostContextProvider>
-                        </UserContextProvider>
-                  </ChatContextProvider>
-            </Router>
-      </React.StrictMode>
+  <React.StrictMode>
+    <Router>
+      <ChatContextProvider>
+        <UserContextProvider>
+          <PostContextProvider>
+            <App />
+          </PostContextProvider>
+        </UserContextProvider>
+      </ChatContextProvider>
+    </Router>
+  </React.StrictMode>
 );
