@@ -1,5 +1,16 @@
 import { instance } from '../axios/index';
 
+// Function for test-session user endpoint
+async function testSession() {
+  try {
+    const response = await instance.get('/test-session');
+    return response.data
+  } catch (error) {
+    const cekSesi = JSON.parse(error.request.response)
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | testSession | FETCH');
+  }
+}
+
 // Function for register user endpoint
 async function register(name, username, email, password) {
   try {
@@ -22,9 +33,57 @@ async function login(email, password) {
 }
 
 //Function profile
-async function user(userId) {
+async function userProfile() {
   try {
-    const response = await instance.get(`/user/${userId}/profile`);
+    const response = await instance.get(`/profile`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+//Update Profile
+async function updateProfile (formData) {
+  const formDataObject = Object.fromEntries(formData.entries());
+  try {
+    const response = await instance.post('/profile/update', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  } 
+  catch (error) {
+    if (formDataObject.file.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
+      throw new Error('File Tidak Boleh Lebih Dari 2MB')
+    }
+    // console.error(error) // code dibawah didapat dari error Axios dari sini
+    const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | FETCH');
+  }
+}
+
+
+// Function for create post endpoint
+async function createPost (formData) {
+  const formDataObject = Object.fromEntries(formData.entries());
+  try {
+    const response = await instance.post('/post/create', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  } 
+  catch (error) {
+    if (formDataObject.file.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
+      throw new Error('File Tidak Boleh Lebih Dari 2MB')
+    }
+    // console.error(error) // code dibawah didapat dari error Axios dari sini
+    const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | FETCH');
+  }
+}
+
+async function logout() {
+  try {
+    const response = await instance.post('/logout');
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || 'Something went wrong');
@@ -32,4 +91,4 @@ async function user(userId) {
 }
 
 
-export { register, login, user };
+export { register, login, userProfile, updateProfile, createPost, testSession, logout};
