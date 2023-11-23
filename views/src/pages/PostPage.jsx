@@ -11,10 +11,14 @@ function PostPage() {
   const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext);
   // State untuk menyimpan kategori yang dipilih
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedTags, setSelectedTags] = useState(null);
 
   // Fungsi untuk memfilter data berdasarkan kategori yang dipilih
   const filterByCategory = (category) => {
     setSelectedCategory(category);
+  };
+  const filterByTags = (category) => {
+    setSelectedTags(category);
   };
 
   useEffect(() => {
@@ -42,12 +46,25 @@ function PostPage() {
               </li>
             ))}
         </ul>
+        <h2 className="text-xl font-bold mb-4">Tags</h2>
+        <ul>
+          <li className="cursor-pointer hover:underline text-blue-500" onClick={() => filterByTags(null)}>
+            All
+          </li>
+          {postState.length > 0 &&
+            [...new Set(postState.map((post) => post.post_tags))].map((tags, id) => (
+              <li key={id} className="cursor-pointer hover:underline text-blue-500" onClick={() => filterByTags(tags)}>
+                {tags}
+              </li>
+            ))}
+        </ul>
       </div>
 
       <div className="col-span-3">
         <div className="flex-auto grid grid-cols gap-4 mt-5">
           {postState
             .filter((post) => selectedCategory === null || post.post_category === selectedCategory) // Filter berdasarkan kategori yang dipilih
+            .filter((post) => selectedTags === null || post.post_tags === selectedTags)
             .map((post, id) => (
               <div key={id} className="bg-white p-4 mb-4 rounded-lg shadow-md">
                 <h2 className="text-xl font-bold mb-2">{post.post_title}</h2>
