@@ -51,7 +51,6 @@ function ProfilePreview() {
                       const maxSize = 2 * 1024 * 1024
                       if (file.size <= maxSize) {
                         const imageUrl = URL.createObjectURL(file);
-                        console.log(imageUrl)
                         set_img_profile_link(imageUrl);
                       } else {
                         toast.error('File Tidak Boleh Lebih Dari 2MB!', {

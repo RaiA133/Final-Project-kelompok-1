@@ -3,8 +3,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { createPost } from "../modules/fetch";
 import Partner from "../components/Partner";
 import { useEffect, useState, useContext } from "react";
-import ProfilePriview from "../components/ProfilePreview";
-import { PostContext } from "../contexts/postcontext";
+import ProfilePreview from "../components/ProfilePreview";
+import { PostContext } from "../contexts/postContext";
 
 function CreatePostPage({ PostForm }) {
   const navigate = useNavigate();
@@ -26,6 +26,8 @@ function CreatePostPage({ PostForm }) {
     }
 
     const formData = new FormData(e.target);
+    // const formDataObject = Object.fromEntries(formData);
+    // console.log(formDataObject);
     try {
       const response = await createPost(formData);
       setSelectedImage("");
@@ -36,13 +38,6 @@ function CreatePostPage({ PostForm }) {
 
         toast.success(
           <>
-            {/* button default/ button awal */}
-            {/* <span className="leading-normal">{successMessage}</span>
-                                    <button className="ms-4 btn btn-xs my-0" onClick={() => navigate("/post")}>
-                                          Lihat
-                                    </button> */}
-
-            {/* button modif yang mengarah ke detail postingan */}
             {postState.length > 0 && (
               <div>
                 <span className="leading-normal">{successMessage}</span>

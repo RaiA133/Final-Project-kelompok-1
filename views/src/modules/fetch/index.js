@@ -92,6 +92,7 @@ async function getPostDetailBySlug(slug) {
 // Function for create post endpoint
 async function createPost(formData) {
   const formDataObject = Object.fromEntries(formData.entries());
+  console.log(formDataObject)
   try {
     const response = await instance.post('/post/create', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
