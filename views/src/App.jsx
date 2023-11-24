@@ -40,46 +40,24 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/post" element={<PrivateRoute> <PostPage /> </PrivateRoute>} />
-            <Route path="/post/:id" element={<PrivateRoute> <PostDetailPage /> </PrivateRoute>} />
+            <Route path="/post" element={<PostPage />} />
+            <Route path="/post/:id" element={<PostDetailPage />} />
             <Route path="/profile" element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
             <Route path="/create-post" element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
             <Route path="/chat" element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
           </Routes>
-          
+
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 min-h-full bg-base-200">
             {/* Sidebar content here */}
-            <li>
-              <a onClick={() => navigate("/")}>Home</a>
-            </li>
-            {!isLogin && (
-              <li>
-                <a onClick={() => navigate("/login")}>Login</a>
-              </li>
-            )}
-            {!isLogin && (
-              <li>
-                <a onClick={() => navigate("/register")}>Register</a>
-              </li>
-            )}
-            {isLogin && (
-              <li>
-                <a onClick={() => navigate("/create-post")}>Create Post</a>
-              </li>
-            )}
-            {isLogin && (
-              <li>
-                <a onClick={() => navigate("/post")}>Post</a>
-              </li>
-            )}
-            {isLogin && (
-              <li>
-                <a onClick={() => navigate("/chat")}>Chat</a>
-              </li>
-            )}
+            <li><a onClick={() => navigate("/")}>Home</a></li>
+            {!isLogin && (<li><a onClick={() => navigate("/login")}>Login</a></li>)}
+            {!isLogin && (<li><a onClick={() => navigate("/register")}>Register</a></li>)}
+            {isLogin && (<li><a onClick={() => navigate("/create-post")}>Create Post</a></li>)}
+            {isLogin && (<li><a onClick={() => navigate("/post")}>Post</a></li>)}
+            {isLogin && (<li><a onClick={() => navigate("/chat")}>Chat</a></li>)}
           </ul>
         </div>
       </div>

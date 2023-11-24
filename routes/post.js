@@ -19,14 +19,14 @@ const upload = multer({
   limits: { fileSize: 2000000 }, // 2MB limit
 });
 
-route.get("/post", middlewares.verifyToken, postController.getPost);
+route.get("/post", postController.getPost);
 route.get("/post/mine", middlewares.verifyToken, postController.getYourPost);
 
-route.get("/post/category/:post_category", middlewares.verifyToken, postController.getPostByCategory);
-route.get("/post/tags/:post_tags", middlewares.verifyToken, postController.getPostByTags);
-route.get("/post/terbaru", middlewares.verifyToken, postController.getPostByTerbaru);
-route.get("/post/terlama", middlewares.verifyToken, postController.getPostByTerlama);
-route.get("/post/:slug", middlewares.verifyToken, postController.getPostBySlug);
+route.get("/post/category/:post_category", postController.getPostByCategory);
+route.get("/post/tags/:post_tags", postController.getPostByTags);
+route.get("/post/terbaru", postController.getPostByTerbaru);
+route.get("/post/terlama", postController.getPostByTerlama);
+route.get("/post/:slug", postController.getPostBySlug);
 route.post("/post/create", middlewares.verifyToken, upload.single("file"), (req, res, next) => {
   const fileName = req.file.filename;
   postController.createPostingan(req, res, next, fileName); // mengirim nama file yg sama ke userController.updateProfile
