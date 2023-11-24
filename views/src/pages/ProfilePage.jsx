@@ -15,18 +15,15 @@ function ProfilePage() {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    // const formDataObject = Object.fromEntries(formData);
-    // console.log(formDataObject)
     try {
 
       const response = await updateProfile(formData);
 
-      if (response.status[0] === 201) {
+      if (response.status[1] === 'Success') {
         const successMessage = response.message;
         toast.success(
           <>
             <span className='leading-normal'>{successMessage}</span>
-            <button className='ms-4 btn btn-xs my-0' onClick={() => navigate("/post")}>Lihat</button>
           </>,
           { duration: 2500 }
         )

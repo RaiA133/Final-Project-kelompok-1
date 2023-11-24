@@ -12,7 +12,6 @@ function ProfilePreview() {
   let location = useLocation();
   const navigate = useNavigate();
   const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext)
-  // console.log(img_profile_link)
 
   return (
     
@@ -44,7 +43,7 @@ function ProfilePreview() {
                 <input
                   className="file-input file-input-md w-[130px]"
                   type="file"
-                  name="img_profile"
+                  name="file"
                   onChange={(e) => {
                     const file = e.target.files[0];
                   

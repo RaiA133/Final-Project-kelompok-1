@@ -43,7 +43,7 @@ class profileController {
 
   // halaman EDIT PROFILE | UPDATE data user by id ( middlewares : JWT | login needed )
   static updateProfile(req, res, next, fileName) {
-    const { id } = req.userData; // hasil decoded dari middleware verifyToken
+    const { unique_id } = req.userData; // hasil decoded dari middleware verifyToken
 
     const {
       name, username, email,
@@ -60,7 +60,11 @@ class profileController {
       job, country, address, contact,
       web_link, github_link, fb_link, ig_link
     }
-    User.findByPk(id)
+    User.findOne({
+      where: {
+        unique_id
+      }
+    })
       .then(data => {
         if (!data) {
           res.status(404).json({

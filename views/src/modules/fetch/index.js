@@ -45,16 +45,14 @@ async function userProfile() {
 //Update Profile
 async function updateProfile (formData) {
   const formDataObject = Object.fromEntries(formData.entries());
-  console.log(formDataObject)
-  // return
   try {
-    const response = await instance.post('/profile/update', formData, {
+    const response = await instance.put('/profile/update', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;
   } 
   catch (error) {
-    if (formDataObject.img_profile.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
+    if (formDataObject.file.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
       throw new Error('File Tidak Boleh Lebih Dari 2MB')
     }
     console.error(error) // code dibawah didapat dari error Axios dari sini
@@ -67,6 +65,8 @@ async function updateProfile (formData) {
 // Function for create post endpoint
 async function createPost (formData) {
   const formDataObject = Object.fromEntries(formData.entries());
+  // console.log(formDataObject)
+  // return
   try {
     const response = await instance.post('/post/create', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
