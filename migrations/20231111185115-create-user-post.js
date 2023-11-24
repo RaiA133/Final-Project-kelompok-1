@@ -17,7 +17,7 @@ module.exports = {
       slug: {
         allowNull: true,
         nique:true,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       post_img: {
         allowNull: true,
@@ -29,7 +29,7 @@ module.exports = {
       },
       post_desc: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       post_category: {
         allowNull: true,

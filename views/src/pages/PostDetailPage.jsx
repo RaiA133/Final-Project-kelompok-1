@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
-import { PostContext } from "../contexts/postcontext";
+import { PostContext } from "../contexts/PostContext";
 
 function PostDetailPage() {
   const navigate = useNavigate();

@@ -40,52 +40,13 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route
-              path="/post"
-              element={
-                <PrivateRoute>
-                  {" "}
-                  <PostPage />{" "}
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/post/:id"
-              element={
-                <PrivateRoute>
-                  {" "}
-                  <PostDetailPage />{" "}
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <PrivateRoute>
-                  {" "}
-                  <ProfilePage />{" "}
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/create-post"
-              element={
-                <PrivateRoute>
-                  {" "}
-                  <CreatePostPage />{" "}
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/chat"
-              element={
-                <PrivateRoute>
-                  {" "}
-                  <ChatPage />{" "}
-                </PrivateRoute>
-              }
-            />
+            <Route path="/post" element={<PrivateRoute> <PostPage /> </PrivateRoute>} />
+            <Route path="/post/:id" element={<PrivateRoute> <PostDetailPage /> </PrivateRoute>} />
+            <Route path="/profile" element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
+            <Route path="/create-post" element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
+            <Route path="/chat" element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
           </Routes>
+          
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>

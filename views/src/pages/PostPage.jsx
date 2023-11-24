@@ -1,24 +1,26 @@
 import { useState, useContext } from "react";
-import { PostContext } from "../contexts/postcontext";
+import { PostContext } from "../contexts/PostContext";
 import ListPost from "../components/PostPage/ListPost";
+import DeatilPost from "../components/PostPage/DetailPost";
 
 function PostPage() {
-  const { postState } = useContext(PostContext); // lise semua post
+  const { postState, postDetailState } = useContext(PostContext); // lise semua post
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedTags, setSelectedTags] = useState(null);
 
-  const filterByCategory = (category) => {
-    setSelectedCategory(category);
-    setCurrentPage(1);
-  };
+  // const filterByCategory = (category) => {
+  //   setSelectedCategory(category);
+  //   setCurrentPage(1);
+  // };
 
-  const filterByTags = (category) => {
-    setSelectedTags(category);
-    setCurrentPage(1);
-  };
+  // const filterByTags = (category) => {
+  //   setSelectedTags(category);
+  //   setCurrentPage(1);
+  // };
+
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -30,12 +32,14 @@ function PostPage() {
     : [];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-6 mb-16 mx-5">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-6 mb-16 mx-32">
       <div className="row-span-2 flex flex-col text-xl items-center pt-6 pb-10 h-fit">
 
         <div className="flex-auto grid grid-cols gap-4 card w-full mb-5">
           {currentItems.map((post, id) => (
-            <ListPost post={post} id={id} />
+            <div key={id}>
+              <ListPost post={post} id={id} />
+            </div>
           ))}
         </div>
 
@@ -51,7 +55,7 @@ function PostPage() {
       </div>
 
       <div className="col-span-2 p-10 bg-base-100 card shadow-md mt-6 min-w-40 h-fit sticky top-5">
-
+        <DeatilPost data={postDetailState} />
       </div>
 
       {/* <div className="col-span-2 p-10 bg-base-100 card shadow-md mt-6 min-w-40">

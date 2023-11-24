@@ -40,15 +40,6 @@ async function getAllPostingan() {
   }
 }
 
-// async function getPostDetailById() {
-//   try {
-//     const response = await instance.get(`/post/:id`);
-//     return response.data;
-//   } catch (error) {
-//     throw new Error(error.response.data.message || "Something went wrong");
-//   }
-// }
-
 //Function profile
 async function userProfile() {
   try {
@@ -65,6 +56,15 @@ async function getUserbyId(id) {
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+async function getPostDetailBySlug(slug) {
+  try {
+    const response = await instance.get(`/post/${slug}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
@@ -98,4 +98,4 @@ async function logout() {
 }
 
 
-export { register, login, userProfile, getUserbyId, getAllPostingan, createPost, testSession, logout };
+export { register, login, userProfile, getUserbyId, getPostDetailBySlug, getAllPostingan, createPost, testSession, logout };
