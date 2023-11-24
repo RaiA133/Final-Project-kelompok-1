@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { AllUserContext } from "../../components/AdminRoute";
-import { getUserByUniqueId } from "../../modules/fetch";
+import { getUserByUniqueId, deleteAdministrator } from "../../modules/fetch";
 import Detail from "./components/Detail";
 
 function TableAllUser() {
   const { allUser, getRole } = useContext(AllUserContext)
-  const users = allUser.data
+  const users = allUser && allUser.data ? allUser.data : [];
   const [role, setRole] = useState(2)
   const [detailData, setDetailData] = useState(null);
   const handleRoleChange = (e) => setRole(e.target.value);
@@ -15,6 +15,23 @@ function TableAllUser() {
       setDetailData(response3.data);
     }
   }
+
+  async function handleDeleteUser(id) {
+    try {
+      const response = await deleteAdministrator(id);
+     
+      if (response.status[0] === 'Success') {
+        navigate("/administrator");
+        console.log('User deleted successfully');
+      } else {
+        console.error('Failed to delete user');
+      }
+    } catch (error) {
+      console.error('An error occurred while deleting user:', error.message);
+    }
+  }
+  
+  
   return (
     <>
       <dialog id="my_modal_2" className="modal">
@@ -76,7 +93,7 @@ function TableAllUser() {
                       }}>details</button>
 
                       <button className="btn btn-error btn-xs ml-2" onClick={() => {
-                        handleDeleteUser(user.unique_id)}}
+                        handleDeleteUser(user.id)}}
                       >delete</button>
 
                     </th>

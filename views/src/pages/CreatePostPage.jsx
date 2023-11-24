@@ -4,7 +4,8 @@ import { createPost } from "../modules/fetch";
 import Partner from "../components/Partner";
 import { useEffect, useState, useContext } from "react";
 import ProfilePriview from "../components/ProfilePreview";
-import { PostContext } from "../contexts/postcontext";
+import { PostContext } from "../contexts/PostContext";
+
 
 function CreatePostPage({ PostForm }) {
   const navigate = useNavigate();

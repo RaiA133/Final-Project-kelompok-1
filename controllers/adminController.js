@@ -78,13 +78,50 @@ class adminController {
         })
       })
   }
-  
+
   // halaman ADMIN | DELETE data user by unique_id ( middlewares : JWT | login needed )
-  static deleteUserByUniqueId(req, res, next) {
+  static deleteUserById(req, res, next) {
     const { unique_id } = req.params; // hasil decoded dari middleware verifyToken
     User.destroy({
       where: {
         unique_id,
+      }
+    })
+      .then(data => {
+        if (!data) {
+          return res.status(404).json({
+            status: [404, 'Failed'],
+            halaman: 'Administrator',
+            message: [
+              'Anda Belum Login!',
+              'Data Tidak ada'
+            ]
+          });
+        }
+        else {
+          return res.status(200).json({
+            status: [200, 'Success'],
+            halaman: 'Administrator',
+            message: `Data User Berhasil Dihapus`,
+          });
+        }
+      })
+      .catch(err => {
+        return res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'Administrator',
+          message: 'Something went wrong',
+          error: err
+        });
+      });
+  }
+
+  // halaman ADMIN | DELETE data user by id ( middlewares : JWT | login needed )
+  static deleteUserByUniqueId(req, res, next) {
+    const { id } = req.params; // hasil decoded dari middleware verifyToken
+    User.destroy({
+      where: {
+        id,
       }
     })
       .then(data => {

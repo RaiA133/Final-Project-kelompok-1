@@ -118,6 +118,15 @@ async function getUserRoleAdmin() {
   }
 }
 
+async function deleteAdministrator(id) {
+  try {
+    const response = await instance.delete(`/administrator/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
 async function logout() {
   try {
     const response = await instance.post('/logout');
@@ -129,6 +138,6 @@ async function logout() {
 
 
 
-export { register, login, getAllPostingan, getUserbyId, getPostDetailBySlug, userProfile, createPost, testSession, getAllDataUserAdmin, getUserRoleAdmin, getUserByUniqueId, logout };
+export { register, login, getAllPostingan, getUserbyId, getPostDetailBySlug, userProfile, createPost, testSession, getAllDataUserAdmin, getUserRoleAdmin, getUserByUniqueId, deleteAdministrator, logout };
 
 

@@ -5,7 +5,8 @@ import App from "./App.jsx";
 import "./index.css";
 import { ChatContextProvider } from "./contexts/ChatContext.jsx";
 import { UserContextProvider } from "./contexts/UserContext.jsx";
-import { PostContextProvider } from "./contexts/postcontext.jsx";
+import { PostContextProvider } from "./contexts/PostContext.jsx";
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
