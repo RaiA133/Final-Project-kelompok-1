@@ -9,7 +9,12 @@ import { UserContext } from '../contexts/UserContext';
 
 function ProfilePreview() {
   let location = useLocation();
-  const { userState, img_profile_link } = useContext(UserContext)
+  const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext)
+  console.log(img_profile_link)
+
+  
+
+
   return (
     
     <div className={`row-span-2 flex flex-col text-xl items-center pt-6 pb-10 bg-base-100 card shadow-md h-fit ${location.pathname === '/profile' ? 'ms-6' : ''}`}>
@@ -32,6 +37,13 @@ function ProfilePreview() {
                   className="file-input file-input-md w-[130px]"
                   type="file"
                   name="img_profile"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const imageUrl = URL.createObjectURL(file);
+                      set_img_profile_link(imageUrl);
+                    }
+                  }}
                 />
               </li>
               <li><a>Remove Photo</a></li>

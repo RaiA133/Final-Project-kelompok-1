@@ -1,13 +1,12 @@
 // require('dotenv').config()
 import { useNavigate } from 'react-router-dom';
-import ProfilePriview from '../components/ProfilePreview'
+import ProfilePreview from '../components/ProfilePreview'
 import Partner from '../components/Partner';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import toast, { Toaster } from 'react-hot-toast';
-import { createPost } from "../modules/fetch";
-import { useEffect, useState } from 'react';
-import ProfilePriview from '../components/ProfilePreview'
+import { updateProfile } from "../modules/fetch";
+import { useEffect } from 'react';
 
 function ProfilePage() {
   const navigate = useNavigate()
@@ -16,22 +15,11 @@ function ProfilePage() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!selectedImage) {
-      const successMessage = "Masukan File yang Berbeda";
-      toast.error(
-        <>
-          <span className='leading-normal'>{successMessage}</span>
-        </>,
-        { duration: 2500 }
-      );
-      return
-    }
-
     const formData = new FormData(e.target);
+    // const formDataObject = Object.fromEntries(formData);
     try {
 
-      const response = await createPost(formData);
-      setSelectedImage("");
+      const response = await updateProfile(formData);
 
       if (response.status[0] === 201) {
         const successMessage = response.message;
@@ -55,20 +43,15 @@ function ProfilePage() {
     }
   }
 
-  useEffect(() => {
-    if (PostForm?.image) {
-      setSelectedImage(`http://localhost:8000/${PostForm?.image}`);
-    }
-  }, [PostForm]);
 
   return (
     <>
       <div className="p-5">
         
-        <form action="">
+        <form action="" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
 
-            <ProfilePriview />
+            <ProfilePreview />
             
             <div className="row-span-3 col-span-2 p-10 bg-base-100 card shadow-md">
               <div className="flex justify-between">

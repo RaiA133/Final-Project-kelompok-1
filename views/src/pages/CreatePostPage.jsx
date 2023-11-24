@@ -3,7 +3,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { createPost } from "../modules/fetch";
 import Partner from '../components/Partner';
 import { useEffect, useState } from 'react';
-import ProfilePriview from '../components/ProfilePreview'
+import ProfilePreview from '../components/ProfilePreview'
 
 function CreatePostPage({ PostForm }) {
   const navigate = useNavigate()
@@ -197,7 +197,7 @@ function CreatePostPage({ PostForm }) {
 
             </div>
 
-            <ProfilePriview />
+            <ProfilePreview />
 
           </div>
 
