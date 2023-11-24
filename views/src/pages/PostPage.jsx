@@ -11,15 +11,15 @@ function PostPage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedTags, setSelectedTags] = useState(null);
 
-  // const filterByCategory = (category) => {
-  //   setSelectedCategory(category);
-  //   setCurrentPage(1);
-  // };
+  const filterByCategory = (category) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
 
-  // const filterByTags = (category) => {
-  //   setSelectedTags(category);
-  //   setCurrentPage(1);
-  // };
+  const filterByTags = (category) => {
+    setSelectedTags(category);
+    setCurrentPage(1);
+  };
 
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -38,18 +38,24 @@ function PostPage() {
         <select 
           className="select select-bordered w-full max-w-xs"
           defaultValue=""
+          onChange={(e) => filterByCategory(e.target.value)}
         >
-          <option value="" disabled hidden>Categories</option>
-          <option value="1">Categories 1</option>
-          <option value="2">Categories 2</option>
+          <option value="" disabled>Categories</option>
+          {Array.isArray(postState) &&
+          postState.map((post) => (
+            <option key={post.id} value={post.post_category}>{post.post_category}</option>
+          ))}
         </select>
         <select 
           className="select select-bordered w-full max-w-xs"
           defaultValue=""
+          onChange={(e) => filterByTags(e.target.value)}
         >
-          <option value="" disabled hidden>Tags</option>
-          <option value="1">Tags 1</option>
-          <option value="2">Tags 2</option>
+          <option value="" disabled>Tags</option>
+          {Array.isArray(postState) &&
+          postState.map((post) => (
+            <option key={post.id} value={post.post_tags}>{post.post_tags}</option>
+          ))}
         </select>
         <select 
           className="select select-bordered w-full max-w-xs"
