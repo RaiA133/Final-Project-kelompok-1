@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import LogoKelompok1B from '../assets/logo/LogoKelompok1B.jpg';
 import { logout } from "../modules/fetch" 
 import { UserContext } from "../contexts/UserContext";
 
@@ -19,10 +20,10 @@ function Navbar() {
   // mengirim img_profile_link dari isi userState di Context itu sendiri tapi di edit dengan link static
   useEffect(() => {
     if (userState.img_profile) {
-       const link = "http://localhost:3000/profile/picture/" + userState.img_profile
+       const link = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/` + userState.img_profile
        set_img_profile_link(link)
     } else {
-      const link = import.meta.env.VITE_PROFILE_DEFAULT;
+      const link = import.meta.env.VITE_PROFILE_DEFAULT
       set_img_profile_link(link)
     }
   }, [userState])
@@ -34,6 +35,7 @@ function Navbar() {
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </label>
       </div>
+      {/* <div className="flex-1 px-2 mx-3 font-bold text-3xl"><a style={{ cursor: 'pointer' }} onClick={() => navigate("/")}><img className="w-10" alt="Tailwind CSS Navbar component" src={LogoKelompok1B} /></a></div> */}
       <div className="flex-1 px-2 mx-3 font-bold text-3xl"><a style={{ cursor: 'pointer' }} onClick={() => navigate("/")}>!U</a></div>
       <div className="flex-none hidden lg:block gap-2">
         <ul className="menu menu-horizontal">

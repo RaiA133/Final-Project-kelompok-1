@@ -102,7 +102,7 @@ module.exports = {
       },
       remember_token: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
 
       createdAt: {
