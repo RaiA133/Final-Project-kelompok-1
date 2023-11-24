@@ -80,7 +80,7 @@ class postController {
           return res.status(200).json({
             status: [200, "Success"],
             halaman: "Post",
-            message: `Semua Postinganmu Berdasarkan Id ${data.id}`,
+            message: `Semua Postinganmu Berdasarkan Slug : ${data.slug}`,
             data,
           });
         }
