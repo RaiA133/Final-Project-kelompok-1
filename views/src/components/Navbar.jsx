@@ -22,7 +22,7 @@ function Navbar() {
        const link = "http://localhost:3000/profile/picture/" + userState.img_profile
        set_img_profile_link(link)
     } else {
-      const link = "http://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg";
+      const link = import.meta.env.VITE_PROFILE_DEFAULT;
       set_img_profile_link(link)
     }
   }, [userState])
