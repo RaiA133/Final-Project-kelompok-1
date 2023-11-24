@@ -110,13 +110,20 @@ function CreatePostPage({ PostForm }) {
               <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 py-5'>
                 <div className="form-control w-full">
                   <label className="label"><span className="label-text">Category</span></label>
-                  <input
-                    className="input input-bordered w-full"
-                    type="text"
+                  <select 
+                    className="select select-bordered w-full max-w-xs"
                     name="post_category"
-                    placeholder="Post Category"
                     required
-                  />
+                    defaultValue=""
+                  >
+                    <option value="" disabled hidden>Post Category</option>
+                    <option value="Application">Application</option>
+                    <option value="Website">Website</option>
+                    <option value="Video Editing">Video Editing</option>
+                    <option value="Digital Art">Digital Art</option>
+                    <option value="Animation">Animation</option>
+                    <option value="Gaming">Gaming</option>
+                  </select>
                 </div>
 
                 <div className="form-control w-full">

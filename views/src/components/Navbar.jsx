@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from "../contexts/UserContext";
 import { logout } from "../modules/fetch" 
+import { UserContext } from "../contexts/UserContext";
 
 function Navbar() {
   const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext)
@@ -18,8 +18,13 @@ function Navbar() {
 
   // mengirim img_profile_link dari isi userState di Context itu sendiri tapi di edit dengan link static
   useEffect(() => {
-    const link = "http://localhost:3000/profile/picture/" + userState.img_profile || import.meta.env.VITE_PROFILE_DEFAULT;
-    set_img_profile_link(link)
+    if (userState.img_profile) {
+       const link = "http://localhost:3000/profile/picture/" + userState.img_profile
+       set_img_profile_link(link)
+    } else {
+      const link = "http://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg";
+      set_img_profile_link(link)
+    }
   }, [userState])
 
   return (
@@ -65,6 +70,11 @@ function Navbar() {
               <li>
                 <a className="justify-between" onClick={() => navigate("/create-post")}>
                   Create Post
+                </a>
+              </li>
+              <li>
+                <a className="justify-between" onClick={() => navigate("/chat")}>
+                  Chat
                 </a>
               </li>
               <li><a>Settings</a></li>

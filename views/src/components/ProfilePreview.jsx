@@ -10,9 +10,9 @@ import toast, { Toaster } from 'react-hot-toast';
 
 function ProfilePreview() {
   let location = useLocation();
+  const navigate = useNavigate();
   const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext)
   // console.log(img_profile_link)
-
 
   return (
     
@@ -66,6 +66,11 @@ function ProfilePreview() {
               <li><a>Remove Photo</a></li>
             </ul>
           </details>
+        }
+        {location.pathname == '/create-post' && 
+          <div className='absolute m-2'>
+            <button className='btn btn-sm btn-neutral' onClick={() => navigate("/profile")} >Edit Profile</button>
+          </div>
         }
       </div>
 
