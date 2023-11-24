@@ -8,6 +8,7 @@ module.exports = {
     const addUser_posts = [
       {
         unique_id: users.user1,
+        slug: 'pencari-jodoh-1',
         post_img: "image1.jpg",
         post_title: "Pencari Jodoh",
         post_desc: "Mencari pasangan wanita yang setia",
@@ -21,9 +22,10 @@ module.exports = {
       },
       {
         unique_id: users.user1,
+        slug: 'pengerjaan-web-gis-2',
         post_img: "image2.jpg",
-        post_title: "Pengerjaan Web GIS",
-        post_desc: "Bisa membuat seperti Google Maps",
+        post_title: "Pengerjaan Web GIS Perferendis, suscipit fuga nobis libero, sequi magnam consequatur",
+        post_desc: "Bisa membuat seperti Google Maps Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis, suscipit fuga nobis libero, sequi magnam consequatur commodi distinctio, quas cum ut corrupti? Iure sunt accusantium id magnam laborum vitae minima nesciunt eveniet. Provident molestias molestiae asperiores doloribus dicta cumque facere magnam veniam, et nihil eius, unde consequatur nostrum voluptates dolorem quam, quo dolore fugit quidem? Itaque at facilis sequi iusto ab id cumque exercitationem.",
         post_category: "GIS",
         post_tags: "Teknologi",
         min_price: "Rp. 7.000.000",
@@ -34,6 +36,7 @@ module.exports = {
       },
       {
         unique_id: users.user2,
+        slug: 'travel-blog-writer-3',
         post_img: "image3.jpg",
         post_title: "Travel Blog Writer",
         post_desc: "Menulis pengalaman perjalanan",
@@ -47,6 +50,7 @@ module.exports = {
       },
       {
         unique_id: users.user2,
+        slug: 'freelance-graphic-designer-4',
         post_img: "image4.jpg",
         post_title: "Freelance Graphic Designer",
         post_desc: "Desain grafis kreatif",
@@ -60,6 +64,7 @@ module.exports = {
       },
       {
         unique_id: users.user2,
+        slug: 'social-media-manager-5',
         post_img: "image5.jpg",
         post_title: "Social Media Manager",
         post_desc: "Mengelola akun media sosial",
@@ -73,6 +78,7 @@ module.exports = {
       },
       {
         unique_id: users.user3,
+        slug: 'e-book-editor-6',
         post_img: "image6.jpg",
         post_title: "E-book Editor",
         post_desc: "Mengedit naskah e-book",
@@ -86,6 +92,7 @@ module.exports = {
       },
       {
         unique_id: users.user3,
+        slug: 'fitness-trainer-6',
         post_img: "image7.jpg",
         post_title: "Fitness Trainer",
         post_desc: "Pelatihan kebugaran",

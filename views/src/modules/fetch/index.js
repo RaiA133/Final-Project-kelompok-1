@@ -1,4 +1,4 @@
-import { instance } from '../axios/index';
+import { instance } from "../axios/index";
 
 // Function for test-session user endpoint
 async function testSession() {
@@ -7,28 +7,36 @@ async function testSession() {
     return response.data
   } catch (error) {
     const cekSesi = JSON.parse(error.request.response)
-    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | testSession | FETCH');
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
   }
 }
 
 // Function for register user endpoint
 async function register(name, username, email, password) {
   try {
-    const response = await instance.post('/register', { name, username, email, password });
-    return response.data
+    const response = await instance.post("/register", { name, username, email, password });
+    return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong');
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
-
 
 // Function for login user endpoint
 async function login(email, password) {
   try {
-    const response = await instance.post('/login', { email, password });
+    const response = await instance.post("/login", { email, password });
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong');
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+async function getAllPostingan() {
+  try {
+    const response = await instance.get("/post"); // Adjust the endpoint accordingly
+    return response.data; // Assuming response.data contains the necessary data
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
@@ -42,23 +50,41 @@ async function userProfile() {
   }
 }
 
+async function getUserbyId(id) {
+  try {
+    const response = await instance.get(`/profile/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+async function getPostDetailBySlug(slug) {
+  try {
+    const response = await instance.get(`/post/${slug}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
 
 // Function for create post endpoint
-async function createPost (formData) {
+async function createPost(formData) {
   const formDataObject = Object.fromEntries(formData.entries());
+
   try {
     const response = await instance.post('/post/create', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;
-  } 
+  }
   catch (error) {
     if (formDataObject.file.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
       throw new Error('File Tidak Boleh Lebih Dari 2MB')
     }
     // console.error(error) // code dibawah didapat dari error Axios dari sini
     const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
-    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | FETCH');
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
   }
 }
 
@@ -72,6 +98,4 @@ async function logout() {
 }
 
 
-export { register, login, userProfile, createPost, testSession, logout};
-
-
+export { register, login, userProfile, getUserbyId, getPostDetailBySlug, getAllPostingan, createPost, testSession, logout };

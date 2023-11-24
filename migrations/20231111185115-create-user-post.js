@@ -6,12 +6,18 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
+        nique:true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       unique_id: {
         allowNull: true,
         type: Sequelize.STRING
+      },
+      slug: {
+        allowNull: true,
+        nique:true,
+        type: Sequelize.TEXT
       },
       post_img: {
         allowNull: true,
@@ -23,7 +29,7 @@ module.exports = {
       },
       post_desc: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       post_category: {
         allowNull: true,
@@ -51,7 +57,7 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       updatedAt: {
         allowNull: false,

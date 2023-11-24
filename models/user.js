@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     github_link: DataTypes.STRING,
     fb_link: DataTypes.STRING,
     ig_link: DataTypes.STRING,
-    remember_token: DataTypes.STRING
+    remember_token: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'User',

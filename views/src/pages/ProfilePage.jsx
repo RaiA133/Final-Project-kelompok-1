@@ -1,4 +1,3 @@
-// require('dotenv').config()
 import { useNavigate } from 'react-router-dom';
 import ProfilePriview from '../components/ProfilePreview'
 import Partner from '../components/Partner';
