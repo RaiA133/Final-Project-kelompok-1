@@ -191,10 +191,12 @@ function CreatePostPage({ PostForm }) {
               </div>
             </div>
 
-            <ProfilePriview />
+            <ProfilePreview />
+
           </div>
 
           <Partner />
+                      
         </form>
       </div>
     </>

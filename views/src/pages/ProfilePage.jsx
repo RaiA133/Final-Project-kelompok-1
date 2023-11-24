@@ -1,21 +1,61 @@
 import { useNavigate } from 'react-router-dom';
-import ProfilePriview from '../components/ProfilePreview'
+import ProfilePreview from '../components/ProfilePreview'
 import Partner from '../components/Partner';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import toast, { Toaster } from 'react-hot-toast';
+import { updateProfile } from "../modules/fetch";
 
 function ProfilePage() {
   const navigate = useNavigate()
   const { userState } = useContext(UserContext)
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    try {
+
+      const response = await updateProfile(formData);
+
+      if (response.status[1] === 'Success') {
+        const successMessage = response.message;
+        toast.success(
+          <>
+            <span className='leading-normal'>{successMessage}</span>
+          </>,
+          { duration: 2500 }
+        )
+      }
+
+    } catch (error) {
+      let failedMessage = error.message
+      console.log(error)
+      console.error(failedMessage)
+      toast.error(failedMessage, {
+        duration: 2500,
+      });
+    }
+  }
+
+
   return (
     <>
       <div className="p-5">
-        
-        <form action="">
+
+        <form action="" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
 
-            <ProfilePriview />
-            
+            <Toaster
+              toastOptions={{
+                style: {
+                  maxWidth: '600px'
+                }
+              }}
+            />
+
+            <ProfilePreview />
+
             <div className="row-span-3 col-span-2 p-10 bg-base-100 card shadow-md">
               <div className="flex justify-between">
                 <p className="text-4xl font-bold">Edit Profile</p>
@@ -66,24 +106,6 @@ function ProfilePage() {
                     name="address"
                     placeholder="Your Address"
                     defaultValue={userState.address}
-                  />
-                </div>
-                <div className="form-control w-full">
-                  <label className="label"><span className="label-text">Password</span></label>
-                  <input
-                    className="input input-bordered w-full"
-                    type="password"
-                    name="password"
-                    placeholder="Change Your Password"
-                  />
-                </div>
-                <div className="form-control w-full">
-                  <label className="label"><span className="label-text">Confirm Password</span></label>
-                  <input
-                    className="input input-bordered w-full"
-                    type="password"
-                    name="password"
-                    placeholder="Confirm Password Change"
                   />
                 </div>
                 <div className="form-control w-full">

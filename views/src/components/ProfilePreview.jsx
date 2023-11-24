@@ -6,14 +6,26 @@ import iconFacebook from '../assets/icon/facebook.svg';
 import iconInstagram from '../assets/icon/instagram.svg';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import toast, { Toaster } from 'react-hot-toast';
+import { updateProfile } from "../modules/fetch";
 
 function ProfilePreview() {
   let location = useLocation();
   const navigate = useNavigate();
-  const { userState, img_profile_link } = useContext(UserContext)
+  const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext)
+
   return (
-    
+
     <div className={`row-span-2 flex flex-col text-xl items-center pt-6 pb-10 bg-base-100 card shadow-md h-fit ${location.pathname === '/profile' ? 'ms-6' : ''}`}>
+
+      <Toaster
+        toastOptions={{
+          style: {
+            maxWidth: '600px'
+          }
+        }}
+      />
+
       <div className="flex justify-center w-80">
         <p className="text-2xl font-bold">Profile Preview</p>
       </div>
@@ -32,14 +44,42 @@ function ProfilePreview() {
                 <input
                   className="file-input file-input-md w-[130px]"
                   type="file"
-                  name="img_profile"
+                  name="file"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                      const maxSize = 2 * 1024 * 1024
+                      if (file.size <= maxSize) {
+                        const imageUrl = URL.createObjectURL(file);
+                        console.log(imageUrl)
+                        set_img_profile_link(imageUrl);
+                      } else {
+                        toast.error('File Tidak Boleh Lebih Dari 2MB!', {
+                          duration: 2500,
+                        });
+                      }
+                    }
+                  }}
+
                 />
               </li>
-              <li><a>Remove Photo</a></li>
+              <li>
+                <a onClick={ async () => {
+                  const formData = new FormData();
+                  formData.append('hapus_img', 'default.png');
+                  const hapus_img = await updateProfile(formData);
+                  if (hapus_img.status[1] == 'Success') {
+                    toast.success('Hapus Photo Berhasil!', {
+                      duration: 2500,
+                    });
+                    set_img_profile_link(import.meta.env.VITE_PROFILE_DEFAULT);
+                  }
+                }}>Remove Photo</a>
+              </li>
             </ul>
           </details>
         }
-        {location.pathname == '/create-post' && 
+        {location.pathname == '/create-post' &&
           <div className='absolute m-2'>
             <button className='btn btn-sm btn-neutral' onClick={() => navigate("/profile")} >Edit Profile</button>
           </div>

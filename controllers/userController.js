@@ -43,24 +43,28 @@ class profileController {
 
   // halaman EDIT PROFILE | UPDATE data user by id ( middlewares : JWT | login needed )
   static updateProfile(req, res, next, fileName) {
-    const { id } = req.userData; // hasil decoded dari middleware verifyToken
+    const { unique_id } = req.userData; // hasil decoded dari middleware verifyToken
 
     const {
       name, username, email,
-      img_profile, birth_date,
+      hapus_img, birth_date,
       birth_place, about, company,
       job, country, address, contact,
       web_link, github_link, fb_link, ig_link
     } = req.body;
-    const file = fileName; // menerima filenya yg sama dengan apa yang di simpan di assets
+    const imgProfileValue = hapus_img ? hapus_img : fileName;
     const updatedUser = {
       name, username, email,
-      img_profile: file, birth_date,
+      img_profile: imgProfileValue, birth_date,
       birth_place, about, company,
       job, country, address, contact,
       web_link, github_link, fb_link, ig_link
     }
-    User.findByPk(id)
+    User.findOne({
+      where: {
+        unique_id
+      }
+    })
       .then(data => {
         if (!data) {
           res.status(404).json({
