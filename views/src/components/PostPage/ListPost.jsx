@@ -24,7 +24,7 @@ function ListPost({ post, id }) {
       <h2 className="text-xl font-bold mb-2">{post.post_title}</h2>
       <div className="flex items-center mb-2">
         <img src={img_profile_link || "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"} alt="gambar projek" className="w-10 h-10 object-cover rounded-full" />
-        <p>{userState.username || "username"}</p>
+        <p className="ms-3">{userState.username || "username"}</p>
       </div>
       <p className="text-sm max-h-20 overflow-hidden">{post.post_desc}</p>
       <div className="divider"/>
@@ -43,6 +43,9 @@ function ListPost({ post, id }) {
         <button onClick={() => handleDetailPost(post.slug)} className="btn btn-neutral btn-sm">
           View Detail
         </button>
+      </div>
+      <div className="text-sm mt-5 font-light">
+        {post.createdAt}
       </div>
     </div>
 

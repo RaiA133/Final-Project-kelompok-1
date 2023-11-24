@@ -32,60 +32,67 @@ function PostPage() {
     : [];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-6 mb-16 mx-32">
-      <div className="row-span-2 flex flex-col text-xl items-center pt-6 pb-10 h-fit">
-
-        <div className="flex-auto grid grid-cols gap-4 card w-full mb-5">
-          {currentItems.map((post, id) => (
-            <div key={id}>
-              <ListPost post={post} id={id} />
-            </div>
-          ))}
-        </div>
-
-        <div className="join grid grid-cols-2">
-          <button className="join-item btn btn-outline" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
-            Previous page
-          </button>
-          <button className="join-item btn btn-outline" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentItems.length < itemsPerPage}>
-            Next
-          </button>
-        </div>
-
+    <>
+    
+      <div className="bg-base-100 mt-5 flex justify-center p-5 gap-3">
+        <select 
+          className="select select-bordered w-full max-w-xs"
+          defaultValue=""
+        >
+          <option value="" disabled hidden>Categories</option>
+          <option value="1">Categories 1</option>
+          <option value="2">Categories 2</option>
+        </select>
+        <select 
+          className="select select-bordered w-full max-w-xs"
+          defaultValue=""
+        >
+          <option value="" disabled hidden>Tags</option>
+          <option value="1">Tags 1</option>
+          <option value="2">Tags 2</option>
+        </select>
+        <select 
+          className="select select-bordered w-full max-w-xs"
+          defaultValue=""
+        >
+          <option value="1" selected>Terbaru</option>
+          <option value="2">Terlama</option>
+        </select>
       </div>
 
-      <div className="col-span-2 p-10 bg-base-100 card shadow-md mt-6 min-w-40 h-fit sticky top-5">
-        <DeatilPost data={postDetailState} />
+      <div className="flex justify-center text-4xl font-bold items-center h-10 mt-5">
+        Postingan
       </div>
 
-      {/* <div className="col-span-2 p-10 bg-base-100 card shadow-md mt-6 min-w-40">
-        <h2 className="text-xl font-bold mb-4">Kategori</h2>
-        <ul>
-          <li className="cursor-pointer hover:underline text-blue-500" onClick={() => filterByCategory(null)}>
-            All
-          </li>
-          {postState.length > 0 &&
-            [...new Set(postState.map((post) => post.post_category))].map((category, id) => (
-              <li key={id} className="cursor-pointer hover:underline text-blue-500" onClick={() => filterByCategory(category)}>
-                {category}
-              </li>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-6 mb-16 mx-3 xl:mx-32">
+        <div className="row-span-2 flex flex-col text-xl items-center pt-6 pb-10 h-fit">
+
+          <div className="flex-auto grid grid-cols gap-4 card w-full mb-5">
+            {currentItems.map((post, id) => (
+              <div key={id}>
+                <ListPost post={post} id={id} />
+              </div>
             ))}
-        </ul>
-        <h2 className="text-xl font-bold mb-4">Tags</h2>
-        <ul>
-          <li className="cursor-pointer hover:underline text-blue-500" onClick={() => filterByTags(null)}>
-            All
-          </li>
-          {postState.length > 0 &&
-            [...new Set(postState.map((post) => post.post_tags))].map((tags, id) => (
-              <li key={id} className="cursor-pointer hover:underline text-blue-500" onClick={() => filterByTags(tags)}>
-                {tags}
-              </li>
-            ))}
-        </ul>
-      </div> */}
-    </div>
-  );
+          </div>
+
+          <div className="join grid grid-cols-2">
+            <button className="join-item btn btn-outline" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
+              Previous page
+            </button>
+            <button className="join-item btn btn-outline" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentItems.length < itemsPerPage}>
+              Next
+            </button>
+          </div>
+
+        </div>
+
+        <div className="col-span-2 p-10 bg-base-100 card shadow-md mt-6 min-w-40 h-fit sticky top-5">
+          <DeatilPost data={postDetailState} />
+        </div>
+        
+      </div>
+    </>
+  )
 }
 
 export default PostPage;
