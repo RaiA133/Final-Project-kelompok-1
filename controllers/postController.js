@@ -240,7 +240,6 @@ class postController {
         min_price, max_price, post_worktime, post_worktime_time
       } = req.body;
 
-
       const currentDate = new Date(); // Dapatkan tanggal saat ini
       const expirationDate = new Date(); // Tambahkan 30 hari ke tanggal saat ini
       expirationDate.setDate(currentDate.getDate() + 30);
@@ -250,8 +249,8 @@ class postController {
         const formattedTitle = title.toLowerCase().replace(/\s+/g, '-'); // Lowercase dan ganti spasi dengan strip
         return formattedTitle
       };
-      const slugFormated = createSlug(post_title); // Buat slug dari post_title
 
+      const slugFormated = createSlug(post_title); // Buat slug dari post_title
       const file = fileName;
       const newUser_post = await User_post.create({
         unique_id,
@@ -266,7 +265,6 @@ class postController {
         post_worktime: post_worktime + ' ' + post_worktime_time,
         post_expired_in: expirationDate,
       });
-
 
       res.status(201).json({
         status: [201, 'Success'],
@@ -303,7 +301,6 @@ class postController {
     User_post.findByPk(req.params.id)
       .then(data => {
         if (!data) {
-          console.log(file)
           res.status(404).json({
             status: [404, 'Success'],
             halaman: 'Post',

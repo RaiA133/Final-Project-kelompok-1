@@ -50,6 +50,26 @@ async function userProfile() {
   }
 }
 
+
+//Update Profile
+async function updateProfile (formData) {
+  const formDataObject = Object.fromEntries(formData.entries());
+  try {
+    const response = await instance.put('/profile/update', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  } 
+  catch (error) {
+    if (formDataObject.file.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
+      throw new Error('File Tidak Boleh Lebih Dari 2MB')
+    }
+    const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
+  }
+}
+
+// get user by id
 async function getUserbyId(id) {
   try {
     const response = await instance.get(`/profile/${id}`);
@@ -59,6 +79,7 @@ async function getUserbyId(id) {
   }
 }
 
+// get user by slug | slug otomatis dari title
 async function getPostDetailBySlug(slug) {
   try {
     const response = await instance.get(`/post/${slug}`);
@@ -71,7 +92,6 @@ async function getPostDetailBySlug(slug) {
 // Function for create post endpoint
 async function createPost(formData) {
   const formDataObject = Object.fromEntries(formData.entries());
-
   try {
     const response = await instance.post('/post/create', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -98,4 +118,4 @@ async function logout() {
 }
 
 
-export { register, login, userProfile, getUserbyId, getPostDetailBySlug, getAllPostingan, createPost, testSession, logout };
+export { register, login, userProfile, updateProfile, getUserbyId, getPostDetailBySlug, getAllPostingan, createPost, testSession, logout };

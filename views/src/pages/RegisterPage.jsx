@@ -40,11 +40,7 @@ function RegisterPage() {
       toast.error(failedMessage, {
         duration: 2500,
       });
-        
-        // Redirect ke halaman login setelah registrasi berhasil
-        setTimeout(() => {
-          navigate('/login');
-        }, 2000);
+      
     }
       
   }
@@ -80,6 +76,7 @@ function RegisterPage() {
                   type="text" 
                   name="name" 
                   placeholder="Name" 
+                  required
                   />
               </div>
 
@@ -90,6 +87,7 @@ function RegisterPage() {
                   type="text" 
                   name="username" 
                   placeholder="Username" 
+                  required
                   />
               </div>
 
@@ -100,6 +98,7 @@ function RegisterPage() {
                   type="email" 
                   name="email" 
                   placeholder="Email" 
+                  required
                 />
               </div>
 
@@ -112,6 +111,7 @@ function RegisterPage() {
                   value={password}
                   autoComplete='off'
                   placeholder="Password"
+                  required
                 />
                 <label className="label place-content-end">
                   <a onClick={togglePasswordVisibility} className="label-text-alt text-xs underline" style={{ cursor: 'pointer' }}>
@@ -129,6 +129,7 @@ function RegisterPage() {
                   value={confirmPassword}
                   autoComplete='off'
                   placeholder="Confirm Password"
+                  required
                 />
                 <label className="label place-content-end">
                   {password !== confirmPassword && (
