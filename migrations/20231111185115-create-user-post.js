@@ -6,11 +6,17 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
+        nique:true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       unique_id: {
         allowNull: true,
+        type: Sequelize.STRING
+      },
+      slug: {
+        allowNull: true,
+        nique:true,
         type: Sequelize.STRING
       },
       post_img: {

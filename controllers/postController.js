@@ -61,12 +61,12 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | GET data user_posts by id ( middlewares : JWT | login needed )
-  static getPostById(req, res, next) {
-    const { id } = req.params; // hasil decoded dari middleware verifyToken
+  // halaman POST PEKERJAAN | GET data user_posts by slug ( middlewares : JWT | login needed )
+  static getPostBySlug(req, res, next) {
+    const { slug } = req.params; // hasil decoded dari middleware verifyToken
     User_post.findOne({
       where: {
-        id,
+        slug,
       },
     })
       .then((data) => {
@@ -245,9 +245,17 @@ class postController {
       const expirationDate = new Date(); // Tambahkan 30 hari ke tanggal saat ini
       expirationDate.setDate(currentDate.getDate() + 30);
 
+      // Fungsi untuk membuat slug
+      const createSlug = (title) => {
+        const formattedTitle = title.toLowerCase().replace(/\s+/g, '-'); // Lowercase dan ganti spasi dengan strip
+        return formattedTitle
+      };
+      const slugFormated = createSlug(post_title); // Buat slug dari post_title
+
       const file = fileName;
       const newUser_post = await User_post.create({
         unique_id,
+        slug: Date.now() + '_' + slugFormated,
         post_img: file,
         post_title,
         post_desc,
