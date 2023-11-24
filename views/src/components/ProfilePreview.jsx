@@ -37,7 +37,7 @@ function ProfilePreview() {
           <img src={img_profile_link} />
         </div>
         {location.pathname == '/profile' &&
-          <details className="dropdown absolute">
+          <details className="dropdown dropdown-top absolute">
             <summary className="m-1 btn btn-sm btn-neutral">Edit</summary>
             <ul className="ms-1 p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-36 overflow-hidden">
               <li>
