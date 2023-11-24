@@ -28,7 +28,7 @@ function DeatilPost({ data }) {
                 <h1 className="text-4xl font-bold h-12 max-h-28 overflow-auto">{data.post_title}</h1>
                 <div className="flex items-center mb-2">
                   <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="gambar projek" className="w-10 h-10 object-cover rounded-full" />
-                  <p className="ms-3 btn btn-ghost btn-sm">username</p>
+                  <p className="ms-3 btn btn-ghost btn-sm">{data.username}</p>
                 </div>
                 <p className="py-6">{data.post_desc}</p>
               <div className="mt-1 text-sm">

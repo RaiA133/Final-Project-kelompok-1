@@ -6,7 +6,7 @@ import { logout } from "../modules/fetch"
 import { UserContext } from "../contexts/UserContext";
 
 function Navbar() {
-  const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext)
+  const { userState, img_profile_link, set_img_profile_link, isAdmin, setIsAdmin } = useContext(UserContext)
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate()
 
@@ -36,7 +36,9 @@ function Navbar() {
         </label>
       </div>
       {/* <div className="flex-1 px-2 mx-3 font-bold text-3xl"><a style={{ cursor: 'pointer' }} onClick={() => navigate("/")}><img className="w-10" alt="Tailwind CSS Navbar component" src={LogoKelompok1B} /></a></div> */}
-      <div className="flex-1 px-2 mx-3 font-bold text-3xl"><a style={{ cursor: 'pointer' }} onClick={() => navigate("/")}>!U</a></div>
+      <div className="flex-1 px-2 mx-3 font-bold text-3xl"><a style={{ cursor: 'pointer' }} onClick={() => navigate("/")}>
+                <img className="w-10 rounded-full" alt="Tailwind CSS Navbar component " src={LogoKelompok1B} />
+      </a></div>
       <div className="flex-none hidden lg:block gap-2">
         <ul className="menu menu-horizontal">
           {/* Navbar menu content here */}
@@ -80,6 +82,9 @@ function Navbar() {
                 </a>
               </li>
               <li><a>Settings</a></li>
+              {isAdmin && (
+                <li><a onClick={() => navigate("/administrator")}>Administrator</a></li>
+              )}
               <li><a
                 onClick={async () => {
                   

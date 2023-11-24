@@ -88,6 +88,36 @@ async function createPost(formData) {
   }
 }
 
+// Function Administrator Get All Data User
+async function getAllDataUserAdmin() {
+  try {
+    const response = await instance.get(`/administrator`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+// Function Administrator Get Data User by unique_id
+async function getUserByUniqueId(unique_id) {
+  try {
+    const response = await instance.get(`/administrator/get/${unique_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+// Function Administrator Get All Data User
+async function getUserRoleAdmin() {
+  try {
+    const response = await instance.get(`/administrator/get/role`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
 async function logout() {
   try {
     const response = await instance.post('/logout');
@@ -98,4 +128,7 @@ async function logout() {
 }
 
 
-export { register, login, userProfile, getUserbyId, getPostDetailBySlug, getAllPostingan, createPost, testSession, logout };
+
+export { register, login, getAllPostingan, getUserbyId, getPostDetailBySlug, userProfile, createPost, testSession, getAllDataUserAdmin, getUserRoleAdmin, getUserByUniqueId, logout };
+
+

@@ -69,10 +69,9 @@ class authController {
         else {
           const JWTtime = process.env.JWT_EXPIRED_TIME
           const token = jwt.sign({ // data yang di encoded jadi JWT, diteruskan ke middleware JWT : middlewares/index.js
-            id: data.id,
             unique_id: data.unique_id,
             username: data.username,
-            // user_role_id: data.user_role_id,
+            user_role_id: data.user_role_id,
           }, secretKey, { expiresIn: JWTtime });
 
           data.update({ 
