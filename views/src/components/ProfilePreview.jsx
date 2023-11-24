@@ -6,18 +6,26 @@ import iconFacebook from '../assets/icon/facebook.svg';
 import iconInstagram from '../assets/icon/instagram.svg';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
+import toast, { Toaster } from 'react-hot-toast';
 
 function ProfilePreview() {
   let location = useLocation();
   const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext)
-  console.log(img_profile_link)
-
-  
+  // console.log(img_profile_link)
 
 
   return (
     
     <div className={`row-span-2 flex flex-col text-xl items-center pt-6 pb-10 bg-base-100 card shadow-md h-fit ${location.pathname === '/profile' ? 'ms-6' : ''}`}>
+      
+      <Toaster
+        toastOptions={{
+          style: {
+            maxWidth: '600px'
+          }
+        }}
+      />
+      
       <div className="flex justify-center w-80">
         <p className="text-2xl font-bold">Profile Preview</p>
       </div>
@@ -39,11 +47,20 @@ function ProfilePreview() {
                   name="img_profile"
                   onChange={(e) => {
                     const file = e.target.files[0];
+                  
                     if (file) {
-                      const imageUrl = URL.createObjectURL(file);
-                      set_img_profile_link(imageUrl);
+                      const maxSize = 2 * 1024 * 1024
+                      if (file.size <= maxSize) {
+                        const imageUrl = URL.createObjectURL(file);
+                        set_img_profile_link(imageUrl);
+                      } else {
+                        toast.error('File Tidak Boleh Lebih Dari 2MB', {
+                          duration: 2500,
+                        });
+                      }
                     }
                   }}
+                  
                 />
               </li>
               <li><a>Remove Photo</a></li>

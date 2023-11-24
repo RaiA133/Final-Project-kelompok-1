@@ -6,7 +6,6 @@ import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import toast, { Toaster } from 'react-hot-toast';
 import { updateProfile } from "../modules/fetch";
-import { useEffect } from 'react';
 
 function ProfilePage() {
   const navigate = useNavigate()
@@ -17,6 +16,7 @@ function ProfilePage() {
 
     const formData = new FormData(e.target);
     // const formDataObject = Object.fromEntries(formData);
+    // console.log(formDataObject)
     try {
 
       const response = await updateProfile(formData);
@@ -47,12 +47,20 @@ function ProfilePage() {
   return (
     <>
       <div className="p-5">
-        
+
         <form action="" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
 
+            <Toaster
+              toastOptions={{
+                style: {
+                  maxWidth: '600px'
+                }
+              }}
+            />
+
             <ProfilePreview />
-            
+
             <div className="row-span-3 col-span-2 p-10 bg-base-100 card shadow-md">
               <div className="flex justify-between">
                 <p className="text-4xl font-bold">Edit Profile</p>
@@ -103,24 +111,6 @@ function ProfilePage() {
                     name="address"
                     placeholder="Your Address"
                     defaultValue={userState.address}
-                  />
-                </div>
-                <div className="form-control w-full">
-                  <label className="label"><span className="label-text">Password</span></label>
-                  <input
-                    className="input input-bordered w-full"
-                    type="password"
-                    name="password"
-                    placeholder="Change Your Password"
-                  />
-                </div>
-                <div className="form-control w-full">
-                  <label className="label"><span className="label-text">Confirm Password</span></label>
-                  <input
-                    className="input input-bordered w-full"
-                    type="password"
-                    name="password"
-                    placeholder="Confirm Password Change"
                   />
                 </div>
                 <div className="form-control w-full">

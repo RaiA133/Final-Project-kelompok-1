@@ -7,7 +7,7 @@ async function testSession() {
     return response.data
   } catch (error) {
     const cekSesi = JSON.parse(error.request.response)
-    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | testSession | FETCH');
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
   }
 }
 
@@ -45,6 +45,8 @@ async function userProfile() {
 //Update Profile
 async function updateProfile (formData) {
   const formDataObject = Object.fromEntries(formData.entries());
+  console.log(formDataObject)
+  // return
   try {
     const response = await instance.post('/profile/update', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -52,12 +54,12 @@ async function updateProfile (formData) {
     return response.data;
   } 
   catch (error) {
-    if (formDataObject.file.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
+    if (formDataObject.img_profile.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
       throw new Error('File Tidak Boleh Lebih Dari 2MB')
     }
-    // console.error(error) // code dibawah didapat dari error Axios dari sini
+    console.error(error) // code dibawah didapat dari error Axios dari sini
     const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
-    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | FETCH');
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
   }
 }
 
@@ -77,7 +79,7 @@ async function createPost (formData) {
     }
     // console.error(error) // code dibawah didapat dari error Axios dari sini
     const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
-    throw new Error(cekSesi?.message || error?.message || 'Something went wrong | FETCH');
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
   }
 }
 
