@@ -54,7 +54,7 @@ function ProfilePreview() {
                         console.log(imageUrl)
                         set_img_profile_link(imageUrl);
                       } else {
-                        toast.error('File Tidak Boleh Lebih Dari 2MB', {
+                        toast.error('File Tidak Boleh Lebih Dari 2MB!', {
                           duration: 2500,
                         });
                       }
@@ -69,7 +69,7 @@ function ProfilePreview() {
                   formData.append('hapus_img', 'default.png');
                   const hapus_img = await updateProfile(formData);
                   if (hapus_img.status[1] == 'Success') {
-                    toast.success('Hapus Photo Berhasil', {
+                    toast.success('Hapus Photo Berhasil!', {
                       duration: 2500,
                     });
                     set_img_profile_link(import.meta.env.VITE_PROFILE_DEFAULT);
