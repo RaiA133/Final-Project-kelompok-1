@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { DecodedTokenContext } from "./PrivateRoute";
 import { getAllDataUserAdmin, getUserRoleAdmin } from "../modules/fetch";
+import { UserContext } from "../contexts/UserContext";
 
 export const AllUserContext = createContext();
 
@@ -11,7 +12,7 @@ function AdminRoute({
 }) {
   const navigate = useNavigate();
   const { decodedTokenState } = useContext(DecodedTokenContext)
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { isAdmin, setIsAdmin } = useContext(UserContext);
   const [allUser, setAllUser] = useState({})
   const [getRole, setGetRole] = useState()
   useEffect(() => {
