@@ -47,15 +47,15 @@ class profileController {
 
     const {
       name, username, email,
-      img_profile, birth_date,
+      hapus_img, birth_date,
       birth_place, about, company,
       job, country, address, contact,
       web_link, github_link, fb_link, ig_link
     } = req.body;
-    const file = fileName; // menerima filenya yg sama dengan apa yang di simpan di assets
+    const imgProfileValue = hapus_img ? hapus_img : fileName;
     const updatedUser = {
       name, username, email,
-      img_profile: file, birth_date,
+      img_profile: imgProfileValue, birth_date,
       birth_place, about, company,
       job, country, address, contact,
       web_link, github_link, fb_link, ig_link

@@ -27,7 +27,6 @@ function ProfilePage() {
           </>,
           { duration: 2500 }
         )
-        e.target.reset(); // reset form ketika berhasil
       }
 
     } catch (error) {
