@@ -34,7 +34,7 @@ function ListPost({ post, id }) {
       <p className="text-sm max-h-20 overflow-hidden">{post.post_desc}</p>
       <div className="divider" />
       <div className="text-sm mt-2">
-        <span>Budget :</span>
+        <span>Max Revenue :</span>
         {post.max_price}
         <p>Project Status: On Going</p>
         <p>Worktime: {post.post_worktime}</p>

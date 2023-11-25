@@ -9,10 +9,9 @@ import DynamicInput from "../components/DynamicInput";
 import { NumericFormat } from "react-number-format";
 
 function CreatePostPage({ PostForm }) {
-  const [GetOutputArray, setGetOutputArray] = useState([]);
-  
   const navigate = useNavigate();
-  const { postState } = useContext(PostContext);
+  const [GetOutputArray, setGetOutputArray] = useState([]);
+  const { postState, categoryTags } = useContext(PostContext);
   const [selectedImage, setSelectedImage] = useState(null);
 
   async function handleSubmit(e) {
@@ -30,18 +29,17 @@ function CreatePostPage({ PostForm }) {
     }
     const formData = new FormData(e.target);
     formData.append("skills", GetOutputArray);
-    const formDataObject = Object.fromEntries(formData);
-    // console.log(formDataObject);
-    // console.log("typeof(GetOutputArray)", typeof(GetOutputArray))
+
+    // const formDataObject = Object.fromEntries(formData);
+    // console.log('formDataObject', formDataObject);
     // return
+
     try {
       const response = await createPost(formData);
       setSelectedImage("");
-
       if (response.status[0] === 201) {
         const successMessage = response.message;
         const newPostSlug = response.data.slug;
-
         toast.success(
           <>
             {postState.length > 0 && (
@@ -75,6 +73,15 @@ function CreatePostPage({ PostForm }) {
       setSelectedImage(`http://localhost:8000/${PostForm?.image}`);
     }
   }, [PostForm]);
+
+
+  const [currency, setCurrency] = useState('Rp');
+  const handleCurrencyChange = (event) => {
+    setCurrency(event.target.value);
+  };
+
+  const categories = categoryTags.categories
+  const tags = categoryTags.tags
 
   return (
     <>
@@ -128,12 +135,11 @@ function CreatePostPage({ PostForm }) {
                     <option value="" disabled hidden>
                       Post Category
                     </option>
-                    <option value="Application">Application</option>
-                    <option value="Website">Website</option>
-                    <option value="Video Editing">Video Editing</option>
-                    <option value="Digital Art">Digital Art</option>
-                    <option value="Animation">Animation</option>
-                    <option value="Gaming">Gaming</option>
+                    {categories.map((category, index) => (
+                      <option key={index} value={category}>
+                        {category}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -141,7 +147,16 @@ function CreatePostPage({ PostForm }) {
                   <label className="label">
                     <span className="label-text">Tags</span>
                   </label>
-                  <input className="input input-bordered w-full" type="text" name="post_tags" placeholder="Post Tags" required />
+                  <select className="select select-bordered w-full" name="post_tags" required defaultValue="">
+                    <option value="" disabled hidden>
+                      Post Tags
+                    </option>
+                    {tags.map((tag, index) => (
+                      <option key={index} value={tag}>
+                        {tag}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -150,30 +165,37 @@ function CreatePostPage({ PostForm }) {
                   <span className="label-text">Price Range</span>
                 </label>
                 <div className="flex items-center w-full">
-                
+
                   <div className="block sm:flex w-full">
                     <div className="flex items-center w-full">
-                      <select className="select select-bordered w-fit mr-2">
-                        <option value="Rp. " selected>Rp</option>
-                        <option value="$. ">$</option>
+                      <select
+                        className="select select-bordered w-fit mr-2"
+                        value={currency}
+                        onChange={handleCurrencyChange}
+                        defaultValue=""
+                      >
+                        <option value="Rp" selected>Rp</option>
+                        <option value="$">$</option>
                       </select>
                       <NumericFormat
                         className="input input-bordered w-full"
-                        value={12323}
+                        value={0}
                         name="min_price"
-                        prefix="Rp. "
-                        thousandSeparator={"."}
-                        decimalSeparator={","}
+                        prefix={currency + ' '}
+                        thousandSeparator="."
+                        decimalSeparator=","
+                        required
                       />
                     </div>
                     <div className="text-2xl font-bold mx-3 text-center sm:mt-2">-</div>
                     <NumericFormat
-                      className="input input-bordered w-full" 
-                      value={12323}
+                      className="input input-bordered w-full"
+                      value={0}
                       name="max_price"
-                      prefix="Rp. "
-                      thousandSeparator={"."}
-                      decimalSeparator={","}
+                      prefix={currency + ' '}
+                      thousandSeparator="."
+                      decimalSeparator=","
+                      required
                     />
                   </div>
                 </div>
@@ -186,8 +208,8 @@ function CreatePostPage({ PostForm }) {
                   </label>
                   <div className="flex justify-center">
                     <input className="input input-bordered w-full me-2" type="number" name="post_worktime" placeholder="00" required />
-                    <select className="select select-bordered join-item" name="post_worktime_time">
-                      <option value="Day">Day</option>
+                    <select className="select select-bordered join-item" name="post_worktime_time" defaultValue="">
+                      <option value="Day" selected>Day</option>
                       <option value="Week">Week</option>
                       <option value="Month">Month</option>
                     </select>
@@ -215,7 +237,7 @@ function CreatePostPage({ PostForm }) {
               </div>
 
               <div className="form-control w-full">
-                <DynamicInput setGetOutputArray={setGetOutputArray}/>
+                <DynamicInput setGetOutputArray={setGetOutputArray} />
               </div>
 
             </div>
@@ -225,7 +247,7 @@ function CreatePostPage({ PostForm }) {
           </div>
 
           <Partner />
-                      
+
         </form>
       </div>
     </>

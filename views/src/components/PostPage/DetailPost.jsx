@@ -26,8 +26,10 @@ function DeatilPost({ data }) {
                 </div>
                 <p className="py-6">{data.post_desc}</p>
                 <div className="mt-1 text-sm">
-                  <span className="font-bold">Minimum Revenue : </span>
-                  {data.min_price}
+                  <span className="font-bold">Min Revenue : </span>
+                  {data.min_price} <br/>
+                  <span className="font-bold">Max Revenue : </span>
+                  {data.max_price}
                   <p><span className="font-bold">Project Status: </span>On Going</p>
                   <p><span className="font-bold">Worktime: </span>{data.post_worktime}</p>
                 </div>

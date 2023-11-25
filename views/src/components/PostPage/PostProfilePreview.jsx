@@ -11,6 +11,12 @@ function PostProfilePreview({ hisProfile }) {
 
     <div className='row-span-2 flex flex-col text-xl items-center pt-6 pb-7 bg-base-100 card shadow-md h-fit lg:sticky top-0'>
 
+      <div className="flex justify-center w-fit">
+        <p className="text-xl font-bold">Posted By</p>
+      </div>
+
+      <div className='divider' />
+
       <div className="avatar">
         <div className="w-40 xl:w-80 rounded-xl">
           <img src={`${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${hisProfile.img_profile}`} />

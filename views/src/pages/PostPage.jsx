@@ -6,9 +6,8 @@ import { getPostTerbaru, getPostTerlama } from "../modules/fetch";
 
 function PostPage() {
   const { postState, postDetailState, setPostState } = useContext(PostContext); // list semua post
-
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(5);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedTags, setSelectedTags] = useState(null);
 
@@ -61,10 +60,10 @@ function PostPage() {
       <div className="bg-base-100 mt-5 flex justify-center p-5 gap-3">
         <select 
           className="select select-bordered w-full max-w-xs"
-          defaultValue=""
           onChange={(e) => filterByCategory(e.target.value)}
+          defaultValue=""
         >
-          <option value="" disabled>Categories</option>
+          <option value="" disabled hidden>Categories</option>
           {Array.isArray(postState) &&
           postState.map((post) => (
             <option key={post.id} value={post.post_category}>{post.post_category}</option>
@@ -72,10 +71,10 @@ function PostPage() {
         </select>
         <select 
           className="select select-bordered w-full max-w-xs"
-          defaultValue=""
           onChange={(e) => filterByTags(e.target.value)}
+          defaultValue=""
         >
-          <option value=""  disabled>Tags</option>
+          <option value="" disabled hidden>Tags</option>
           {Array.isArray(postState) &&
           postState.map((post) => (
             <option key={post.id} value={post.post_tags}>{post.post_tags}</option>
@@ -83,8 +82,8 @@ function PostPage() {
         </select>
         <select 
           className="select select-bordered w-full max-w-xs"
-          defaultValue=""
           onChange={(e) => filterByTime(e.target.value)}
+          defaultValue=""
         >
           <option value="terbaru" selected>Terbaru</option>
           <option value="terlama">Terlama</option>
