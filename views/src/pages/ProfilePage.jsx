@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import ProfilePreview from '../components/ProfilePreview'
+import AllYourPost from '../components/ProfilePage/AllYourPost'
 import Partner from '../components/Partner';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
@@ -56,6 +57,7 @@ function ProfilePage() {
 
             <ProfilePreview />
 
+            {/* FORM EDIT PROFILE */}
             <div className="row-span-3 col-span-2">
 
               <div className='p-10 bg-base-100 card shadow-md'>
@@ -226,12 +228,10 @@ function ProfilePage() {
                 </div>
               </div>
 
-              <div className="p-10 bg-base-100 card shadow-md mt-5">
-                All Your Post
-              </div>
+              <AllYourPost />
 
             </div>
-            
+            {/* END FORM EDIT PROFILE */}
 
           </div>
 
