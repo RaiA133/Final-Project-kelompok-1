@@ -16,7 +16,7 @@ function ProfilePreview() {
 
   return (
 
-    <div className={`row-span-2 flex flex-col text-xl items-center pt-6 pb-10 bg-base-100 card shadow-md h-fit ${location.pathname === '/profile' ? 'ms-6' : ''}`}>
+    <div className={`row-span-2 flex flex-col text-xl items-center pt-6 pb-10 bg-base-100 card shadow-md h-fit sticky top-0 ${location.pathname === '/profile' ? 'ms-6' : ''}`}>
 
       <Toaster
         toastOptions={{
@@ -93,10 +93,10 @@ function ProfilePreview() {
         <p className="text-sm">{userState.city || 'Kota'}, {userState.country || 'Negara'}</p>
       </div>
       <div className='grid gap-2 grid-cols-4 my-4 justify-center items-center'>
-        <img src={iconGlobe} className='w-7 hover:cursor-pointer' alt="Personal Website" onClick={() => window.open(userState.web_link || "https://tailwindcss.com", "_blank")} />
-        <img src={iconGithub} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open(userState.github_link || "https://tailwindcss.com", "_blank")} />
-        <img src={iconFacebook} className='w-6 hover:cursor-pointer' alt="Personal Facebook" onClick={() => window.open(userState.fb_link || "https://tailwindcss.com", "_blank")} />
-        <img src={iconInstagram} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open(userState.ig_link || "https://tailwindcss.com", "_blank")} />
+        {userState.web_link && <img src={iconGlobe} className='w-7 hover:cursor-pointer' alt="Personal Website" onClick={() => window.open(userState.web_link || "#", "_blank")} />}
+        {userState.github_link && <img src={iconGithub} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open(userState.github_link || "#", "_blank")} />}
+        {userState.fb_link && <img src={iconFacebook} className='w-6 hover:cursor-pointer' alt="Personal Facebook" onClick={() => window.open(userState.fb_link || "#", "_blank")} />}
+        {userState.ig_link && <img src={iconInstagram} className='w-6 hover:cursor-pointer' alt="Personal Github" onClick={() => window.open(userState.ig_link || "#", "_blank")} />}
       </div>
       <div className="rounded-xl bg-base-200 p-5 text-sm w-60 xl:w-80 max-h-96">{userState.about || 'About Me'}</div>
     </div>

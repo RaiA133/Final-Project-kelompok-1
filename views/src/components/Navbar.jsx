@@ -61,7 +61,7 @@ function Navbar() {
               <li>
                 <div className="avatar" onClick={() => navigate("/profile")}>
                   <div className="w-8 rounded-full">
-                    <img src={img_profile_link} />
+                    <img src={img_profile_link} alt="profile" />
                   </div>
                   <span className="overflow-hidden">
                     <p className="text-xs font-bold"> {userState.username || 'username'} </p>
