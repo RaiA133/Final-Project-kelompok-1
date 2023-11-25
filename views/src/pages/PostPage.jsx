@@ -3,6 +3,7 @@ import { PostContext } from "../contexts/PostContext";
 import ListPost from "../components/PostPage/ListPost";
 import DeatilPost from "../components/PostPage/DetailPost";
 import { getPostTerbaru, getPostTerlama } from "../modules/fetch";
+import Partner from "../components/Partner";
 
 function PostPage() {
   const { postState, postDetailState, setPostState } = useContext(PostContext); // list semua post
@@ -90,8 +91,13 @@ function PostPage() {
         </select>
       </div>
 
-      <div className="flex justify-center text-4xl font-bold items-center h-10 mt-5">
-        Postingan
+      <div className="w-screen ms-0 mt-5 overflow-hidden">
+        <div class="strips w-100 py-2 relative text-2xl border">
+          <b class="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES</b>
+          <b class="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES</b>
+          <b class="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES</b>
+          <b class="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES</b>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-6 mb-16 mx-5 xl:mx-32">
@@ -105,7 +111,7 @@ function PostPage() {
             ))}
           </div>
 
-          <div className="join grid grid-cols-2">
+          <div className="join grid grid-cols-2 mt-5">
             <button className="join-item btn btn-outline" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
               Previous page
             </button>
@@ -121,6 +127,7 @@ function PostPage() {
         </div>
         
       </div>
+      <Partner />
     </>
   )
 }

@@ -33,7 +33,11 @@ function ListPost({ post, id }) {
       </div>
       <p className="text-sm max-h-20 overflow-hidden">{post.post_desc}</p>
       <div className="divider" />
-      <div className="text-sm mt-2">
+      <div className="flex gap-2">
+        {post.post_category && <kbd className="kbd kbd-md w-fit text-xs">{post.post_category}</kbd> }
+        {post.post_tags && <kbd className="kbd kbd-md w-fit text-xs">#{post.post_tags}</kbd> }
+      </div>
+      <div className="text-sm mt-3">
         <span>Max Revenue :</span>
         {post.max_price}
         <p>Project Status: On Going</p>
