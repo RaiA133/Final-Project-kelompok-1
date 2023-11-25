@@ -24,15 +24,17 @@ function PostDetailPage() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 mb-16 mt-6 mx-5 card shadow-md">
 
-      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => navigate("/post")} >✕</button>
-      <div className="col-span-2 p-10 bg-base-100">
+      <div className="col-span-2 p-10 pt-8 bg-base-100">
 
+        <div className="flex justify-between">
         <h3 className="text-2xl font-extrabold text-base-900 sm:text-3xl">{selectedPost.post_title}</h3>
+        <button className="btn btn-sm btn-circle btn-ghost right-2 top-2" onClick={() => navigate("/post")} >✕</button>
+        </div>
         <p className="mt-6 text-base text-base-500">
           {selectedPost.post_desc}
         </p>
 
-        <div className="divider divider-start text-primary">Skill Needed</div>
+        <div className="divider divider-start text-primary mt-8">Skill Needed</div>
 
         <div className="block md:flex justify-between">
           <div className="mb-5">

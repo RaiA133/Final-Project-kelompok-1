@@ -10,11 +10,6 @@ function DeatilPost({ data }) {
   // Mencari postingan yang sesuai dengan ID dari URL
   const selectedPost = Array.isArray(postState) ? postState.find((post) => post.id === parseInt(id)) : null;
 
-  // Pastikan postingan yang dipilih ditemukan sebelum menampilkan datanya
-  // if (!selectedPost) {
-  //   return <div>Postingan tidak ditemukan.</div>;
-  // }
-
   return (
     <div>
       {data.unique_id ? (
