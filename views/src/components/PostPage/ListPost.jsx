@@ -6,10 +6,10 @@ import { getPostDetailBySlug } from "../../modules/fetch";
 
 function ListPost({ post, id }) {
   const navigate = useNavigate();
-  const { setPostDetailState, } = useContext(PostContext);
+  const { setPostDetailState } = useContext(PostContext);
   const { userState, img_profile_link } = useContext(UserContext); // profile kita
 
- 
+
   // getPostDetailBySlug
   async function handleDetailPost(slug) {
     const response = await getPostDetailBySlug(slug); // Fetch data
@@ -17,7 +17,6 @@ function ListPost({ post, id }) {
       setPostDetailState(response.data); // Set state if the response is successful
     }
   }
-  // console.log(postDetailState)
 
   return (
     <div className="bg-base-100 card shadow-md p-10">
@@ -27,7 +26,7 @@ function ListPost({ post, id }) {
         <p className="ms-3">{userState.username || "username"}</p>
       </div>
       <p className="text-sm max-h-20 overflow-hidden">{post.post_desc}</p>
-      <div className="divider"/>
+      <div className="divider" />
       <div className="text-sm mt-2">
         <span>Budget :</span>
         {post.max_price}
@@ -37,10 +36,10 @@ function ListPost({ post, id }) {
       <div className="mt-4">
         {/* <button className="btn btn-neutral btn-sm mr-2">Chat Owner</button> */}
         {/* <button className="btn btn-neutral btn-sm mr-2">Ambil Pekerjaan</button> */}
-        {/* <button onClick={() => navigate(`/post/${post.id}`)} className="btn btn-primary">
-          View
-        </button> */}
-        <button onClick={() => handleDetailPost(post.slug)} className="btn btn-neutral btn-sm">
+        <button onClick={() => navigate(`/post/${post.slug}`)} className="btn btn-neutral btn-sm lg:hidden">
+          View Detail
+        </button>
+        <button onClick={() => handleDetailPost(post.slug)} className="btn btn-neutral btn-sm hidden lg:block">
           View Detail
         </button>
       </div>
@@ -48,21 +47,6 @@ function ListPost({ post, id }) {
         {post.createdAt}
       </div>
     </div>
-
-    // <div className="card bg-base-100 shadow-xl">
-    //   <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
-    //   <div className="card-body">
-    //     <h2 className="card-title">
-    //       Shoes!
-    //       <div className="badge badge-secondary">NEW</div>
-    //     </h2>
-    //     <p>If a dog chews shoes whose shoes does he choose?</p>
-    //     <div className="card-actions justify-end">
-    //       <div className="badge badge-outline">Fashion</div>
-    //       <div className="badge badge-outline">Products</div>
-    //     </div>
-    //   </div>
-    // </div>
   )
 }
 

@@ -8,6 +8,7 @@ export const PostContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const [postState, setPostState] = useState({});
   const [postDetailState, setPostDetailState] = useState({});
+  const [post_img_link, set_post_img_link] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,5 +27,6 @@ export const PostContextProvider = ({ children }) => {
   return <PostContext.Provider value={{ 
     postState, setPostState, 
     postDetailState, setPostDetailState,
+    post_img_link, set_post_img_link,
   }}>{children}</PostContext.Provider>;
 };

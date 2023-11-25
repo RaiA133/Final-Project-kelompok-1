@@ -4,7 +4,7 @@ import ListPost from "../components/PostPage/ListPost";
 import DeatilPost from "../components/PostPage/DetailPost";
 
 function PostPage() {
-  const { postState, postDetailState } = useContext(PostContext); // lise semua post
+  const { postState, postDetailState } = useContext(PostContext); // list semua post
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -21,7 +21,6 @@ function PostPage() {
     setCurrentPage(1);
   };
 
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = Array.isArray(postState)
@@ -30,6 +29,7 @@ function PostPage() {
       .filter((post) => selectedTags === null || post.post_tags === selectedTags)
       .slice(indexOfFirstItem, indexOfLastItem)
     : [];
+
 
   return (
     <>
@@ -70,7 +70,7 @@ function PostPage() {
         Postingan
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-6 mb-16 mx-3 xl:mx-32">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-6 mb-16 mx-5 xl:mx-32">
         <div className="row-span-2 flex flex-col text-xl items-center pt-6 pb-10 h-fit">
 
           <div className="flex-auto grid grid-cols gap-4 card w-full mb-5">
@@ -92,7 +92,7 @@ function PostPage() {
 
         </div>
 
-        <div className="col-span-2 p-10 bg-base-100 card shadow-md mt-6 min-w-40 h-fit sticky top-5">
+        <div className="col-span-2 p-10 bg-base-100 card shadow-md mt-6 min-w-40 h-fit sticky top-5 hidden lg:block">
           <DeatilPost data={postDetailState} />
         </div>
         

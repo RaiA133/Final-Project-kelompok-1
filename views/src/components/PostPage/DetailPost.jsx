@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
-import { PostContext } from "../../contexts/PostContext";
+import { PostContext } from '../../contexts/PostContext';
 
 function DeatilPost({ data }) {
   const navigate = useNavigate();
@@ -31,14 +31,16 @@ function DeatilPost({ data }) {
                   <p className="ms-3 btn btn-ghost btn-sm">username</p>
                 </div>
                 <p className="py-6">{data.post_desc}</p>
-              <div className="mt-1 text-sm">
-                <span>Budget :</span>
-                {data.max_price}
-                <p>Project Status: On Going</p>
-                <p>Worktime: {data.post_worktime}</p>
+                <div className="mt-1 text-sm">
+                  <span>Budget :</span>
+                  {data.max_price}
+                  <p>Project Status: On Going</p>
+                  <p>Worktime: {data.post_worktime}</p>
+                </div>
+                <button onClick={() => navigate(`/post/${data.slug}`)} className="btn btn-primary mt-5">
+                  More Detail
+                </button>
               </div>
-              <button className="btn btn-primary mt-3">Get Started</button>
-            </div>
           </div>
         </div>
         <div className="mt-5 font-light">Dibuat : {data.createdAt}</div>

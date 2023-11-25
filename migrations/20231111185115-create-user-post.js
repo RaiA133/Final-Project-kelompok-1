@@ -51,6 +51,10 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+      skills: {
+        allowNull: true,
+        type: Sequelize.ARRAY(Sequelize.STRING)
+      },
       post_expired_in: {
         allowNull: true,
         type: Sequelize.DATE

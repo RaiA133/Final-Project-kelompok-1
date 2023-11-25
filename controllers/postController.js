@@ -236,7 +236,7 @@ class postController {
     try {
       const {
         post_title, post_desc,
-        post_category, post_tags,
+        post_category, post_tags, skills,
         min_price, max_price, post_worktime, post_worktime_time
       } = req.body;
 
@@ -260,6 +260,7 @@ class postController {
         post_desc,
         post_category,
         post_tags,
+        skills : [skills],
         min_price,
         max_price,
         post_worktime: post_worktime + ' ' + post_worktime_time,

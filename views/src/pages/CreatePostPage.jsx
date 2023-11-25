@@ -5,8 +5,12 @@ import Partner from "../components/Partner";
 import { useEffect, useState, useContext } from "react";
 import ProfilePreview from "../components/ProfilePreview";
 import { PostContext } from "../contexts/postContext";
+import DynamicInput from "../components/DynamicInput";
+import { NumericFormat } from "react-number-format";
 
 function CreatePostPage({ PostForm }) {
+  const [GetOutputArray, setGetOutputArray] = useState([]);
+  
   const navigate = useNavigate();
   const { postState } = useContext(PostContext);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -24,17 +28,19 @@ function CreatePostPage({ PostForm }) {
       );
       return;
     }
-
     const formData = new FormData(e.target);
-    // const formDataObject = Object.fromEntries(formData);
+    formData.append("skills", GetOutputArray);
+    const formDataObject = Object.fromEntries(formData);
     // console.log(formDataObject);
+    // console.log("typeof(GetOutputArray)", typeof(GetOutputArray))
+    // return
     try {
       const response = await createPost(formData);
       setSelectedImage("");
 
       if (response.status[0] === 201) {
         const successMessage = response.message;
-        const newPostId = response.data.id;
+        const newPostSlug = response.data.slug;
 
         toast.success(
           <>
@@ -43,7 +49,7 @@ function CreatePostPage({ PostForm }) {
                 <span className="leading-normal">{successMessage}</span>
                 <button
                   className="ms-4 btn btn-xs my-0"
-                  onClick={() => navigate(`/post/${newPostId}`)} // Menggunakan ID postingan baru di sini
+                  onClick={() => navigate(`/post/${newPostSlug}`)} // Menggunakan ID postingan baru di sini
                 >
                   Lihat
                 </button>
@@ -52,7 +58,7 @@ function CreatePostPage({ PostForm }) {
           </>,
           { duration: 2500 }
         );
-        e.target.reset(); // reset form ketika berhasil
+        // e.target.reset(); // reset form ketika berhasil
       }
     } catch (error) {
       let failedMessage = error.message;
@@ -75,6 +81,7 @@ function CreatePostPage({ PostForm }) {
       <div className="p-5">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
+
             <Toaster
               toastOptions={{
                 style: {
@@ -117,7 +124,7 @@ function CreatePostPage({ PostForm }) {
                   <label className="label">
                     <span className="label-text">Category</span>
                   </label>
-                  <select className="select select-bordered w-full max-w-xs" name="post_category" required defaultValue="">
+                  <select className="select select-bordered w-full" name="post_category" required defaultValue="">
                     <option value="" disabled hidden>
                       Post Category
                     </option>
@@ -142,10 +149,33 @@ function CreatePostPage({ PostForm }) {
                 <label className="label">
                   <span className="label-text">Price Range</span>
                 </label>
-                <div className="flex items-center">
-                  <input className="input input-bordered w-full" type="text" name="min_price" placeholder="Min Price" required />
-                  <div className="text-2xl font-bold mx-5">-</div>
-                  <input className="input input-bordered w-full" type="text" name="max_price" placeholder="Max Price" required />
+                <div className="flex items-center w-full">
+                
+                  <div className="block sm:flex w-full">
+                    <div className="flex items-center w-full">
+                      <select className="select select-bordered w-fit mr-2">
+                        <option value="Rp. " selected>Rp</option>
+                        <option value="$. ">$</option>
+                      </select>
+                      <NumericFormat
+                        className="input input-bordered w-full"
+                        value={12323}
+                        name="min_price"
+                        prefix="Rp. "
+                        thousandSeparator={"."}
+                        decimalSeparator={","}
+                      />
+                    </div>
+                    <div className="text-2xl font-bold mx-3 text-center sm:mt-2">-</div>
+                    <NumericFormat
+                      className="input input-bordered w-full" 
+                      value={12323}
+                      name="max_price"
+                      prefix="Rp. "
+                      thousandSeparator={"."}
+                      decimalSeparator={","}
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -155,7 +185,7 @@ function CreatePostPage({ PostForm }) {
                     <span className="label-text">Worktime</span>
                   </label>
                   <div className="flex justify-center">
-                    <input className="input input-bordered w-full me-2" type="text" name="post_worktime" placeholder="00" required />
+                    <input className="input input-bordered w-full me-2" type="number" name="post_worktime" placeholder="00" required />
                     <select className="select select-bordered join-item" name="post_worktime_time">
                       <option value="Day">Day</option>
                       <option value="Week">Week</option>
@@ -184,6 +214,11 @@ function CreatePostPage({ PostForm }) {
                   </div>
                 </div>
               </div>
+
+              <div className="form-control w-full">
+                <DynamicInput setGetOutputArray={setGetOutputArray}/>
+              </div>
+
             </div>
 
             <ProfilePreview />

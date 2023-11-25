@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     min_price: DataTypes.STRING,
     max_price: DataTypes.STRING,
     post_worktime: DataTypes.STRING,
+    skills: DataTypes.ARRAY(DataTypes.STRING),
     post_expired_in: DataTypes.DATE,
   }, {
     sequelize,

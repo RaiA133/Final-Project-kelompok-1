@@ -28,7 +28,7 @@ function App() {
   }, [window.localStorage.getItem("token")]);
 
   return (
-    <div className="container mx-auto bg-base-300 pt-3" data-theme="light">
+    <div className="mx-auto bg-base-300 pt-3" data-theme="light">
       <div className="drawer">
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col bg-base-300">
@@ -41,7 +41,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/post" element={<PostPage />} />
-            <Route path="/post/:id" element={<PostDetailPage />} />
+            <Route path="/post/:slug" element={<PostDetailPage />} />
             <Route path="/profile" element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
             <Route path="/create-post" element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
             <Route path="/chat" element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
