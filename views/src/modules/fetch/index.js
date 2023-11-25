@@ -40,6 +40,24 @@ async function getAllPostingan() {
   }
 }
 
+async function getPostTerbaru() {
+  try {
+    const response = await instance.get("/post/terbaru"); // Adjust the endpoint accordingly
+    return response.data; // Assuming response.data contains the necessary data
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+async function getPostTerlama() {
+  try {
+    const response = await instance.get("/post/terlama"); // Adjust the endpoint accordingly
+    return response.data; // Assuming response.data contains the necessary data
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
 //Function profile
 async function userProfile() {
   try {
@@ -118,4 +136,11 @@ async function logout() {
 }
 
 
-export { register, login, userProfile, updateProfile, getUserbyId, getPostDetailBySlug, getAllPostingan, createPost, testSession, logout };
+export { 
+  register, login, 
+  userProfile, updateProfile, 
+  getUserbyId, getPostDetailBySlug, 
+  getAllPostingan, createPost, 
+  getPostTerbaru, getPostTerlama,
+  testSession, logout 
+};

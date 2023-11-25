@@ -2,9 +2,10 @@ import { useState, useContext } from "react";
 import { PostContext } from "../contexts/PostContext";
 import ListPost from "../components/PostPage/ListPost";
 import DeatilPost from "../components/PostPage/DetailPost";
+import { getPostTerbaru, getPostTerlama } from "../modules/fetch";
 
 function PostPage() {
-  const { postState, postDetailState } = useContext(PostContext); // list semua post
+  const { postState, postDetailState, setPostState } = useContext(PostContext); // list semua post
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -18,6 +19,29 @@ function PostPage() {
 
   const filterByTags = (category) => {
     setSelectedTags(category);
+    setCurrentPage(1);
+  };
+
+  const filterByTime = async (category) => {
+    if (category == 'terbaru') {
+      try {
+        const response = await getPostTerbaru(); // Fetch data
+        if (response.status[1] === "Success") {
+          setPostState(response.data); // Set state if the response is successful
+        }
+      } catch (err) {
+        // console.log(err)
+      }
+    } else if (category == 'terlama') {
+      try {
+        const response = await getPostTerlama(); // Fetch data
+        if (response.status[1] === "Success") {
+          setPostState(response.data); // Set state if the response is successful
+        }
+      } catch (err) {
+        // console.log(err)
+      }
+    }
     setCurrentPage(1);
   };
 
@@ -60,9 +84,10 @@ function PostPage() {
         <select 
           className="select select-bordered w-full max-w-xs"
           defaultValue=""
+          onChange={(e) => filterByTime(e.target.value)}
         >
-          <option value="1" selected>Terbaru</option>
-          <option value="2">Terlama</option>
+          <option value="terbaru" selected>Terbaru</option>
+          <option value="terlama">Terlama</option>
         </select>
       </div>
 

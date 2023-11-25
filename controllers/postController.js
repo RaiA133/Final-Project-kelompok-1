@@ -7,7 +7,9 @@ class postController {
   // halaman POST PEKERJAAN | GET all data user_posts ( middlewares : JWT | login needed )
   static getPost(req, res, next) {
     // console.log(User_post)
-    User_post.findAll()
+    User_post.findAll({
+      order: [['id', 'DESC']],
+    })
       .then(data => {
         res.status(200).json({
           status: [200, 'Success'],
