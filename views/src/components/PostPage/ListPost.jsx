@@ -1,20 +1,27 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import { PostContext } from "../../contexts/PostContext";
 import { UserContext } from "../../contexts/UserContext";
 import { getPostDetailBySlug } from "../../modules/fetch";
 
 function ListPost({ post, id }) {
   const navigate = useNavigate();
-  const { setPostDetailState } = useContext(PostContext);
+  const { postState, post_img_link, set_post_img_link, setPostDetailState } = useContext(PostContext);
   const { userState, img_profile_link } = useContext(UserContext); // profile kita
-
 
   // getPostDetailBySlug
   async function handleDetailPost(slug) {
     const response = await getPostDetailBySlug(slug); // Fetch data
     if (response.status[1] === "Success") {
       setPostDetailState(response.data); // Set state if the response is successful
+    }
+    const selectedPost = Array.isArray(postState) ? postState.find((post) => post.slug === slug) : null;
+    if (selectedPost.post_img) {
+      const link = `${import.meta.env.VITE_BACKEND_BASEURL}/post/picture/` + selectedPost.post_img
+      set_post_img_link(link)
+    } else {
+      const link = import.meta.env.VITE_POST_PIC_DEFAULT
+      set_post_img_link(link)
     }
   }
 

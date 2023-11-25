@@ -1,14 +1,10 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { PostContext } from '../../contexts/PostContext';
 
 function DeatilPost({ data }) {
   const navigate = useNavigate();
-  const { id } = useParams(); // Mendapatkan ID dari URL
-  const { postState, post_img_link } = useContext(PostContext);
-
-  // Mencari postingan yang sesuai dengan ID dari URL
-  const selectedPost = Array.isArray(postState) ? postState.find((post) => post.id === parseInt(id)) : null;
+  const { post_img_link } = useContext(PostContext);
 
   return (
     <div>
@@ -21,7 +17,7 @@ function DeatilPost({ data }) {
                 <div className="flex">
                   <img src={post_img_link} className="max-w-[330px] rounded-lg shadow-2xl" />
                   <div className="col border p-5">
-                    <h1 className="text-4xl font-bold h-12 max-h-28 overflow-auto">{data.post_title}</h1>
+                    <h1 className="text-4xl font-bold max-h-28 overflow-auto">{data.post_title}</h1>
                     <div className="flex mt-1">
                       <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="gambar projek" className="w-10 h-10 object-cover rounded-full" />
                       <p className="ms-3 btn btn-ghost btn-sm">username</p>
@@ -30,10 +26,10 @@ function DeatilPost({ data }) {
                 </div>
                 <p className="py-6">{data.post_desc}</p>
                 <div className="mt-1 text-sm">
-                  <span>Budget :</span>
-                  {data.max_price}
-                  <p>Project Status: On Going</p>
-                  <p>Worktime: {data.post_worktime}</p>
+                  <span className="font-bold">Minimum Revenue : </span>
+                  {data.min_price}
+                  <p><span className="font-bold">Project Status: </span>On Going</p>
+                  <p><span className="font-bold">Worktime: </span>{data.post_worktime}</p>
                 </div>
                 <button onClick={() => navigate(`/post/${data.slug}`)} className="btn btn-primary mt-5">
                   More Detail

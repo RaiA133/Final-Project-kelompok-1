@@ -19,7 +19,7 @@ function CreatePostPage({ PostForm }) {
     e.preventDefault();
 
     if (!selectedImage) {
-      const successMessage = "Masukan File yang Berbeda";
+      const successMessage = "File Gambar Wajib Dimasukan";
       toast.error(
         <>
           <span className="leading-normal">{successMessage}</span>
@@ -58,7 +58,7 @@ function CreatePostPage({ PostForm }) {
           </>,
           { duration: 2500 }
         );
-        // e.target.reset(); // reset form ketika berhasil
+        e.target.reset(); // reset form ketika berhasil
       }
     } catch (error) {
       let failedMessage = error.message;
@@ -205,7 +205,6 @@ function CreatePostPage({ PostForm }) {
                       name="file"
                       placeholder="Upload Image"
                       accept="image/*"
-                      required
                       onChange={(e) => {
                         const file = e.target.files[0];
                         setSelectedImage(URL.createObjectURL(file));

@@ -51,7 +51,7 @@ function PostPage() {
           defaultValue=""
           onChange={(e) => filterByTags(e.target.value)}
         >
-          <option value="" disabled>Tags</option>
+          <option value=""  disabled>Tags</option>
           {Array.isArray(postState) &&
           postState.map((post) => (
             <option key={post.id} value={post.post_tags}>{post.post_tags}</option>
