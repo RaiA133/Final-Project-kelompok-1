@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { User_post } = require('../models')
+const { User_post, User } = require('../models')
 const { v4: uuidv4 } = require('uuid');
 
 class postController {
@@ -9,6 +9,10 @@ class postController {
     // console.log(User_post)
     User_post.findAll({
       order: [['id', 'DESC']],
+      include: {
+        model: User,
+        as: 'user'
+      }
     })
       .then(data => {
         res.status(200).json({

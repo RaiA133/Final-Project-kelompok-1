@@ -6,7 +6,7 @@ import { getPostDetailBySlug } from "../../modules/fetch";
 
 function ListPost({ post, id }) {
   const navigate = useNavigate();
-  const { postState, post_img_link, set_post_img_link, setPostDetailState } = useContext(PostContext);
+  const { postState, set_post_img_link, setPostDetailState } = useContext(PostContext);
   const { userState, img_profile_link } = useContext(UserContext); // profile kita
 
   // getPostDetailBySlug

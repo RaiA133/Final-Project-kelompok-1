@@ -6,13 +6,17 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        nique:true,
+        unique:true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       unique_id: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references: {
+          model: "Users",
+          key: "unique_id"
+        }
       },
       slug: {
         allowNull: true,

@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { PostContext } from '../contexts/postContext';
+import { PostContext } from '../contexts/PostContext';
 
 function PostDetailPage() {
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ function PostDetailPage() {
       <div className="row-span-2 p-5 bg-base-200 ps-8">
 
         <div className="stats bg-primary text-secondary-content w-fit lg:w-full mb-5">
-          <div className="stat w-fit">
+          <div className="stat w-full">
             <div className="stat-title text-base-100">Minimum Revenue</div>
             <div className="stat-value">{selectedPost.min_price}</div>
             <div className="divider mb-2 divider-secondary" />
