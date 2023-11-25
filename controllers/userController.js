@@ -2,7 +2,7 @@ require('dotenv').config();
 const { User } = require('../models')
 const { Op } = require('sequelize');
 
-class profileController {
+class userController {
 
   // halaman PROFILE | GET data user by id ( middlewares : JWT | login needed )
   static getUserById(req, res, next) {
@@ -53,6 +53,8 @@ class profileController {
       web_link, github_link, fb_link, ig_link
     } = req.body;
     const imgProfileValue = hapus_img ? hapus_img : fileName;
+    // console.log('asd', username)
+    // return
     const updatedUser = {
       name, username, email,
       img_profile: imgProfileValue, birth_date,
@@ -70,6 +72,7 @@ class profileController {
     })
       .then(existingUser => {
         if (existingUser) {
+          console.log(existingUser)
           // Email is already in use
         res.status(400).json({
           status: [400, 'Failed'],
@@ -125,4 +128,4 @@ class profileController {
 
 }
 
-module.exports = profileController
+module.exports = userController

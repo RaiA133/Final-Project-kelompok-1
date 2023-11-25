@@ -65,11 +65,9 @@ function PostDetailPage() {
           <div className="stat w-fit">
             <div className="stat-title text-base-100">Minimum Revenue</div>
             <div className="stat-value">{selectedPost.min_price}</div>
-            {/* <div className="stat-value">Rp.<span>1.200.000</span></div> */}
-            <div className="divider mb-2" />
+            <div className="divider mb-2 divider-secondary" />
             <div className="stat-title text-base-100">Maximum Revenue</div>
             <div className="stat-value">{selectedPost.max_price}</div>
-            {/* <div className="stat-value">Rp.<span>2.000.000</span></div> */}
             <div className="stat-actions">
               <button className="btn btn-sm mr-2">Chat Owner</button>
               <button className="btn btn-sm">Ambil Kerjaan</button>

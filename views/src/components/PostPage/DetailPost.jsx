@@ -17,8 +17,8 @@ function DeatilPost({ data }) {
                 <div className="flex">
                   <img src={post_img_link} className="max-w-[330px] rounded-lg shadow-2xl" />
                   <div className="col border p-5">
-                    <h1 className="text-4xl font-bold max-h-28 overflow-auto">{data.post_title}</h1>
-                    <div className="flex mt-1">
+                    <h1 className="text-4xl font-bold h-fit">{data.post_title}</h1>
+                    <div className="flex mt-3">
                       <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="gambar projek" className="w-10 h-10 object-cover rounded-full" />
                       <p className="ms-3 btn btn-ghost btn-sm">username</p>
                     </div>

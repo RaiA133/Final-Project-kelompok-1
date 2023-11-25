@@ -2,14 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import ProfilePreview from '../components/ProfilePreview'
 import AllYourPost from '../components/ProfilePage/AllYourPost'
 import Partner from '../components/Partner';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import toast, { Toaster } from 'react-hot-toast';
 import { updateProfile } from "../modules/fetch";
 
 function ProfilePage() {
   const navigate = useNavigate()
-  const { userState } = useContext(UserContext)
+  const { userState, img_profile_link } = useContext(UserContext)
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -18,12 +18,12 @@ function ProfilePage() {
     try {
 
       const response = await updateProfile(formData);
-
       if (response.status[1] === 'Success') {
-        const successMessage = response.message;
+        const toastMessage = response.message;
+        console.log(toastMessage)
         toast.success(
           <>
-            <span className='leading-normal'>{successMessage}</span>
+            <span className='leading-normal'>{toastMessage}</span>
           </>,
           { duration: 2500 }
         )
@@ -38,6 +38,16 @@ function ProfilePage() {
       });
     }
   }
+
+  useEffect(() => {
+    const toastMessage = localStorage.getItem('toastMessage')
+    if (toastMessage == 'Hapus Photo Berhasil!') {
+      toast.success(toastMessage, {
+        duration: 2500,
+      });
+      localStorage.removeItem('toastMessage');
+    }
+  }, [img_profile_link]);
 
 
   return (

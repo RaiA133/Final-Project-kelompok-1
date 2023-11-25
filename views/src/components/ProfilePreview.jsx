@@ -6,7 +6,6 @@ import iconFacebook from '../assets/icon/facebook.svg';
 import iconInstagram from '../assets/icon/instagram.svg';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
-import toast, { Toaster } from 'react-hot-toast';
 import { updateProfile } from "../modules/fetch";
 
 function ProfilePreview() {
@@ -17,14 +16,6 @@ function ProfilePreview() {
   return (
 
     <div className={`row-span-2 flex flex-col text-xl items-center pt-6 pb-10 bg-base-100 card shadow-md h-fit sticky top-0 ${location.pathname === '/profile' ? 'ms-6' : ''}`}>
-
-      <Toaster
-        toastOptions={{
-          style: {
-            maxWidth: '600px'
-          }
-        }}
-      />
 
       <div className="flex justify-center w-80">
         <p className="text-2xl font-bold">Profile Preview</p>
@@ -66,12 +57,14 @@ function ProfilePreview() {
                 <a onClick={ async () => {
                   const formData = new FormData();
                   formData.append('hapus_img', 'default.png');
+                  formData.append('username', userState.username);
                   const hapus_img = await updateProfile(formData);
-                  if (hapus_img.status[1] == 'Success') {
-                    toast.success('Hapus Photo Berhasil!', {
-                      duration: 2500,
-                    });
+                  if (hapus_img.status[1] == "Success") {
                     set_img_profile_link(import.meta.env.VITE_PROFILE_DEFAULT);
+                    window.localStorage.setItem('toastMessage', 'Hapus Photo Berhasil!');
+                    setTimeout(() => {
+                      localStorage.removeItem('toastMessage');
+                    }, 100)
                   }
                 }}>Remove Photo</a>
               </li>
