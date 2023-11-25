@@ -56,7 +56,7 @@ function App() {
             {!isLogin && (<li><a onClick={() => navigate("/login")}>Login</a></li>)}
             {!isLogin && (<li><a onClick={() => navigate("/register")}>Register</a></li>)}
             {isLogin && (<li><a onClick={() => navigate("/create-post")}>Create Post</a></li>)}
-            {isLogin && (<li><a onClick={() => navigate("/post")}>Post</a></li>)}
+            {isLogin && (<li><a onClick={() => navigate("/post")}>Find Post</a></li>)}
             {isLogin && (<li><a onClick={() => navigate("/chat")}>Chat</a></li>)}
           </ul>
         </div>

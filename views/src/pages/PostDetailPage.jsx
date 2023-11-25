@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { PostContext } from '../contexts/PostContext';
+import PostProfilePreview from "../components/PostPage/PostProfilePreview";
 
 function PostDetailPage() {
   const navigate = useNavigate();
@@ -8,7 +9,6 @@ function PostDetailPage() {
   const { postState, post_img_link, set_post_img_link } = useContext(PostContext);
   const selectedPost = Array.isArray(postState) ? postState.find((post) => post.slug === slug) : null;
 
-  // Pastikan postingan yang dipilih ditemukan sebelum menampilkan datanya
   if (!selectedPost) {
     return <div className="flex justify-center items-center h-64">Postingan tidak ditemukan.</div>;
   }
@@ -20,6 +20,8 @@ function PostDetailPage() {
     const link = import.meta.env.VITE_POST_PIC_DEFAULT
     set_post_img_link(link)
   }
+
+  // console.log(selectedPost)
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 mb-16 mt-6 mx-5 card shadow-md">
@@ -59,9 +61,10 @@ function PostDetailPage() {
 
       </div>
 
-      <div className="row-span-2 p-5 bg-base-200 ps-8">
+      <div className="row-span-2 p-5 bg-base-200 px-auto">
 
-        <div className="stats bg-primary text-secondary-content w-fit lg:w-full mb-5">
+      <div className="block md:flex lg:block h-fit">
+        <div className="stats bg-primary text-secondary-content h-fit w-full lg:w-full mb-5 mr-4 lg:mr-0">
           <div className="stat w-full">
             <div className="stat-title text-base-100">Minimum Revenue</div>
             <div className="stat-value">{selectedPost.min_price}</div>
@@ -74,9 +77,12 @@ function PostDetailPage() {
             </div>
           </div>
         </div>
-        <div className="stats bg-secondary text-secondary-content w-fit lg:w-full ms-5 lg:ms-0">
-          <div className="stat w-fit">asd</div>
+        <div className="stats text-base-content w-full md:w-1/2 lg:w-full mx-auto lg:ms-0 mb-5">
+          {/* <div className="stat w-fit"> */}
+            <PostProfilePreview hisProfile={selectedPost.user}/>
+          {/* </div> */}
         </div>
+      </div>
 
       </div>
 

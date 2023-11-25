@@ -24,13 +24,12 @@ function ListPost({ post, id }) {
       set_post_img_link(link)
     }
   }
-
   return (
     <div className="bg-base-100 card shadow-md p-10">
       <h2 className="text-xl font-bold mb-2">{post.post_title}</h2>
       <div className="flex items-center mb-2">
-        <img src={img_profile_link || "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"} alt="gambar projek" className="w-10 h-10 object-cover rounded-full" />
-        <p className="ms-3">{userState.username || "username"}</p>
+        <img src={`${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${post.user.img_profile}`} alt="gambar projek" className="w-10 h-10 object-cover rounded-full" />
+        <p className="ms-3">{post.user.username || "username"}</p>
       </div>
       <p className="text-sm max-h-20 overflow-hidden">{post.post_desc}</p>
       <div className="divider" />

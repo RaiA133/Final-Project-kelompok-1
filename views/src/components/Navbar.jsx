@@ -70,6 +70,11 @@ function Navbar() {
                 </div>
               </li>
               <li>
+                <a className="justify-between" onClick={() => navigate("/post")}>
+                  Find Post
+                </a>
+              </li>
+              <li>
                 <a className="justify-between" onClick={() => navigate("/create-post")}>
                   Create Post
                 </a>

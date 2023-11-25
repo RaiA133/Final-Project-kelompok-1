@@ -25,7 +25,7 @@ function ProfilePreview() {
 
       <div className="avatar">
         <div className="w-60 xl:w-80 rounded-xl">
-          <img src={img_profile_link} />
+          <img src={img_profile_link} className='w-20' />
         </div>
         {location.pathname == '/profile' &&
           <details className="dropdown dropdown-top absolute">
