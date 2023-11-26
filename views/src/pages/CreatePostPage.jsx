@@ -174,7 +174,7 @@ function CreatePostPage({ PostForm }) {
                         onChange={handleCurrencyChange}
                         defaultValue=""
                       >
-                        <option value="Rp" selected>Rp</option>
+                        <option value="Rp">Rp</option>
                         <option value="$">$</option>
                       </select>
                       <NumericFormat
@@ -209,7 +209,7 @@ function CreatePostPage({ PostForm }) {
                   <div className="flex justify-center">
                     <input className="input input-bordered w-full me-2" type="number" name="post_worktime" placeholder="00" required />
                     <select className="select select-bordered join-item" name="post_worktime_time" defaultValue="">
-                      <option value="Day" selected>Day</option>
+                      <option value="Day">Day</option>
                       <option value="Week">Week</option>
                       <option value="Month">Month</option>
                     </select>

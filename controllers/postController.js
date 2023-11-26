@@ -365,7 +365,7 @@ class postController {
       .then(data => {
         if (!data) {
           res.status(404).json({
-            status: [404, 'Success'],
+            status: [404, 'Failed'],
             halaman: 'Post',
             message: 'Data tidak ditemukan!',
           });

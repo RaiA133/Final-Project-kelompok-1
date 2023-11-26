@@ -32,7 +32,7 @@ function PostDetailPage() {
         <div className="col-span-2 p-10 pt-8 bg-base-100 lg:sticky top-0">
 
           <div className="flex justify-between">
-            <h3 className="text-2xl font-extrabold text-base-900 sm:text-3xl">{selectedPost.post_title}</h3>
+            <h3 className="text-2xl font-extrabold text-base-900 sm:text-3xl" id="title">{selectedPost.post_title}</h3>
             <button className="btn btn-sm btn-circle btn-ghost right-2 top-2" onClick={() => navigate("/post")} >✕</button>
           </div>
 

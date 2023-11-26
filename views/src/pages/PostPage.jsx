@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { PostContext } from "../contexts/PostContext";
 import ListPost from "../components/PostPage/ListPost";
-import DeatilPost from "../components/PostPage/DetailPost";
+import DetailPost from "../components/PostPage/DetailPost";
 import { getPostTerbaru, getPostTerlama } from "../modules/fetch";
 import Partner from "../components/Partner";
 
@@ -54,7 +54,6 @@ function PostPage() {
       .slice(indexOfFirstItem, indexOfLastItem)
     : [];
 
-
   return (
     <>
     
@@ -86,17 +85,17 @@ function PostPage() {
           onChange={(e) => filterByTime(e.target.value)}
           defaultValue=""
         >
-          <option value="terbaru" selected>Terbaru</option>
+          <option value="terbaru">Terbaru</option>
           <option value="terlama">Terlama</option>
         </select>
       </div>
 
-      <div className="w-screen ms-0 mt-5 overflow-hidden">
-        <div class="strips w-100 py-2 relative text-2xl border">
-          <b class="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES</b>
-          <b class="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES</b>
-          <b class="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES</b>
-          <b class="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES</b>
+      <div className="w-screen ms-0 mt-5 mx-0 max-w-[1520px]">
+        <div className="strips w-100 py-2 relative text-2xl">
+          <b className="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES / </b>
+          <b className="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES / </b>
+          <b className="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES / </b>
+          <b className="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES / </b>
         </div>
       </div>
 
@@ -123,7 +122,7 @@ function PostPage() {
         </div>
 
         <div className="col-span-2 p-10 bg-base-100 card shadow-md mt-6 min-w-40 h-fit sticky top-5 hidden lg:block">
-          <DeatilPost data={postDetailState} />
+          <DetailPost data={postDetailState} />
         </div>
         
       </div>

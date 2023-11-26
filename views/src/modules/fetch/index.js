@@ -31,10 +31,21 @@ async function login(email, password) {
   }
 }
 
+// function get semua postingan
 async function getAllPostingan() {
   try {
     const response = await instance.get("/post"); // Adjust the endpoint accordingly
     return response.data; // Assuming response.data contains the necessary data
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+// get all your postingan
+async function getYourPostingan() {
+  try {
+    const response = await instance.get("/post/mine");
+    return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || "Something went wrong");
   }
@@ -53,6 +64,16 @@ async function getPostTerlama() {
   try {
     const response = await instance.get("/post/terlama"); // Adjust the endpoint accordingly
     return response.data; // Assuming response.data contains the necessary data
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+// get all your postingan
+async function delYourPostinganById(id) {
+  try {
+    const response = await instance.delete(`/post/delete/${id}`);
+    return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || "Something went wrong");
   }
@@ -141,6 +162,7 @@ export {
   userProfile, updateProfile, 
   getUserbyId, getPostDetailBySlug, 
   getAllPostingan, createPost, 
+  getYourPostingan, delYourPostinganById,
   getPostTerbaru, getPostTerlama,
   testSession, logout 
 };

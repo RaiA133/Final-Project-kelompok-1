@@ -18,7 +18,7 @@ function ProfilePage() {
     try {
 
       const response = await updateProfile(formData);
-      if (response.status[1] === 'Success') {
+      if (response.message === 'Postingan berhasil di update!') {
         const toastMessage = response.message;
         console.log(toastMessage)
         toast.success(
@@ -42,6 +42,12 @@ function ProfilePage() {
   useEffect(() => {
     const toastMessage = localStorage.getItem('toastMessage')
     if (toastMessage == 'Hapus Photo Berhasil!') {
+      toast.success(toastMessage, {
+        duration: 2500,
+      });
+      localStorage.removeItem('toastMessage');
+    }
+    if (toastMessage == 'Postingan berhasil di delete!') {
       toast.success(toastMessage, {
         duration: 2500,
       });

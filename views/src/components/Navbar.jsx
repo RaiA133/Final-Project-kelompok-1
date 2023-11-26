@@ -84,7 +84,7 @@ function Navbar() {
                   Chat
                 </a>
               </li>
-              <li><a>Settings</a></li>
+              {/* <li><a>Settings</a></li> */}
               <li><a
                 onClick={async () => {
                   
