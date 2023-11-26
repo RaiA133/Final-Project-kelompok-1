@@ -76,7 +76,7 @@ function Navbar() {
               </li>
               <li>
                 <a className="justify-between" onClick={() => navigate("/create-post")}>
-                  Create Post
+                  Buat Tawaran
                 </a>
               </li>
               <li>
