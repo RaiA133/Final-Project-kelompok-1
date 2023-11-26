@@ -58,7 +58,6 @@ function RegisterPage() {
       toast.error(failedMessage, {
         duration: 2500,
       });
-      
     }
       
   }
