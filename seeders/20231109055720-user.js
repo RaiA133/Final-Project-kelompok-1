@@ -9,6 +9,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     const addUsers = [
       {
+        id: users.user1,
         user_role_id: 1,
         unique_id: users.user1,
         name: 'Raie Aswajjillah',
@@ -33,6 +34,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        id: users.user2,
         user_role_id: 2,
         unique_id: users.user2,
         name: 'Ikhsan',
@@ -44,6 +46,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        id: users.user3,
         user_role_id: 2,
         unique_id: users.user3,
         name: 'Iffat',

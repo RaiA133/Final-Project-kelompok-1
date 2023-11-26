@@ -32,6 +32,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/', routers);
 app.use('/profile/picture', express.static(path.join(__dirname, 'assets/img/users')));
+app.use('/post/picture', express.static(path.join(__dirname, 'assets/img/user_postingan')));
 
 if (process.env.NODE_ENV !== 'test') {
   httpServer.listen(port, () => {

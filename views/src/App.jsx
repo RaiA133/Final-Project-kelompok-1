@@ -40,14 +40,15 @@ function App() {
 
           {/* Page content here SEKALIGUS Define ROUTE URL*/}
           <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/login' element={<LoginPage />} />
-            <Route path='/register' element={<RegisterPage />} />
-            <Route path='/post' element={<PrivateRoute> <PostPage /> </PrivateRoute>} />
-            <Route path='/profile' element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
-            <Route path='/create-post' element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
-            <Route path='/chat' element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
-            <Route path='/administrator' element={<PrivateRoute> <AdminRoute> <AdminPage /> `</AdminRoute> </PrivateRoute>} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/post" element={<PostPage />} />
+            <Route path="/post/:slug" element={<PostDetailPage />} />
+            <Route path="/profile" element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
+            <Route path="/create-post" element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
+            <Route path="/chat" element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
+            <Route path='/administrator' element={<PrivateRoute> <AdminRoute> <AdminPage /> </AdminRoute> </PrivateRoute>} />
           </Routes>
 
         </div>
@@ -56,13 +57,12 @@ function App() {
           <ul className="menu p-4 w-80 min-h-full bg-base-200">
             {/* Sidebar content here */}
             <li><a onClick={() => navigate("/")}>Home</a></li>
-            {!isLogin && <li><a onClick={() => navigate("/login")}>Login</a></li>}
-            {!isLogin && <li><a onClick={() => navigate("/register")}>Register</a></li>}
-            {isLogin && <li><a onClick={() => navigate("/create-post")}>Create Post</a></li>}
+            {!isLogin && (<li><a onClick={() => navigate("/login")}>Login</a></li>)}
+            {!isLogin && (<li><a onClick={() => navigate("/register")}>Register</a></li>)}
+            {isLogin && (<li><a onClick={() => navigate("/create-post")}>Create Post</a></li>)}
             {isAdmin && <li><a onClick={() => navigate("/administrator")}>Administrator</a></li>}
-            {isLogin && <li><a onClick={() => navigate("/post")}>Post</a></li>}
-            {isLogin && <li><a onClick={() => navigate("/chat")}>Chat</a></li>}
-            
+            {isLogin && (<li><a onClick={() => navigate("/post")}>Find Post</a></li>)}
+            {isLogin && (<li><a onClick={() => navigate("/chat")}>Chat</a></li>)}
           </ul>
         </div>
       </div>

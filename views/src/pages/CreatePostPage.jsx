@@ -3,20 +3,22 @@ import toast, { Toaster } from "react-hot-toast";
 import { createPost } from "../modules/fetch";
 import Partner from "../components/Partner";
 import { useEffect, useState, useContext } from "react";
-import ProfilePriview from "../components/ProfilePreview";
-import { PostContext } from "../contexts/PostContext";
-
+import ProfilePreview from "../components/ProfilePreview";
+import { PostContext } from "../contexts/postContext";
+import DynamicInput from "../components/DynamicInput";
+import { NumericFormat } from "react-number-format";
 
 function CreatePostPage({ PostForm }) {
   const navigate = useNavigate();
-  const { postState } = useContext(PostContext);
+  const [GetOutputArray, setGetOutputArray] = useState([]);
+  const { postState, categoryTags } = useContext(PostContext);
   const [selectedImage, setSelectedImage] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     if (!selectedImage) {
-      const successMessage = "Masukan File yang Berbeda";
+      const successMessage = "File Gambar Wajib Dimasukan";
       toast.error(
         <>
           <span className="leading-normal">{successMessage}</span>
@@ -25,31 +27,27 @@ function CreatePostPage({ PostForm }) {
       );
       return;
     }
-
     const formData = new FormData(e.target);
+    formData.append("skills", GetOutputArray);
+
+    // const formDataObject = Object.fromEntries(formData);
+    // console.log('formDataObject', formDataObject);
+    // return
+
     try {
       const response = await createPost(formData);
       setSelectedImage("");
-
       if (response.status[0] === 201) {
         const successMessage = response.message;
-        const newPostId = response.data.id;
-
+        const newPostSlug = response.data.slug;
         toast.success(
           <>
-            {/* button default/ button awal */}
-            {/* <span className="leading-normal">{successMessage}</span>
-                                    <button className="ms-4 btn btn-xs my-0" onClick={() => navigate("/post")}>
-                                          Lihat
-                                    </button> */}
-
-            {/* button modif yang mengarah ke detail postingan */}
             {postState.length > 0 && (
               <div>
                 <span className="leading-normal">{successMessage}</span>
                 <button
                   className="ms-4 btn btn-xs my-0"
-                  onClick={() => navigate(`/post/${newPostId}`)} // Menggunakan ID postingan baru di sini
+                  onClick={() => navigate(`/post/${newPostSlug}`)} // Menggunakan ID postingan baru di sini
                 >
                   Lihat
                 </button>
@@ -76,11 +74,21 @@ function CreatePostPage({ PostForm }) {
     }
   }, [PostForm]);
 
+
+  const [currency, setCurrency] = useState('Rp');
+  const handleCurrencyChange = (event) => {
+    setCurrency(event.target.value);
+  };
+
+  const categories = categoryTags.categories
+  const tags = categoryTags.tags
+
   return (
     <>
       <div className="p-5">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
+
             <Toaster
               toastOptions={{
                 style: {
@@ -123,16 +131,15 @@ function CreatePostPage({ PostForm }) {
                   <label className="label">
                     <span className="label-text">Category</span>
                   </label>
-                  <select className="select select-bordered w-full max-w-xs" name="post_category" required defaultValue="">
+                  <select className="select select-bordered w-full" name="post_category" required defaultValue="">
                     <option value="" disabled hidden>
                       Post Category
                     </option>
-                    <option value="Application">Application</option>
-                    <option value="Website">Website</option>
-                    <option value="Video Editing">Video Editing</option>
-                    <option value="Digital Art">Digital Art</option>
-                    <option value="Animation">Animation</option>
-                    <option value="Gaming">Gaming</option>
+                    {categories.map((category, index) => (
+                      <option key={index} value={category}>
+                        {category}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -140,7 +147,16 @@ function CreatePostPage({ PostForm }) {
                   <label className="label">
                     <span className="label-text">Tags</span>
                   </label>
-                  <input className="input input-bordered w-full" type="text" name="post_tags" placeholder="Post Tags" required />
+                  <select className="select select-bordered w-full" name="post_tags" required defaultValue="">
+                    <option value="" disabled hidden>
+                      Post Tags
+                    </option>
+                    {tags.map((tag, index) => (
+                      <option key={index} value={tag}>
+                        {tag}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -148,10 +164,40 @@ function CreatePostPage({ PostForm }) {
                 <label className="label">
                   <span className="label-text">Price Range</span>
                 </label>
-                <div className="flex items-center">
-                  <input className="input input-bordered w-full" type="text" name="min_price" placeholder="Min Price" required />
-                  <div className="text-2xl font-bold mx-5">-</div>
-                  <input className="input input-bordered w-full" type="text" name="max_price" placeholder="Max Price" required />
+                <div className="flex items-center w-full">
+
+                  <div className="block sm:flex w-full">
+                    <div className="flex items-center w-full">
+                      <select
+                        className="select select-bordered w-fit mr-2"
+                        value={currency}
+                        onChange={handleCurrencyChange}
+                        defaultValue=""
+                      >
+                        <option value="Rp">Rp</option>
+                        <option value="$">$</option>
+                      </select>
+                      <NumericFormat
+                        className="input input-bordered w-full"
+                        value={0}
+                        name="min_price"
+                        prefix={currency + ' '}
+                        thousandSeparator="."
+                        decimalSeparator=","
+                        required
+                      />
+                    </div>
+                    <div className="text-2xl font-bold mx-3 text-center sm:mt-2">-</div>
+                    <NumericFormat
+                      className="input input-bordered w-full"
+                      value={0}
+                      name="max_price"
+                      prefix={currency + ' '}
+                      thousandSeparator="."
+                      decimalSeparator=","
+                      required
+                    />
+                  </div>
                 </div>
               </div>
 
@@ -161,8 +207,8 @@ function CreatePostPage({ PostForm }) {
                     <span className="label-text">Worktime</span>
                   </label>
                   <div className="flex justify-center">
-                    <input className="input input-bordered w-full me-2" type="text" name="post_worktime" placeholder="00" required />
-                    <select className="select select-bordered join-item" name="post_worktime_time">
+                    <input className="input input-bordered w-full me-2" type="number" name="post_worktime" placeholder="00" required />
+                    <select className="select select-bordered join-item" name="post_worktime_time" defaultValue="">
                       <option value="Day">Day</option>
                       <option value="Week">Week</option>
                       <option value="Month">Month</option>
@@ -181,7 +227,6 @@ function CreatePostPage({ PostForm }) {
                       name="file"
                       placeholder="Upload Image"
                       accept="image/*"
-                      required
                       onChange={(e) => {
                         const file = e.target.files[0];
                         setSelectedImage(URL.createObjectURL(file));
@@ -190,12 +235,19 @@ function CreatePostPage({ PostForm }) {
                   </div>
                 </div>
               </div>
+
+              <div className="form-control w-full">
+                <DynamicInput setGetOutputArray={setGetOutputArray} />
+              </div>
+
             </div>
 
-            <ProfilePriview />
+            <ProfilePreview />
+
           </div>
 
           <Partner />
+
         </form>
       </div>
     </>

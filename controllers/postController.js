@@ -1,13 +1,18 @@
 require('dotenv').config();
-const { User_post } = require('../models')
-const { v4: uuidv4 } = require('uuid');
+const { User_post, User } = require('../models')
 
 class postController {
 
   // halaman POST PEKERJAAN | GET all data user_posts ( middlewares : JWT | login needed )
   static getPost(req, res, next) {
     // console.log(User_post)
-    User_post.findAll()
+    User_post.findAll({
+      order: [['id', 'DESC']],
+      include: {
+        model: User,
+        as: 'user'
+      }
+    })
       .then(data => {
         res.status(200).json({
           status: [200, 'Success'],
@@ -32,6 +37,10 @@ class postController {
     User_post.findAll({
       where: {
         unique_id
+      },
+      include: {
+        model: User,
+        as: 'user'
       }
     })
       .then(data => {
@@ -68,6 +77,10 @@ class postController {
       where: {
         slug,
       },
+      include: {
+        model: User,
+        as: 'user'
+      }
     })
       .then((data) => {
         if (!data) {
@@ -101,6 +114,10 @@ class postController {
     User_post.findOne({
       where: {
         post_category
+      },
+      include: {
+        model: User,
+        as: 'user'
       }
     })
       .then(data => {
@@ -136,6 +153,10 @@ class postController {
     User_post.findOne({
       where: {
         post_tags
+      },
+      include: {
+        model: User,
+        as: 'user'
       }
     })
       .then(data => {
@@ -169,6 +190,10 @@ class postController {
   static getPostByTerbaru(req, res, next) {
     User_post.findAll({
       order: [['id', 'DESC']],
+      include: {
+        model: User,
+        as: 'user'
+      }
     })
       .then(data => {
         if (!data) {
@@ -201,6 +226,10 @@ class postController {
   static getPostByTerlama(req, res, next) {
     User_post.findAll({
       order: [['id', 'ASC']],
+      include: {
+        model: User,
+        as: 'user'
+      }
     })
       .then(data => {
         if (!data) {
@@ -236,23 +265,23 @@ class postController {
     try {
       const {
         post_title, post_desc,
-        post_category, post_tags,
+        post_category, post_tags, skills,
         min_price, max_price, post_worktime, post_worktime_time
       } = req.body;
-
-
+      
       const currentDate = new Date(); // Dapatkan tanggal saat ini
       const expirationDate = new Date(); // Tambahkan 30 hari ke tanggal saat ini
       expirationDate.setDate(currentDate.getDate() + 30);
-
+      
       // Fungsi untuk membuat slug
       const createSlug = (title) => {
         const formattedTitle = title.toLowerCase().replace(/\s+/g, '-'); // Lowercase dan ganti spasi dengan strip
         return formattedTitle
       };
+      
       const slugFormated = createSlug(post_title); // Buat slug dari post_title
-
       const file = fileName;
+      const skillsArray = skills.split(',');
       const newUser_post = await User_post.create({
         unique_id,
         slug: Date.now() + '_' + slugFormated,
@@ -261,12 +290,12 @@ class postController {
         post_desc,
         post_category,
         post_tags,
+        skills : skillsArray,
         min_price,
         max_price,
         post_worktime: post_worktime + ' ' + post_worktime_time,
         post_expired_in: expirationDate,
       });
-
 
       res.status(201).json({
         status: [201, 'Success'],
@@ -303,10 +332,9 @@ class postController {
     User_post.findByPk(req.params.id)
       .then(data => {
         if (!data) {
-          console.log(file)
           res.status(404).json({
             status: [404, 'Success'],
-            halaman: 'Post',
+            halaman: 'updatePostingan',
             message: 'Data tidak ditemukan!',
             data: updatedPostingan
           });
@@ -317,7 +345,7 @@ class postController {
       .then(data => {
         res.status(200).json({
           status: [200, 'Success'],
-          halaman: 'Post',
+          halaman: 'updatePostingan',
           message: 'Postingan berhasil di update!',
           data: updatedPostingan
         });
@@ -325,7 +353,7 @@ class postController {
       .catch(err => {
         res.status(500).json({
           status: [500, 'Failed'],
-          halaman: 'Post',
+          halaman: 'updatePostingan',
           message: 'Something went wrong!',
           error: err
         });
@@ -337,8 +365,8 @@ class postController {
       .then(data => {
         if (!data) {
           res.status(404).json({
-            status: [404, 'Success'],
-            halaman: 'Post',
+            status: [404, 'Failed'],
+            halaman: 'deletePostingan',
             message: 'Data tidak ditemukan!',
           });
         } else {
@@ -348,14 +376,14 @@ class postController {
       .then(data => {
         res.status(200).json({
           status: [200, 'Success'],
-          halaman: 'Post',
+          halaman: 'deletePostingan',
           message: 'Postingan berhasil di delete!',
         });
       })
       .catch(err => {
         res.status(500).json({
           status: [500, 'Failed'],
-          halaman: 'Post',
+          halaman: 'deletePostingan',
           message: 'Something went wrong!',
           error: err
         });

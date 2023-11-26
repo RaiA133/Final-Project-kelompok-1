@@ -15,7 +15,7 @@ function HomePage() {
         duration: 2500,
       });
       localStorage.removeItem('toastMessage');
-    } 
+    }
 
     // TOAST Logout berhasil : Muncul ketika proses logout berhasil
     if (toastMessage == 'Berhasil Logout') {
@@ -25,8 +25,8 @@ function HomePage() {
       });
       localStorage.removeItem('toastMessage');
     }
-  }, []); 
-  
+  }, []);
+
 
   return (
 
@@ -44,9 +44,11 @@ function HomePage() {
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-bold">Halaman Home</h1>
-            <p className="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-            <button onClick={() => navigate('/create-post')} className="btn px-12 btn-primary">Post Now</button>
+            <h1 className="mb-5 text-7xl font-bold">DEFINED</h1>
+            <p className="mb-5">
+            Apakah Anda sedang mencari ahli di bidang desain, penulisan, pengembangan web, atau pekerjaan freelance lainnya? Dengan DEFINED, Anda dapat terhubung dengan ribuan profesional berbakat di seluruh dunia yang siap membantu mewujudkan visi Anda. Atau, jadilah seorang profesional dan raih kesempatan baru!
+            </p>
+            <button onClick={() => navigate('/post')} className="btn px-12 btn-primary">Get Started</button>
           </div>
         </div>
       </div>
@@ -80,10 +82,10 @@ function HomePage() {
           </div>
         </div>
 
-        <div className="col-span-2 min-[640px]:text-xl min-[768px]:text-2xl min-[1024px]:text-3xl min-[1280px]:text-5xl font-bold">
-          <div>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book for research. <br />
-            <button className='btn lg:btn-lg max-[640px]:px-12  min-[640px]:px-16 min-[768px]:px-20 btn-primary mt-20' onClick={() => navigate("/post")}>Get Started</button>
+        <div className="col-span-2 min-[640px]:text-xl min-[768px]:text-2xl min-[1024px]:text-3xl min-[1280px]:text-5xl font-semibold">
+          <div className='lg:me-20'>
+          Jelaskan keinginan dan persyaratan proyek Anda dengan rinci menggunakan fitur "Buat Tawaran". Pilih kategori, tentukan anggaran, dan berikan tenggat waktu. Kami menyederhanakan proses ini sehingga Anda dapat berkonsentrasi pada hasil akhir yang diinginkan. <br />
+            <button className='btn lg:btn-lg max-[640px]:px-12  min-[640px]:px-16 min-[768px]:px-20 btn-primary mt-20' onClick={() => navigate("create-post")}>Post Now</button>
           </div>
         </div>
 

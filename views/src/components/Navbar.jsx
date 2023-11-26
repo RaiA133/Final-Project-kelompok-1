@@ -63,7 +63,7 @@ function Navbar() {
               <li>
                 <div className="avatar" onClick={() => navigate("/profile")}>
                   <div className="w-8 rounded-full">
-                    <img src={img_profile_link} />
+                    <img src={img_profile_link} alt="profile" />
                   </div>
                   <span className="overflow-hidden">
                     <p className="text-xs font-bold"> {userState.username || 'username'} </p>
@@ -72,8 +72,13 @@ function Navbar() {
                 </div>
               </li>
               <li>
+                <a className="justify-between" onClick={() => navigate("/post")}>
+                  Find Post
+                </a>
+              </li>
+              <li>
                 <a className="justify-between" onClick={() => navigate("/create-post")}>
-                  Create Post
+                  Buat Tawaran
                 </a>
               </li>
               <li>
@@ -81,10 +86,13 @@ function Navbar() {
                   Chat
                 </a>
               </li>
-              <li><a>Settings</a></li>
+              
+//               <li><a>Settings</a></li>
+              
               {isAdmin && (
                 <li><a onClick={() => navigate("/administrator")}>Administrator</a></li>
               )}
+              
               <li><a
                 onClick={async () => {
                   
