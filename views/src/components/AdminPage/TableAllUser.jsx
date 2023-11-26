@@ -31,6 +31,7 @@ function TableAllUser() {
     }
   }
   
+  let no = 1
   
   return (
     <>
@@ -80,10 +81,8 @@ function TableAllUser() {
                 .filter(user => user.user_role_id === parseInt(role))
                 .map((user) => (
                   <tr key={user.id}>
-                    <th>
-                      <label>
-                        <input type="checkbox" className="checkbox" />
-                      </label>
+                    <th className="ps-7">
+                      {no++}
                     </th>
                     <th className="px-0 flex justify-center pt-8">
 
@@ -92,9 +91,13 @@ function TableAllUser() {
                         document.getElementById('my_modal_2').showModal()
                       }}>details</button>
 
-                      <button className="btn btn-error btn-xs ml-2" onClick={() => {
-                        handleDeleteUser(user.id)}}
-                      >delete</button>
+                      {parseInt(role) == 2 ? (
+                        <button className="btn btn-error btn-xs ml-2" onClick={() => {
+                          handleDeleteUser(user.id)}}
+                        >delete</button>
+                      ) : (
+                        <div></div>
+                      )}
 
                     </th>
                     <td>
