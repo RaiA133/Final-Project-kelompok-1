@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import PostPage from './pages/PostPage';
 import ProfilePage from './pages/ProfilePage';
+import PostDetailPage from './pages/PostDetailPage'
 import CreatePostPage from './pages/CreatePostPage';
 import ChatPage from './pages/ChatPage';
 import AdminPage from './pages/AdminPage';
@@ -44,7 +45,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/post" element={<PostPage />} />
-            <Route path="/post/:slug" element={<PostDetailPage />} />
+            <Route path="/post/:slug" element={<PostDetailPage  />} />
             <Route path="/profile" element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
             <Route path="/create-post" element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
             <Route path="/chat" element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
@@ -59,10 +60,10 @@ function App() {
             <li><a onClick={() => navigate("/")}>Home</a></li>
             {!isLogin && (<li><a onClick={() => navigate("/login")}>Login</a></li>)}
             {!isLogin && (<li><a onClick={() => navigate("/register")}>Register</a></li>)}
-            {isLogin && (<li><a onClick={() => navigate("/create-post")}>Create Post</a></li>)}
-            {isAdmin && <li><a onClick={() => navigate("/administrator")}>Administrator</a></li>}
-            {isLogin && (<li><a onClick={() => navigate("/post")}>Find Post</a></li>)}
+            {isLogin && (<li><a onClick={() => navigate("/post")}>Cari Pekerjaan</a></li>)}
+            {isLogin && (<li><a onClick={() => navigate("/create-post")}>Buat Tawaram</a></li>)}
             {isLogin && (<li><a onClick={() => navigate("/chat")}>Chat</a></li>)}
+            {isAdmin && <li><a onClick={() => navigate("/administrator")}>Administrator</a></li>}
           </ul>
         </div>
       </div>

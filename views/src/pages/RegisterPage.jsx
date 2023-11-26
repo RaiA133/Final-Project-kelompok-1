@@ -103,8 +103,8 @@ function RegisterPage() {
                   className="input input-bordered w-full max-w-xs" 
                   type="text" 
                   name="username" 
-                  placeholder="Username" 
-                  required
+                  placeholder="Username"
+                  required 
                   />
               </div>
 

@@ -14,11 +14,8 @@ function DeatilPost({ data }) {
             <div className="hero-content flex-col lg:flex-row">
 
               <div className="ms-2">
-       
-                <h1 className="text-4xl font-bold h-12 max-h-28 overflow-auto">{data.post_title}</h1>
-                <div className="flex items-center mb-2">
-                  <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="gambar projek" className="w-10 h-10 object-cover rounded-full" />
-                  <p className="ms-3 btn btn-ghost btn-sm">{data.username}</p>
+                <div className="flex">
+                  <img src={post_img_link} className="max-w-[330px] rounded-lg shadow-2xl" onClick={() => document.getElementById('my_modal_4').showModal()} />
                   <div className="col p-5">
                     <div className="flex gap-2 mb-2">
                       {data.post_category && <kbd className="kbd kbd-md w-fit text-xs">{data.post_category}</kbd>}
@@ -45,7 +42,6 @@ function DeatilPost({ data }) {
                       More Detail
                     </button>
                   </div>
-
                 </div>
               </div>
             </div>
