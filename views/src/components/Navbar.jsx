@@ -61,13 +61,18 @@ function Navbar() {
               <li>
                 <div className="avatar" onClick={() => navigate("/profile")}>
                   <div className="w-8 rounded-full">
-                    <img src={img_profile_link} />
+                    <img src={img_profile_link} alt="profile" />
                   </div>
                   <span className="overflow-hidden">
                     <p className="text-xs font-bold"> {userState.username || 'username'} </p>
                     <p className="text-xs"> {userState.email || 'email@gmail.com'}  </p>
                   </span>
                 </div>
+              </li>
+              <li>
+                <a className="justify-between" onClick={() => navigate("/post")}>
+                  Find Post
+                </a>
               </li>
               <li>
                 <a className="justify-between" onClick={() => navigate("/create-post")}>
@@ -79,7 +84,7 @@ function Navbar() {
                   Chat
                 </a>
               </li>
-              <li><a>Settings</a></li>
+              {/* <li><a>Settings</a></li> */}
               <li><a
                 onClick={async () => {
                   

@@ -31,10 +31,49 @@ async function login(email, password) {
   }
 }
 
+// function get semua postingan
 async function getAllPostingan() {
   try {
     const response = await instance.get("/post"); // Adjust the endpoint accordingly
     return response.data; // Assuming response.data contains the necessary data
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+// get all your postingan
+async function getYourPostingan() {
+  try {
+    const response = await instance.get("/post/mine");
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+async function getPostTerbaru() {
+  try {
+    const response = await instance.get("/post/terbaru"); // Adjust the endpoint accordingly
+    return response.data; // Assuming response.data contains the necessary data
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+async function getPostTerlama() {
+  try {
+    const response = await instance.get("/post/terlama"); // Adjust the endpoint accordingly
+    return response.data; // Assuming response.data contains the necessary data
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+// get all your postingan
+async function delYourPostinganById(id) {
+  try {
+    const response = await instance.delete(`/post/delete/${id}`);
+    return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || "Something went wrong");
   }
@@ -52,7 +91,7 @@ async function userProfile() {
 
 
 //Update Profile
-async function updateProfile (formData) {
+async function updateProfile(formData) {
   const formDataObject = Object.fromEntries(formData.entries());
   try {
     const response = await instance.put('/profile/update', formData, {
@@ -61,7 +100,7 @@ async function updateProfile (formData) {
     return response.data;
   } 
   catch (error) {
-    if (formDataObject.file.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
+    if (formDataObject.file?.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
       throw new Error('File Tidak Boleh Lebih Dari 2MB')
     }
     const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
@@ -118,4 +157,12 @@ async function logout() {
 }
 
 
-export { register, login, userProfile, updateProfile, getUserbyId, getPostDetailBySlug, getAllPostingan, createPost, testSession, logout };
+export { 
+  register, login, 
+  userProfile, updateProfile, 
+  getUserbyId, getPostDetailBySlug, 
+  getAllPostingan, createPost, 
+  getYourPostingan, delYourPostinganById,
+  getPostTerbaru, getPostTerlama,
+  testSession, logout 
+};

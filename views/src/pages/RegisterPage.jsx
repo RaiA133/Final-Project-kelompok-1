@@ -20,6 +20,24 @@ function RegisterPage() {
     if (password !== confirmPassword) {
       return;
     }
+    if (password.length < 6) {
+      toast.error('Password minimal 6 digit!', {
+        duration: 2500,
+      });
+      return
+    }
+    if(e.target.name.value.length > 25) {
+      toast.error('Nama Terlalu Panjang Max 25 digit!', {
+        duration: 2500,
+      });
+      return
+    }
+    if(e.target.username.value.length > 10) {
+      toast.error('Username Terlalu Panjang Max 10 digit!', {
+        duration: 2500,
+      });
+      return
+    }
     try {
       const response = await register(
         e.target.name.value,

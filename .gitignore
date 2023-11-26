@@ -13,3 +13,6 @@ assets/img/user_postingan/*.png
 assets/img/user_postingan/*.jpg
 assets/img/user_postingan/*.jpeg
 assets/img/user_postingan/*.gif
+
+# posisi ini harus dibawah assets/img/user_postingan/*.png
+!assets/img/user_postingan/default.png

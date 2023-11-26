@@ -1,35 +1,42 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import { PostContext } from "../../contexts/PostContext";
-import { UserContext } from "../../contexts/UserContext";
 import { getPostDetailBySlug } from "../../modules/fetch";
 
 function ListPost({ post, id }) {
   const navigate = useNavigate();
-  const { setPostDetailState, } = useContext(PostContext);
-  const { userState, img_profile_link } = useContext(UserContext); // profile kita
+  const { postState, set_post_img_link, setPostDetailState } = useContext(PostContext);
 
- 
   // getPostDetailBySlug
   async function handleDetailPost(slug) {
     const response = await getPostDetailBySlug(slug); // Fetch data
     if (response.status[1] === "Success") {
       setPostDetailState(response.data); // Set state if the response is successful
     }
+    const selectedPost = Array.isArray(postState) ? postState.find((post) => post.slug === slug) : null;
+    if (selectedPost.post_img) {
+      const link = `${import.meta.env.VITE_BACKEND_BASEURL}/post/picture/` + selectedPost.post_img
+      set_post_img_link(link)
+    } else {
+      const link = import.meta.env.VITE_POST_PIC_DEFAULT
+      set_post_img_link(link)
+    }
   }
-  // console.log(postDetailState)
-
   return (
     <div className="bg-base-100 card shadow-md p-10">
       <h2 className="text-xl font-bold mb-2">{post.post_title}</h2>
       <div className="flex items-center mb-2">
-        <img src={img_profile_link || "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"} alt="gambar projek" className="w-10 h-10 object-cover rounded-full" />
-        <p className="ms-3">{userState.username || "username"}</p>
+        <img src={`${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${post.user.img_profile}`} alt="gambar projek" className="w-10 h-10 object-cover rounded-full" />
+        <p className="ms-3">{post.user.username || "username"}</p>
       </div>
       <p className="text-sm max-h-20 overflow-hidden">{post.post_desc}</p>
-      <div className="divider"/>
-      <div className="text-sm mt-2">
-        <span>Budget :</span>
+      <div className="divider" />
+      <div className="flex gap-2">
+        {post.post_category && <kbd className="kbd kbd-md w-fit text-xs">{post.post_category}</kbd> }
+        {post.post_tags && <kbd className="kbd kbd-md w-fit text-xs">#{post.post_tags}</kbd> }
+      </div>
+      <div className="text-sm mt-3">
+        <span>Max Revenue :</span>
         {post.max_price}
         <p>Project Status: On Going</p>
         <p>Worktime: {post.post_worktime}</p>
@@ -37,10 +44,10 @@ function ListPost({ post, id }) {
       <div className="mt-4">
         {/* <button className="btn btn-neutral btn-sm mr-2">Chat Owner</button> */}
         {/* <button className="btn btn-neutral btn-sm mr-2">Ambil Pekerjaan</button> */}
-        {/* <button onClick={() => navigate(`/post/${post.id}`)} className="btn btn-primary">
-          View
-        </button> */}
-        <button onClick={() => handleDetailPost(post.slug)} className="btn btn-neutral btn-sm">
+        <button onClick={() => navigate(`/post/${post.slug}`)} className="btn btn-neutral btn-sm lg:hidden">
+          View Detail
+        </button>
+        <button onClick={() => handleDetailPost(post.slug)} className="btn btn-neutral btn-sm hidden lg:block">
           View Detail
         </button>
       </div>
@@ -48,21 +55,6 @@ function ListPost({ post, id }) {
         {post.createdAt}
       </div>
     </div>
-
-    // <div className="card bg-base-100 shadow-xl">
-    //   <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
-    //   <div className="card-body">
-    //     <h2 className="card-title">
-    //       Shoes!
-    //       <div className="badge badge-secondary">NEW</div>
-    //     </h2>
-    //     <p>If a dog chews shoes whose shoes does he choose?</p>
-    //     <div className="card-actions justify-end">
-    //       <div className="badge badge-outline">Fashion</div>
-    //       <div className="badge badge-outline">Products</div>
-    //     </div>
-    //   </div>
-    // </div>
   )
 }
 

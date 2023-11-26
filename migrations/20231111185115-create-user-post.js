@@ -6,13 +6,17 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        nique:true,
+        unique:true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       unique_id: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references: {
+          model: "Users",
+          key: "unique_id"
+        }
       },
       slug: {
         allowNull: true,
@@ -50,6 +54,10 @@ module.exports = {
       post_worktime: {
         allowNull: true,
         type: Sequelize.STRING
+      },
+      skills: {
+        allowNull: true,
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       post_expired_in: {
         allowNull: true,
