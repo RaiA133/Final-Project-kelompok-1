@@ -4,6 +4,7 @@ import iconGlobe from '../../assets/icon/globe-alt.svg';
 import iconGithub from '../../assets/icon/github.svg';
 import iconFacebook from '../../assets/icon/facebook.svg';
 import iconInstagram from '../../assets/icon/instagram.svg';
+import toast, { Toaster } from 'react-hot-toast';
 
 function PostProfilePreview({ hisProfile }) {
   // console.log('hisProfile', hisProfile)

@@ -90,7 +90,7 @@ class userController {
               if (!data) {
                 res.status(404).json({
                   status: [404, 'Failed'],
-                  halaman: 'Profile',
+                  halaman: 'updateProfile',
                   message: 'Data Tidak Ditemukan!'
                 });
               } else {
@@ -98,7 +98,7 @@ class userController {
                 data.update(updatedUser)
                 res.status(200).json({
                   status: [200, 'Success'],
-                  halaman: 'Profile',
+                  halaman: 'updateProfile',
                   message: 'Data Berhasil Diupdate!',
                   data: updatedUser
                 });
@@ -107,7 +107,7 @@ class userController {
             .catch(err => {
               res.status(500).json({
                 status: [500, 'Failed'],
-                halaman: 'Profile',
+                halaman: 'updateProfile',
                 message: 'Something went wrong',
                 error: err
               });
@@ -117,7 +117,7 @@ class userController {
       .catch(err => {
         res.status(500).json({
           status: [500, 'Failed'],
-          halaman: 'Profile',
+          halaman: 'updateProfile',
           message: 'Something went wrong',
           error: err
         });

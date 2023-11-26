@@ -7,6 +7,7 @@ import iconInstagram from '../assets/icon/instagram.svg';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { updateProfile } from "../modules/fetch";
+import toast, { Toaster } from 'react-hot-toast';
 
 function ProfilePreview() {
   let location = useLocation();
@@ -16,6 +17,14 @@ function ProfilePreview() {
   return (
 
     <div className={`row-span-2 flex flex-col text-xl items-center pt-6 pb-10 bg-base-100 card shadow-md h-fit lg:sticky top-0 ${location.pathname === '/profile' ? 'ms-6' : ''}`}>
+
+      {/* <Toaster
+        toastOptions={{
+          style: {
+            maxWidth: "600px",
+          },
+        }}
+      /> */}
 
       <div className="flex justify-center w-80">
         <p className="text-2xl font-bold">Profile Preview</p>
@@ -37,13 +46,16 @@ function ProfilePreview() {
                   type="file"
                   name="file"
                   onChange={(e) => {
+                    e.preventDefault()
                     const file = e.target.files[0];
+                    let imageUrl
                     if (file) {
                       const maxSize = 2 * 1024 * 1024
                       if (file.size <= maxSize) {
-                        const imageUrl = URL.createObjectURL(file);
+                        imageUrl = URL.createObjectURL(file);
                         set_img_profile_link(imageUrl);
                       } else {
+                        e.target.value = null;
                         toast.error('File Tidak Boleh Lebih Dari 2MB!', {
                           duration: 2500,
                         });
@@ -54,7 +66,7 @@ function ProfilePreview() {
                 />
               </li>
               <li>
-                <a onClick={ async () => {
+                <a onClick={async () => {
                   const formData = new FormData();
                   formData.append('hapus_img', 'default.png');
                   formData.append('username', userState.username);

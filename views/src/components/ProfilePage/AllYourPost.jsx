@@ -9,6 +9,7 @@ function AllYourPost() {
 
   return (
     <div className="p-10 bg-base-100 card shadow-md mt-5 overflow-auto w-full" id='asd'>
+      <form action=""></form>
       <div className="flex justify-between">
         <p className="text-4xl font-bold">Semua Postinganmu</p>
       </div>
@@ -60,15 +61,19 @@ function AllYourPost() {
                         });
                       }}>details</button>
                       <button className="btn btn-error btn-xs"
-                        onClick={async () => {
-                          const hapus_post = await delYourPostinganById(post.id);
-                          if (hapus_post.status[1] == "Success") {
-                            const toastMessage = hapus_post.message
-                            window.localStorage.setItem('toastMessage', toastMessage);
-                            window.location.reload();
-                            setTimeout(() => {
-                              localStorage.removeItem('toastMessage');
-                            }, 100)
+                        onClick={async (e) => {
+                          e.preventDefault()
+                          const shouldDelete = confirm("Apakah Anda yakin ingin menghapus postingan?");
+                          if (shouldDelete) {
+                            const hapus_post = await delYourPostinganById(post.id);
+                            if (hapus_post.status[1] === "Success") {
+                              const toastMessage = hapus_post.message;
+                              window.localStorage.setItem('toastMessage', toastMessage);
+                              window.location.reload();
+                              setTimeout(() => {
+                                localStorage.removeItem('toastMessage');
+                              }, 100);
+                            }
                           }
                         }}>delete</button>
                     </th>

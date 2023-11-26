@@ -16,11 +16,9 @@ function ProfilePage() {
 
     const formData = new FormData(e.target);
     try {
-
       const response = await updateProfile(formData);
-      if (response.message === 'Postingan berhasil di update!') {
+      if (response.status[1] === 'Success' && response.halaman == 'updateProfile') {
         const toastMessage = response.message;
-        console.log(toastMessage)
         toast.success(
           <>
             <span className='leading-normal'>{toastMessage}</span>

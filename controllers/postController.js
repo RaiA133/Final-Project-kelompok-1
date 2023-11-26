@@ -334,7 +334,7 @@ class postController {
         if (!data) {
           res.status(404).json({
             status: [404, 'Success'],
-            halaman: 'Post',
+            halaman: 'updatePostingan',
             message: 'Data tidak ditemukan!',
             data: updatedPostingan
           });
@@ -345,7 +345,7 @@ class postController {
       .then(data => {
         res.status(200).json({
           status: [200, 'Success'],
-          halaman: 'Post',
+          halaman: 'updatePostingan',
           message: 'Postingan berhasil di update!',
           data: updatedPostingan
         });
@@ -353,7 +353,7 @@ class postController {
       .catch(err => {
         res.status(500).json({
           status: [500, 'Failed'],
-          halaman: 'Post',
+          halaman: 'updatePostingan',
           message: 'Something went wrong!',
           error: err
         });
@@ -366,7 +366,7 @@ class postController {
         if (!data) {
           res.status(404).json({
             status: [404, 'Failed'],
-            halaman: 'Post',
+            halaman: 'deletePostingan',
             message: 'Data tidak ditemukan!',
           });
         } else {
@@ -376,14 +376,14 @@ class postController {
       .then(data => {
         res.status(200).json({
           status: [200, 'Success'],
-          halaman: 'Post',
+          halaman: 'deletePostingan',
           message: 'Postingan berhasil di delete!',
         });
       })
       .catch(err => {
         res.status(500).json({
           status: [500, 'Failed'],
-          halaman: 'Post',
+          halaman: 'deletePostingan',
           message: 'Something went wrong!',
           error: err
         });
