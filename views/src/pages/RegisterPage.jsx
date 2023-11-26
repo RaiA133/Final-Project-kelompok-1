@@ -40,11 +40,6 @@ function RegisterPage() {
       toast.error(failedMessage, {
         duration: 2500,
       });
-        
-        // Redirect ke halaman login setelah registrasi berhasil
-        setTimeout(() => {
-          navigate('/login');
-        }, 2000);
     }
       
   }
