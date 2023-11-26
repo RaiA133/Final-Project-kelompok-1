@@ -73,7 +73,7 @@ function Navbar() {
               </li>
               <li>
                 <a className="justify-between" onClick={() => navigate("/post")}>
-                  Find Post
+                  Cari Pekerjaan
                 </a>
               </li>
               <li>
@@ -87,12 +87,11 @@ function Navbar() {
                 </a>
               </li>
               
-//               <li><a>Settings</a></li>
+              {/* <li><a>Settings</a></li> */}
               
               {isAdmin && (
                 <li><a onClick={() => navigate("/administrator")}>Administrator</a></li>
               )}
-              
               <li><a
                 onClick={async () => {
                   
