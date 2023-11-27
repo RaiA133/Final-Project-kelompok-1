@@ -1,8 +1,8 @@
+import { getPostTerbaru, getPostTerlama } from "../modules/fetch";
 import { useState, useContext } from "react";
 import { PostContext } from "../contexts/PostContext";
-import ListPost from "../components/PostPage/ListPost";
 import DetailPost from "../components/PostPage/DetailPost";
-import { getPostTerbaru, getPostTerlama } from "../modules/fetch";
+import ListPost from "../components/PostPage/ListPost";
 import Partner from "../components/Partner";
 
 function PostPage() {
@@ -30,7 +30,7 @@ function PostPage() {
           setPostState(response.data); // Set state if the response is successful
         }
       } catch (err) {
-        // console.log(err)
+        console.log(err)
       }
     } else if (category == 'terlama') {
       try {
@@ -39,7 +39,7 @@ function PostPage() {
           setPostState(response.data); // Set state if the response is successful
         }
       } catch (err) {
-        // console.log(err)
+        console.log(err)
       }
     }
     setCurrentPage(1);

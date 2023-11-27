@@ -177,9 +177,9 @@ async function getUserRoleAdmin() {
   }
 }
 
-async function deleteAdministrator(id) {
+async function deleteAdministrator(unique_id) {
   try {
-    const response = await instance.delete(`/administrator/${id}`);
+    const response = await instance.delete(`/administrator/${unique_id}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || 'Something went wrong');

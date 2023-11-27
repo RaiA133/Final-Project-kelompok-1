@@ -1,16 +1,10 @@
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import iconLocation from '../../../assets/icon/map-pin.svg';
 import iconGlobe from '../../../assets/icon/globe-alt.svg';
 import iconGithub from '../../../assets/icon/github.svg';
 import iconFacebook from '../../../assets/icon/facebook.svg';
 import iconInstagram from '../../../assets/icon/instagram.svg';
-import { UserContext } from '../../../contexts/UserContext';
 
 function Detail({ data }) {
-  const navigate = useNavigate();
-  const { userState, img_profile_link } = useContext(UserContext)
-  // console.log(data)
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-3'>
@@ -63,7 +57,7 @@ function Detail({ data }) {
                   Role
                 </dt>
                 <dd className="mt-1 text-sm text-base-900 sm:mt-0 sm:col-span-2">
-                {data.user_role_id === 1 ? 'Administrator' : 'User'}
+                  {data.user_role_id === 1 ? 'Administrator' : 'User'}
                 </dd>
               </div>
               <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -71,7 +65,7 @@ function Detail({ data }) {
                   Full Name
                 </dt>
                 <dd className="mt-1 text-sm text-base-900 sm:mt-0 sm:col-span-2">
-                {data.name || '-'}
+                  {data.name || '-'}
                 </dd>
               </div>
               <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -79,7 +73,7 @@ function Detail({ data }) {
                   Email address
                 </dt>
                 <dd className="mt-1 text-sm text-base-900 sm:mt-0 sm:col-span-2">
-                {data.email || '-'}
+                  {data.email || '-'}
                 </dd>
               </div>
               <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -87,7 +81,7 @@ function Detail({ data }) {
                   Contact
                 </dt>
                 <dd className="mt-1 text-sm text-base-900 sm:mt-0 sm:col-span-2">
-                {data.contact || '-'}
+                  {data.contact || '-'}
                 </dd>
               </div>
               <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -95,8 +89,8 @@ function Detail({ data }) {
                   Address
                 </dt>
                 <dd className="mt-1 text-sm text-base-900 sm:mt-0 sm:col-span-2">
-                {data.address || '-'}<br/>
-                {data.city || '-'}, {data.country || '-'}
+                  {data.address || '-'}<br />
+                  {data.city || '-'}, {data.country || '-'}
                 </dd>
               </div>
               <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -104,7 +98,7 @@ function Detail({ data }) {
                   Job
                 </dt>
                 <dd className="mt-1 text-sm text-base-900 sm:mt-0 sm:col-span-2">
-                {data.job || '-'}
+                  {data.job || '-'}
                 </dd>
               </div>
             </dl>

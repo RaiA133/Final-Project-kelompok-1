@@ -361,7 +361,13 @@ class postController {
   }
 
   static deletePostingan(req, res, next) {
-    User_post.findByPk(req.params.id)
+    // User_post.findByPk(req.params.id)
+    const { unique_id } = req.userData;
+    User_post.findAll({
+      where: {
+        unique_id
+      }
+    })
       .then(data => {
         if (!data) {
           res.status(404).json({
@@ -370,7 +376,7 @@ class postController {
             message: 'Data tidak ditemukan!',
           });
         } else {
-          return User_post.destroy({ where: { id: req.params.id } })
+          return User_post.destroy({ where: { unique_id } })
         }
       })
       .then(data => {

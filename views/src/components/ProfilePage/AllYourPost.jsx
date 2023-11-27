@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { useNavigate } from 'react-router-dom';
 import { PostContext } from "../../contexts/PostContext";
 import { delYourPostinganById } from "../../modules/fetch";
@@ -9,7 +9,7 @@ function AllYourPost() {
 
   return (
     <div className="p-10 bg-base-100 card shadow-md mt-5 overflow-auto w-full" id='asd'>
-      <form action=""></form>
+
       <div className="flex justify-between">
         <p className="text-4xl font-bold">Semua Postinganmu</p>
       </div>
@@ -60,22 +60,36 @@ function AllYourPost() {
                           behavior: 'smooth',
                         });
                       }}>details</button>
-                      <button className="btn btn-error btn-xs"
-                        onClick={async (e) => {
-                          e.preventDefault()
-                          const shouldDelete = confirm("Apakah Anda yakin ingin menghapus postingan?");
-                          if (shouldDelete) {
-                            const hapus_post = await delYourPostinganById(post.id);
-                            if (hapus_post.status[1] === "Success") {
-                              const toastMessage = hapus_post.message;
-                              window.localStorage.setItem('toastMessage', toastMessage);
-                              window.location.reload();
-                              setTimeout(() => {
-                                localStorage.removeItem('toastMessage');
-                              }, 100);
-                            }
-                          }
-                        }}>delete</button>
+                      <button className="btn btn-error btn-xs" onClick={(e) => {
+                        e.preventDefault();
+                        document.getElementById('my_modal_1').showModal()
+                      }}
+                      >delete</button>
+                      <dialog id="my_modal_1" className="modal">
+                        <div className="modal-box w-fit">
+                          <h3 className="font-bold text-lg text-center">Delete a post</h3>
+                          <p className="pt-4 text-center">Are you sure ?</p>
+                          <div className="modal-action flex justify-between gap-20">
+                            <button className="btn btn-error w-20"
+                              onClick={async (e) => {
+                                e.preventDefault();
+                                const hapus_post = await delYourPostinganById(post.id);
+                                console.log(hapus_post)
+                                if (hapus_post.status[1] === "Success") {
+                                  const toastMessage = hapus_post.message;
+                                  window.localStorage.setItem('toastMessage', toastMessage);
+                                  window.location.reload();
+                                  setTimeout(() => {
+                                    localStorage.removeItem('toastMessage');
+                                  }, 100);
+                                }
+                              }}>Yes</button>
+                            <form method="dialog">
+                              <button className="btn w-20">Close</button>
+                            </form>
+                          </div>
+                        </div>
+                      </dialog>
                     </th>
                   </tr>
                 ))}

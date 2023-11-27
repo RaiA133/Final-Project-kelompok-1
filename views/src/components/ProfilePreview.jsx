@@ -18,14 +18,6 @@ function ProfilePreview() {
 
     <div className={`row-span-2 flex flex-col text-xl items-center pt-6 pb-10 bg-base-100 card shadow-md h-fit lg:sticky top-0 ${location.pathname === '/profile' ? 'ms-6' : ''}`}>
 
-      {/* <Toaster
-        toastOptions={{
-          style: {
-            maxWidth: "600px",
-          },
-        }}
-      /> */}
-
       <div className="flex justify-center w-80">
         <p className="text-2xl font-bold">Profile Preview</p>
       </div>

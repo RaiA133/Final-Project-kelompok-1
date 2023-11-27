@@ -4,7 +4,7 @@ import { createPost } from "../modules/fetch";
 import Partner from "../components/Partner";
 import { useEffect, useState, useContext } from "react";
 import ProfilePreview from "../components/ProfilePreview";
-import { PostContext } from "../contexts/postContext";
+import { PostContext } from "../contexts/PostContext";
 import DynamicInput from "../components/DynamicInput";
 import { NumericFormat } from "react-number-format";
 
@@ -16,7 +16,6 @@ function CreatePostPage({ PostForm }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     if (!selectedImage) {
       const successMessage = "File Gambar Wajib Dimasukan";
       toast.error(
@@ -29,11 +28,9 @@ function CreatePostPage({ PostForm }) {
     }
     const formData = new FormData(e.target);
     formData.append("skills", GetOutputArray);
-
     // const formDataObject = Object.fromEntries(formData);
     // console.log('formDataObject', formDataObject);
     // return
-
     try {
       const response = await createPost(formData);
       setSelectedImage("");
@@ -74,8 +71,7 @@ function CreatePostPage({ PostForm }) {
     }
   }, [PostForm]);
 
-
-  const [currency, setCurrency] = useState('Rp');
+  const [currency, setCurrency] = useState('Rp'); // merubah RP/$ dari select
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
   };
@@ -179,6 +175,7 @@ function CreatePostPage({ PostForm }) {
                       </select>
                       <NumericFormat
                         className="input input-bordered w-full"
+                        autoComplete="off"
                         value={0}
                         name="min_price"
                         prefix={currency + ' '}
@@ -190,6 +187,7 @@ function CreatePostPage({ PostForm }) {
                     <div className="text-2xl font-bold mx-3 text-center sm:mt-2">-</div>
                     <NumericFormat
                       className="input input-bordered w-full"
+                      autoComplete="off"
                       value={0}
                       name="max_price"
                       prefix={currency + ' '}

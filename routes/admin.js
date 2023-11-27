@@ -5,7 +5,7 @@ const middlewares = require('../middlewares')
 route.get('/administrator', middlewares.verifyToken, middlewares.isAdminCheck, adminController.getUser)
 route.get('/administrator/get/role', middlewares.verifyToken, middlewares.isAdminCheck, adminController.getUserRole)
 route.get('/administrator/get/:unique_id', middlewares.verifyToken, middlewares.isAdminCheck, adminController.getUserByUniqueId)
+// route.delete('/administrator/:id', middlewares.verifyToken, middlewares.isAdminCheck, adminController.deleteUserById)
 route.delete('/administrator/:unique_id', middlewares.verifyToken, middlewares.isAdminCheck, adminController.deleteUserByUniqueId)
-route.delete('/administrator/:id', middlewares.verifyToken, middlewares.isAdminCheck, adminController.deleteUserById)
 
 module.exports = route

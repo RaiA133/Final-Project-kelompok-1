@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { getAllDataUserAdmin, getUserRoleAdmin } from "../modules/fetch";
 import { DecodedTokenContext } from "./PrivateRoute";
-import { getAllDataUserAdmin, getUserRoleAdmin, deleteAdministrator } from "../modules/fetch";
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from "../contexts/UserContext";
 
 export const AllUserContext = createContext();
@@ -15,10 +15,11 @@ function AdminRoute({
   const { isAdmin, setIsAdmin } = useContext(UserContext);
   const [allUser, setAllUser] = useState({})
   const [getRole, setGetRole] = useState()
+
   useEffect(() => {
     const checkAdminStatus = async () => {
       try {
-        const response2 = await getUserRoleAdmin()
+        const response2 = await getUserRoleAdmin() // ambil semua data role user
         if (response2.status[1] === 'Success') {
           setGetRole(response2.data)
         }
@@ -27,10 +28,10 @@ function AdminRoute({
           window.localStorage.setItem('toastMessage', toastMessage);
           navigate("/");
         }
-        const response = await getAllDataUserAdmin()
+        const response = await getAllDataUserAdmin() // ambil semua data user
         if (response.status[1] === 'Success') {
-          setIsAdmin(true)
           setAllUser(response)
+          setIsAdmin(true)
         } else {
           navigate("/");
         }

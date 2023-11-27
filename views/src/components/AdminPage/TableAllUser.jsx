@@ -2,39 +2,69 @@ import { useContext, useState } from "react";
 import { AllUserContext } from "../../components/AdminRoute";
 import { getUserByUniqueId, deleteAdministrator } from "../../modules/fetch";
 import Detail from "./components/Detail";
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function TableAllUser() {
-  const { allUser, getRole } = useContext(AllUserContext)
-  const users = allUser && allUser.data ? allUser.data : [];
+  const navigate = useNavigate()
   const [role, setRole] = useState(2)
   const [detailData, setDetailData] = useState(null);
+  const { allUser, getRole } = useContext(AllUserContext)
+  const users = allUser && allUser.data ? allUser.data : [''];
   const handleRoleChange = (e) => setRole(e.target.value);
+
+  // PAGINATION
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5); // jumlah baris per 1 halaman pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = Array.isArray(users)
+    ? users
+      .slice(indexOfFirstItem, indexOfLastItem)
+    : [];
+
   async function handleDetail(unique_id) {
-    const response3 = await getUserByUniqueId(unique_id)
-    if (response3.status[1] === 'Success') {
-      setDetailData(response3.data);
+    const response2 = await getUserByUniqueId(unique_id)
+    if (response2.status[1] === 'Success') {
+      setDetailData(response2.data);
     }
   }
 
-  async function handleDeleteUser(id) {
+  async function handleDeleteUser(unique_id) {
     try {
-      const response = await deleteAdministrator(id);
-     
-      if (response.status[0] === 'Success') {
+      const secondConfirm = confirm('Apakah Anda yakin ? Hapus Beserta Postingannya')
+      if (secondConfirm) {
+        const response = await deleteAdministrator(unique_id);
+        if (response.status[1] === 'Success') {
+          toast.success(response.message, {
+            duration: 6000,
+          })
+        }
         navigate("/administrator");
-        console.log('User deleted successfully');
-      } else {
-        console.error('Failed to delete user');
       }
     } catch (error) {
+      console.log(error)
+      toast.error(error.message, {
+        duration: 6000,
+      })
+      navigate("/administrator");
       console.error('An error occurred while deleting user:', error.message);
     }
   }
-  
+
   let no = 1
-  
+
   return (
     <>
+
+      <Toaster
+        toastOptions={{
+          style: {
+            maxWidth: '600px'
+          }
+        }}
+      />
+
       <dialog id="my_modal_2" className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
 
@@ -77,7 +107,7 @@ function TableAllUser() {
             </thead>
             <tbody>
 
-              {users
+              {currentItems
                 .filter(user => user.user_role_id === parseInt(role))
                 .map((user) => (
                   <tr key={user.id}>
@@ -92,11 +122,27 @@ function TableAllUser() {
                       }}>details</button>
 
                       {parseInt(role) == 2 ? (
-                        <button className="btn btn-error btn-xs ml-2" onClick={() => {
-                          handleDeleteUser(user.id)}}
-                        >delete</button>
+                        <>
+                          <button className="btn btn-error btn-xs ml-2" onClick={() => document.getElementById('my_modal_1').showModal()}>delete</button>
+                          <dialog id="my_modal_1" className="modal">
+                            <div className="modal-box w-fit">
+                              <h3 className="font-bold text-lg text-center">Are you sure ?</h3>
+                              <p className="pt-4 text-center mx-5">Hapus user beserta semua postingannya</p>
+                              <div className="modal-action flex justify-between gap-20">
+                                <form method="dialog">
+                                  <button className="btn btn-error w-20" onClick={() => {
+                                    handleDeleteUser(user.id)
+                                  }}>Yes</button>
+                                </form>
+                                <form method="dialog">
+                                  <button className="btn w-20">Close</button>
+                                </form>
+                              </div>
+                            </div>
+                          </dialog>
+                        </>
                       ) : (
-                        <div></div>
+                        <></>
                       )}
 
                     </th>
@@ -105,7 +151,7 @@ function TableAllUser() {
                         <div className="avatar">
                           <div className="mask mask-squircle w-12 h-12">
                             <img
-                              src={`${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${user.img_profile}`}
+                              src={`${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${user.img_profile}` || import.meta.env.VITE_PROFILE_DEFAULT}
                               alt="Avatar Tailwind CSS Component"
                             />
                           </div>
@@ -126,7 +172,7 @@ function TableAllUser() {
                         {user.company || '-'}
                         <br />
                         <span className="badge badge-ghost badge-sm w-[200px]">
-                        {user.job || '-'}
+                          {user.job || '-'}
                         </span>
                       </div>
                     </td>
@@ -139,12 +185,16 @@ function TableAllUser() {
         </div>
       </div>
       <div className="flex justify-center">
+
         <div className="join grid grid-cols-2 w-80 mt-10">
-          <button className="join-item btn btn-outline">
+          <button className="join-item btn btn-outline" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
             Previous page
           </button>
-          <button className="join-item btn btn-outline">Next</button>
+          <button className="join-item btn btn-outline" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentItems.length < itemsPerPage}>
+            Next
+          </button>
         </div>
+
       </div>
     </>
   )

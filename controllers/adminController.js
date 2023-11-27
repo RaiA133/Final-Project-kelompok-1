@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { User } = require('../models')
+const { User, User_post } = require('../models')
 const { User_role } = require('../models')
 
 
@@ -79,12 +79,12 @@ class adminController {
       })
   }
 
-  // halaman ADMIN | DELETE data user by unique_id ( middlewares : JWT | login needed )
+  // halaman ADMIN | DELETE data user by id ( middlewares : JWT | login needed )
   static deleteUserById(req, res, next) {
-    const { unique_id } = req.params; // hasil decoded dari middleware verifyToken
+    const { id } = req.params; // hasil decoded dari middleware verifyToken
     User.destroy({
       where: {
-        unique_id,
+        id,
       }
     })
       .then(data => {
@@ -116,12 +116,12 @@ class adminController {
       });
   }
 
-  // halaman ADMIN | DELETE data user by id ( middlewares : JWT | login needed )
+  // halaman ADMIN | DELETE data user by unique_id & delete all his post ( middlewares : JWT | login needed )
   static deleteUserByUniqueId(req, res, next) {
-    const { id } = req.params; // hasil decoded dari middleware verifyToken
-    User.destroy({
+    const { unique_id } = req.params;
+    User_post.destroy({ // delete semua postingan user
       where: {
-        id,
+        unique_id,
       }
     })
       .then(data => {
@@ -136,11 +136,28 @@ class adminController {
           });
         }
         else {
-          return res.status(200).json({
-            status: [200, 'Success'],
-            halaman: 'Administrator',
-            message: `Data User Berhasil Dihapus`,
-          });
+          User.findOne({
+            where: {
+              unique_id
+            }
+          })
+            .then(data => {
+              if (!data) {
+                return res.status(404).json({
+                  status: [404, 'Failed'],
+                  halaman: 'getUserByUniqueId',
+                  message: `Data User dengan unique_id ${unique_id} Tidak Ditemukan`,
+                });
+              }
+              else {
+                User.destroy({ where: { unique_id } }) // delete semua user
+                return res.status(200).json({
+                  status: [200, 'Success'],
+                  halaman: 'Administrator',
+                  message: `Username ${data.username} Beserta Seluruh Postingannya berhasil di delete!`,
+                });
+              }
+            })
         }
       })
       .catch(err => {

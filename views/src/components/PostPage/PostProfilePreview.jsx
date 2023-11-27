@@ -1,15 +1,12 @@
-import { useNavigate, useLocation } from 'react-router-dom';
 import iconLocation from '../../assets/icon/map-pin.svg';
 import iconGlobe from '../../assets/icon/globe-alt.svg';
 import iconGithub from '../../assets/icon/github.svg';
 import iconFacebook from '../../assets/icon/facebook.svg';
 import iconInstagram from '../../assets/icon/instagram.svg';
-import toast, { Toaster } from 'react-hot-toast';
+
 
 function PostProfilePreview({ hisProfile }) {
-  // console.log('hisProfile', hisProfile)
   return (
-
     <div className='row-span-2 flex flex-col text-xl items-center pt-6 pb-7 bg-base-100 card shadow-md h-fit lg:sticky top-0'>
 
       <div className="flex justify-center w-fit">
