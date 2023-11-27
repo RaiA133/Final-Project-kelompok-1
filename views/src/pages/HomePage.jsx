@@ -2,6 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Partner from '../components/Partner';
 import toast, { Toaster } from 'react-hot-toast';
+import affan from '../../../assets/img/team/affan.jpeg';
+import holid from '../../../assets/img/team/holid.png';
+import iffat from '../../../assets/img/team/iffat.png';
+import ikhsan from '../../../assets/img/team/ikhsan.png';
+import raie from '../../../assets/img/team/raie.png';
+import hadi from '../../../assets/img/team/hadi.jpg';
 
 function HomePage() {
   const navigate = useNavigate()
@@ -43,10 +49,10 @@ function HomePage() {
       <div className="hero min-h-screen" style={{ backgroundImage: 'url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg)' }}>
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
-          <div className="max-w-md">
+          <div className="max-w-lg">
             <h1 className="mb-5 text-7xl font-bold">DEFINED</h1>
             <p className="mb-5">
-            Apakah Anda sedang mencari ahli di bidang desain, penulisan, pengembangan web, atau pekerjaan freelance lainnya? Dengan DEFINED, Anda dapat terhubung dengan ribuan profesional berbakat di seluruh dunia yang siap membantu mewujudkan visi Anda. Atau, jadilah seorang profesional dan raih kesempatan baru!
+              Apakah Anda sedang mencari ahli di bidang desain, penulisan, pengembangan web, atau pekerjaan freelance lainnya? Dengan DEFINED, Anda dapat terhubung orang orang yang profesional dan berbakat yang siap membantu mewujudkan visi Anda. Atau, jadilah profesional yang dibutuhkan dan raih kesempatan baru!
             </p>
             <button onClick={() => navigate('/post')} className="btn px-12 btn-primary">Get Started</button>
           </div>
@@ -61,24 +67,35 @@ function HomePage() {
           <div className="avatar-group -space-x-6 rtl:space-x-reverse pb-10 min-[768px]:ms-16 min-[1024px]:ms-20 min-[1280px]:ms-24 mt-5">
             <div className="avatar">
               <div className="w-16">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src={affan} title='Affan'/>
               </div>
             </div>
             <div className="avatar">
               <div className="w-16">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src={ikhsan} title='Ikhsan'/>
               </div>
             </div>
             <div className="avatar">
               <div className="w-16">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src={hadi} title='Hadi'/>
               </div>
             </div>
             <div className="avatar">
               <div className="w-16">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src={iffat} title='Iffat'/>
               </div>
             </div>
+            <div className="avatar">
+              <div className="w-16">
+                <img src={holid} title='Holid'/>
+              </div>
+            </div>
+            <div className="avatar">
+              <div className="w-16">
+                <img src={raie} title='Raie'/>
+              </div>
+            </div>
+            
           </div>
         </div>
 
