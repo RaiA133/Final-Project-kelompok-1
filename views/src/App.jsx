@@ -31,7 +31,7 @@ function App() {
   }, [window.localStorage.getItem("token")]);
 
   return (
-    <div className="mx-auto bg-base-300 pt-3" data-theme="light">
+    <div className="mx-auto bg-base-300 pt-3 w-full" data-theme="light">
 
       <div className="drawer">
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />

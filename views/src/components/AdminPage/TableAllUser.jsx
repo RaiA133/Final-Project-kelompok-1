@@ -49,13 +49,16 @@ function TableAllUser() {
       </dialog>
 
       <div className="flex justify-center">
-        <select className="select select-bordered select-sm w-sm" onChange={handleRoleChange}>
+        <select className="select select-bordered select-sm w-sm" onChange={(e) => {
+          setCurrentPage(1); // membuat hamalan jumlah baris table yg dipisah drowpdown fit
+          handleRoleChange(e);
+        }}>
           <option value='2'>User</option>
           <option value='1'>Administrator</option>
         </select>
       </div>
-      <div className="flex justify-center">
-        <div className="overflow-x-auto w-screen h-30 mt-5 flex">
+      <div className="flex h-[31rem]">
+        <div className="overflow-x-auto w-screen h-30 mt-5 flex justify-center h-fit">
           <table className="table w-[1400px] bg-base-100">
             {/* head */}
             <thead>

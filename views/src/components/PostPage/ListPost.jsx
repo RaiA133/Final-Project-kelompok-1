@@ -43,8 +43,6 @@ function ListPost({ post, id }) {
         <p>Worktime: {post.post_worktime}</p>
       </div>
       <div className="mt-4">
-        {/* <button className="btn btn-neutral btn-sm mr-2">Chat Owner</button> */}
-        {/* <button className="btn btn-neutral btn-sm mr-2">Ambil Pekerjaan</button> */}
         <button onClick={() => navigate(`/post/${post.slug}`)} className="btn btn-neutral btn-sm lg:hidden">
           View Detail
         </button>

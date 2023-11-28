@@ -90,7 +90,7 @@ function PostPage() {
         </select>
       </div>
 
-      <div className="w-screen ms-0 mt-5 mx-0 max-w-[1520px]">
+      <div className="w-screen ms-0 mt-5 mx-0 max-w-fit">
         <div className="strips w-100 py-2 relative text-2xl">
           <b className="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES / </b>
           <b className="strips-text">POSTINGAN / DEMAND / KEINGINAN / JOB PORTAL / PROBLEM / WISHES / ISSUES / </b>
