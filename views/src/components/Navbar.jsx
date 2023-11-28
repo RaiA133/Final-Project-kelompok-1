@@ -17,15 +17,11 @@ function Navbar() {
     }
   }, [window.localStorage.getItem("token")]);
 
-  // mengirim img_profile_link dari isi userState di Context itu sendiri tapi di edit dengan link static
-  useEffect(() => {
+  useEffect(() => { // ketika userState / profile kita diupdate, ubah state context link gambar
     if (userState.img_profile) {
-       const link = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/` + userState.img_profile
+       const link = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${userState.img_profile}` || import.meta.env.VITE_PROFILE_DEFAULT
        set_img_profile_link(link)
-    } else {
-      const link = import.meta.env.VITE_PROFILE_DEFAULT
-      set_img_profile_link(link)
-    }
+    } 
   }, [userState])
 
   return (

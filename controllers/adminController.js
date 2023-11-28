@@ -6,7 +6,13 @@ const { User_role } = require('../models')
 class adminController {
   // halaman ADMIN | GET all data user ( middlewares : JWT | login needed )
   static getUser(req, res, next) {
-    User.findAll()
+    const {user_role_id } = req.params
+    User.findAll({
+      where: {
+        user_role_id
+      },
+      order: [['no', 'ASC']],
+    })
       .then(data => {
         res.status(200).json({
           status: [200, 'Success'],
@@ -126,14 +132,28 @@ class adminController {
     })
       .then(data => {
         if (!data) {
-          return res.status(404).json({
-            status: [404, 'Failed'],
-            halaman: 'Administrator',
-            message: [
-              'Anda Belum Login!',
-              'Data Tidak ada'
-            ]
-          });
+          User.findOne({
+            where: {
+              unique_id
+            }
+          })
+            .then(data => {
+              if (!data) {
+                return res.status(404).json({
+                  status: [404, 'Failed'],
+                  halaman: 'getUserByUniqueId',
+                  message: `Data User dengan unique_id ${unique_id} Tidak Ditemukan`,
+                });
+              }
+              else {
+                User.destroy({ where: { unique_id } }) // delete semua user
+                return res.status(200).json({
+                  status: [200, 'Success'],
+                  halaman: 'Administrator',
+                  message: `Username ${data.username} berhasil di delete! (tidak memiliki postingan)`,
+                });
+              }
+            })
         }
         else {
           User.findOne({

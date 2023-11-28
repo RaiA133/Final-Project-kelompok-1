@@ -3,16 +3,46 @@ import iconGlobe from '../../../assets/icon/globe-alt.svg';
 import iconGithub from '../../../assets/icon/github.svg';
 import iconFacebook from '../../../assets/icon/facebook.svg';
 import iconInstagram from '../../../assets/icon/instagram.svg';
+import toast, { Toaster } from 'react-hot-toast';  
+import { deleteUserByUniqueIdAdmin } from '../../../modules/fetch';
 
 function Detail({ data }) {
+  async function handleDeleteUser(unique_id) {
+    try {
+      const secondConfirm = confirm('Apakah Anda yakin ? Hapus Beserta Postingannya')
+      if (secondConfirm) {
+        const response = await deleteUserByUniqueIdAdmin(unique_id);
+        if (response.status[1] === 'Success') {
+          toast.success(response.message, {
+            duration: 6000,
+          })
+        }
+        window.location.reload()
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message, {
+        duration: 6000,
+      })
+      window.location.reload()
+      console.error('An error occurred while deleting user:', error.message);
+    }
+  }
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-3'>
+      <Toaster
+        toastOptions={{
+          style: {
+            maxWidth: '600px'
+          }
+        }}
+      />
       <div className='col-span-1'>
         <div className='row-span-2 flex flex-col text-xl items-center pt-6 pb-5 bg-base-100 card shadow-md h-fit px-5'>
           <div className="avatar">
             <div className="min-w-60 xl:min-w-60 rounded-xl">
-              <img src={`${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${data.img_profile}`} />
+              <img src={import.meta.env.VITE_PROFILE_DEFAULT || `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${data.img_profile}`} />
             </div>
           </div>
           <div className="mt-3 mb-1 text-2xl">
@@ -35,8 +65,15 @@ function Detail({ data }) {
       <div className='col-span-2 bg-base-100 mt-5 h-[40rem] md:ms-10'>
         <div className="bg-base-100 overflow-hidden shadow rounded-lg border">
           <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-base-900">
-              User Profile
+            <h3 className="text-lg leading-6 font-medium text-base-900 flex justify-between items-center">
+              <span>User Profile</span>
+              <span>
+                {data.user_role_id === 2 && (
+                  <button className="btn btn-error btn-xs ml-2" onClick={() =>
+                    document.getElementById('my_modal_1').showModal()
+                  }>delete</button>
+                )}
+              </span>
             </h3>
             <p className="mt-1 max-w-2xl text-sm text-base-500">
               This is some information about the user.
@@ -105,7 +142,26 @@ function Detail({ data }) {
           </div>
         </div>
       </div>
+
+      <dialog id="my_modal_1" className="modal">
+        <div className="modal-box w-fit">
+          <h3 className="font-bold text-lg text-center">Are you sure ?</h3>
+          <p className="pt-4 text-center mx-5">Hapus user {data.username} beserta semua postingannya</p>
+          <div className="modal-action flex justify-between gap-20">
+            <form method="dialog">
+              <button className="btn btn-error w-20" onClick={() => {
+                handleDeleteUser(data.unique_id)
+              }}>Yes</button>
+            </form>
+            <form method="dialog">
+              <button className="btn w-20">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
     </div>
+    
   )
 }
 

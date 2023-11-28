@@ -168,7 +168,6 @@ function CreatePostPage({ PostForm }) {
                         className="select select-bordered w-fit mr-2"
                         value={currency}
                         onChange={handleCurrencyChange}
-                        defaultValue=""
                       >
                         <option value="Rp">Rp</option>
                         <option value="$">$</option>

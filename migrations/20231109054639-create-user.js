@@ -3,6 +3,12 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
+      no: {
+        allowNull: false,
+        unique: true,
+        autoIncrement: true,
+        type: Sequelize.INTEGER
+      },
       id: { // mau bagaimanapun foreign key akan tetap mengambil data kesini, 
         allowNull: true,
         unique: true,

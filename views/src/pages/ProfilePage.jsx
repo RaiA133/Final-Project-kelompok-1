@@ -9,11 +9,9 @@ import { updateProfile } from "../modules/fetch";
 
 function ProfilePage() {
   const navigate = useNavigate()
-  const { userState, img_profile_link } = useContext(UserContext)
-
+  const { userState, img_profile_link, set_img_profile_link } = useContext(UserContext)
   async function handleSubmit(e) {
     e.preventDefault();
-
     const formData = new FormData(e.target);
     try {
       const response = await updateProfile(formData);
@@ -26,7 +24,6 @@ function ProfilePage() {
           { duration: 2500 }
         )
       }
-
     } catch (error) {
       let failedMessage = error.message
       console.log(error)

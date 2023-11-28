@@ -17,12 +17,11 @@ function PostDetailPage() {
   if (selectedPost.post_img) {
     const link = `${import.meta.env.VITE_BACKEND_BASEURL}/post/picture/` + selectedPost.post_img
     set_post_img_link(link)
-  } else {
+  }
+  else {
     const link = import.meta.env.VITE_POST_PIC_DEFAULT
     set_post_img_link(link)
   }
-
-  // console.log(selectedPost)
 
   return (
     <div>
