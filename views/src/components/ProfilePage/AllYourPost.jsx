@@ -45,21 +45,21 @@ function AllYourPost() {
                     {id + 1}
                   </th>
                   <td>
-                    <div className="flex items-center gap-3 w-full">
-                      <div>
-                        <div className="font-bold truncate">{post.post_title}</div>
-                        <span className="badge badge-warning badge-sm w-full lg:w-fit h-fit truncate">{post.post_category}</span>
-                        <span className="badge badge-sencodary badge-sm w-full lg:w-fit h-fit truncate">#{post.post_tags}</span>
+                    <div className="flex items-center gap-3 w-64">
+                      <div className="truncate overflow-hidden ...">
+                        <div className="font-bold truncate" title={post.post_title}>{post.post_title}</div>
+                        <span className="badge badge-warning badge-sm w-full lg:w-fit h-fit truncate" title={post.post_category}>{post.post_category}</span>
+                        <span className="badge badge-sencodary badge-sm w-full lg:w-fit h-fit truncate" title={'#'+post.post_tags}>#{post.post_tags}</span>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <p className="w-64 truncate overflow-hidden ...">
+                    <p className="w-64 truncate overflow-hidden ..." title={post.post_desc}>
                       {post.post_desc}
                     </p>
-                    <span className="badge badge-ghost badge-sm h-fit text-center px-5">{post.min_price} - {post.max_price}</span>
+                    <span className="badge badge-ghost badge-sm h-fit text-center px-5" title={post.min_price +' - '+post.max_price} >{post.min_price} - {post.max_price}</span>
                   </td>
-                  <td className="truncate">{post.createdAt}</td>
+                  <td className="truncate" title={post.createdAt}>{post.createdAt}</td>
                   <th className="truncate">
                     <button className="btn btn-ghost btn-xs me-2" onClick={() => {
                       navigate(`/post/${post.slug}`)
