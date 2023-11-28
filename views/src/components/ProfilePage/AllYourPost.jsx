@@ -45,7 +45,7 @@ function AllYourPost() {
                     {id + 1}
                   </th>
                   <td>
-                    <div className="flex items-center gap-3 w-64">
+                    <div className="flex items-center gap-3 w-60">
                       <div className="truncate overflow-hidden ...">
                         <div className="font-bold truncate" title={post.post_title}>{post.post_title}</div>
                         <span className="badge badge-warning badge-sm w-full lg:w-fit h-fit truncate" title={post.post_category}>{post.post_category}</span>
