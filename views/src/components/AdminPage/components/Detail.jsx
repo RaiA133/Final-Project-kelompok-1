@@ -17,7 +17,6 @@ function Detail({ data }) {
     const FetchDetailPost = async () => {
       try {
         const response = await getPostByUniqueId(data.unique_id);
-        console.log(response);
         if (response.status[1] === "Success") {
           setUserPostByUniqueId(response.data);
         } else {
@@ -29,7 +28,7 @@ function Detail({ data }) {
       }
     };
     FetchDetailPost();
-  }, [data.unique_id]);
+  }, [data]);
 
 
   async function handleDeleteUser(unique_id) {
@@ -95,9 +94,10 @@ function Detail({ data }) {
                 <span>User Profile</span>
                 <span>
                   {data.user_role_id === 2 && (
-                    <button className="btn btn-error btn-xs ml-2" onClick={() =>
-                      document.getElementById('my_modal_1').showModal()
-                    }>delete</button>
+                    <button className="btn btn-error btn-xs ml-2 text-base-100" onClick={(e) => {
+                      document.getElementById('my_modal_delete_user').showModal()
+                      e.preventDefault()
+                    }}>delete</button>
                   )}
                 </span>
               </h3>
@@ -175,7 +175,7 @@ function Detail({ data }) {
         </div>
 
         {/* MODAL POPUP BOX */}
-        <dialog id="my_modal_1" className="modal">
+        <dialog id="my_modal_delete_user" className="modal">
           <div className="modal-box w-fit">
             <h3 className="font-bold text-lg text-center">Are you sure ?</h3>
             <p className="pt-4 text-center mx-5">Hapus user <span className='font-bold'>{data.username}</span> beserta <span className='text-error'>semua postingannya</span></p>

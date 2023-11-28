@@ -74,13 +74,12 @@ function AllUserPost() {
                         behavior: 'smooth',
                       });
                     }}>details</button>
-                    <button className="btn btn-success btn-xs text-base-100 me-2">Edit</button>
                     <button className="btn btn-error btn-xs text-base-100" onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById('my_modal_1').showModal()
+                      document.getElementById('my_modal_delete_post').showModal()
                     }}
                     >delete</button>
-                    <dialog id="my_modal_1" className="modal">
+                    <dialog id="my_modal_delete_post" className="modal">
                       <div className="modal-box w-fit">
                         <h3 className="font-bold text-lg text-center">Delete a post</h3>
                         <p className="pt-4 text-center">Are you sure ?</p>
