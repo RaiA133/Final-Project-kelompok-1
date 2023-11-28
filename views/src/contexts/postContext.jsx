@@ -25,7 +25,8 @@ export const PostContextProvider = ({ children }) => {
       'Photography',
       'Translation',
       'Video Editing',
-      'Virtual Assistance'
+      'Virtual Assistance',
+      'Web Programming'
     ],
     tags: [
       "App Development",

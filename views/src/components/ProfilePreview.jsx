@@ -18,14 +18,6 @@ function ProfilePreview() {
 
     <div className={`row-span-2 flex flex-col text-xl items-center pt-6 pb-10 bg-base-100 card shadow-md h-fit lg:sticky top-0 ${location.pathname === '/profile' ? 'ms-6' : ''}`}>
 
-      {/* <Toaster
-        toastOptions={{
-          style: {
-            maxWidth: "600px",
-          },
-        }}
-      /> */}
-
       <div className="flex justify-center w-80">
         <p className="text-2xl font-bold">Profile Preview</p>
       </div>
@@ -34,7 +26,7 @@ function ProfilePreview() {
 
       <div className="avatar">
         <div className="w-60 xl:w-80 rounded-xl">
-          <img src={img_profile_link} className='w-20' />
+          <img src={img_profile_link || `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${userState.img_profile}`} className='w-20' />
         </div>
         {location.pathname == '/profile' &&
           <details className="dropdown dropdown-top absolute">

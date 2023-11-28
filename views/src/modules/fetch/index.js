@@ -119,6 +119,16 @@ async function getUserbyId(id) {
 }
 
 // get user by slug | slug otomatis dari title
+async function getPostByUniqueId(unique_id) {
+  try {
+    const response = await instance.get(`/post/all/${unique_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+// get user by slug | slug otomatis dari title
 async function getPostDetailBySlug(slug) {
   try {
     const response = await instance.get(`/post/${slug}`);
@@ -148,9 +158,9 @@ async function createPost(formData) {
 }
 
 // Function Administrator Get All Data User
-async function getAllDataUserAdmin() {
+async function getAllDataUserAdmin(user_role_id) {
   try {
-    const response = await instance.get(`/administrator`);
+    const response = await instance.get(`/administrator/${user_role_id}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || 'Something went wrong');
@@ -177,9 +187,10 @@ async function getUserRoleAdmin() {
   }
 }
 
-async function deleteAdministrator(id) {
+async function deleteUserByUniqueIdAdmin(unique_id) {
+  console.log(unique_id)
   try {
-    const response = await instance.delete(`/administrator/${id}`);
+    const response = await instance.delete(`/administrator/${unique_id}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || 'Something went wrong');
@@ -199,12 +210,13 @@ async function logout() {
 export { 
   register, login, 
   getAllPostingan, getUserbyId,
+  getPostByUniqueId,
   getPostDetailBySlug, userProfile, 
   createPost, updateProfile, 
   getYourPostingan, delYourPostinganById,
   getPostTerbaru, getPostTerlama,
   getAllDataUserAdmin, getUserRoleAdmin,
-  getUserByUniqueId, deleteAdministrator, 
+  getUserByUniqueId, deleteUserByUniqueIdAdmin, 
   testSession, logout 
 };
 

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { getAllDataUserAdmin, getUserRoleAdmin } from "../modules/fetch";
 import { DecodedTokenContext } from "./PrivateRoute";
-import { getAllDataUserAdmin, getUserRoleAdmin, deleteAdministrator } from "../modules/fetch";
+import { useNavigate } from 'react-router-dom';
 import { UserContext } from "../contexts/UserContext";
 
 export const AllUserContext = createContext();
@@ -13,31 +13,36 @@ function AdminRoute({
   const navigate = useNavigate();
   const { decodedTokenState } = useContext(DecodedTokenContext)
   const { isAdmin, setIsAdmin } = useContext(UserContext);
-  const [allUser, setAllUser] = useState({})
-  const [getRole, setGetRole] = useState()
+  const [allUser, setAllUser] = useState()
+  const [tableRole, setTableRole] = useState(2)
+  const [getRole, setGetRole] = useState([])
+
+  useEffect(() => {
+    const changeAllUserByRole = async () => {
+      const response2 = await getUserRoleAdmin() // ambil semua data role user
+      if (response2.status[1] === 'Success') {
+        setGetRole(response2.data)
+      }
+      const response = await getAllDataUserAdmin(tableRole) // ambil semua data user
+      if (response.status[1] === 'Success') {
+        setAllUser(response.data)
+        setIsAdmin(true)
+      } else {
+        navigate("/");
+      }
+    }
+    changeAllUserByRole()
+  }, [tableRole])
+
+
   useEffect(() => {
     const checkAdminStatus = async () => {
       try {
-        const response2 = await getUserRoleAdmin()
-        if (response2.status[1] === 'Success') {
-          setGetRole(response2.data)
-        }
         if (decodedTokenState.user_role_id !== 1) {
-          const toastMessage = error.message;
-          window.localStorage.setItem('toastMessage', toastMessage);
           navigate("/");
         }
-        const response = await getAllDataUserAdmin()
-        if (response.status[1] === 'Success') {
-          setIsAdmin(true)
-          setAllUser(response)
-        } else {
-          navigate("/");
-        }
-      } catch (error) {
-        const toastMessage = error.message;
-        window.localStorage.setItem('toastMessage', toastMessage);
-        console.error('Error checking admin status:', error);
+      } catch (err) {
+        console.error('Error checking admin status:', err);
         navigate("/");
       }
     };
@@ -46,8 +51,9 @@ function AdminRoute({
 
   return (
     <div>
-      <AllUserContext.Provider value={{ 
-        allUser, 
+      <AllUserContext.Provider value={{
+        allUser, setAllUser,
+        tableRole, setTableRole,
         getRole,
       }}>
         {isAdmin ? (

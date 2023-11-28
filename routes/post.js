@@ -26,6 +26,7 @@ route.get("/post/category/:post_category", postController.getPostByCategory);
 route.get("/post/tags/:post_tags", postController.getPostByTags);
 route.get("/post/terbaru", postController.getPostByTerbaru);
 route.get("/post/terlama", postController.getPostByTerlama);
+route.get("/post/all/:unique_id", postController.getPostByUniqueId);
 route.get("/post/:slug", postController.getPostBySlug);
 route.post("/post/create", middlewares.verifyToken, upload.single("file"), (req, res, next) => {
   const fileName = req.file.filename;
