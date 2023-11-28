@@ -2,12 +2,14 @@ import { useContext, useState } from "react";
 import { AllUserContext } from "../../components/AdminRoute";
 import { getUserByUniqueId } from "../../modules/fetch";
 import Detail from "./components/Detail";
+import { PostContext } from "../../contexts/PostContext";
 
 
 function TableAllUser() {
   const { allUser, getRole, tableRole, setTableRole } = useContext(AllUserContext)
   const [detailData, setDetailData] = useState(null);
   const handleRoleChange = (e) => setTableRole(e.target.value);
+  const { setAllYourPost } = useContext(PostContext);
 
   // PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,12 +33,12 @@ function TableAllUser() {
   return (
     <>
       <dialog id="my_modal_2" className="modal">
-        <div className="modal-box w-11/12 max-w-5xl">
+        <div className="modal-box w-fit max-w-5xl">
           <div className="flex justify-center w-full">
             <p className="text-xl font-bold">Detail Users</p>
           </div>
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => setAllYourPost(null)}>✕</button>
           </form>
           <div className='divider' />
           <span className="pb-2 flex justify-start">

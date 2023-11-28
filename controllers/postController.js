@@ -3,7 +3,7 @@ const { User_post, User } = require('../models')
 
 class postController {
 
-  // halaman POST PEKERJAAN | GET all data user_posts ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET all data user_posts ( middlewares : JWT | login needed ) (alot)
   static getPost(req, res, next) {
     // console.log(User_post)
     User_post.findAll({
@@ -31,7 +31,7 @@ class postController {
       })
   }
 
-  // halaman POST PEKERJAAN | GET Yours all data user_posts ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET Yours all data user_posts ( middlewares : JWT | login needed ) (one)
   static getYourPost(req, res, next) {
     const { unique_id } = req.userData; // hasil decoded dari middleware verifyToken    
     User_post.findAll({
@@ -56,7 +56,7 @@ class postController {
           return res.status(200).json({
             status: [200, 'Success'],
             halaman: 'Post',
-            message: `Semua Postinganmu Berdasarkan ${data.post_category}`,
+            message: `Semua Postinganmu Username : ${data.username}`,
             data
           });
         }
@@ -71,7 +71,48 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | GET data user_posts by slug ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET all data user_posts by unique_id ( middlewares : JWT | login needed ) (alot)
+  static getPostByUniqueId(req, res, next) {
+    const { unique_id } = req.params; // hasil decoded dari middleware verifyToken    
+    User_post.findAll({
+      where: {
+        unique_id
+      },
+      order: [["id", "DESC"]],
+      // include: {
+      //   model: User,
+      //   as: 'user'
+      // }
+    })
+      .then(data => {
+        console.log(data)
+        if (data.length === 0) {
+          return res.status(404).json({
+            status: [404, 'Failed'],
+            halaman: 'getPostByUniqueId',
+            message: 'Data Post Tidak Ditemukan!'
+          });
+        }
+        else {
+          return res.status(200).json({
+            status: [200, 'Success'],
+            halaman: 'getPostByUniqueId',
+            message: `Semua Postingan Berdasarkan unique_id : ${unique_id}`,
+            data
+          });
+        }
+      })
+      .catch(err => {
+        return res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'getPostByUniqueId',
+          message: 'Something went wrong',
+          error: err
+        });
+      });
+  }
+
+  // halaman POST PEKERJAAN | GET data user_posts by slug ( middlewares : JWT | login needed ) (one)
   static getPostBySlug(req, res, next) {
     const { slug } = req.params; // hasil decoded dari middleware verifyToken
     User_post.findOne({
@@ -109,10 +150,10 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | GET all data user_posts by category, from params url ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET all data user_posts by category, from params url ( middlewares : JWT | login needed ) (alot)
   static getPostByCategory(req, res, next) {
     const { post_category } = req.params;
-    User_post.findOne({
+    User_post.findAll({
       where: {
         post_category
       },
@@ -122,7 +163,7 @@ class postController {
       }
     })
       .then(data => {
-        if (!data) {
+        if (data.length === 0) {
           return res.status(404).json({
             status: [404, 'Failed'],
             halaman: 'Post',
@@ -148,10 +189,10 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | GET all data user_posts by tags, from params url ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET all data user_posts by tags, from params url ( middlewares : JWT | login needed ) (alot)
   static getPostByTags(req, res, next) {
     const { post_tags } = req.params;
-    User_post.findOne({
+    User_post.findAll({
       where: {
         post_tags
       },
@@ -161,7 +202,7 @@ class postController {
       }
     })
       .then(data => {
-        if (!data) {
+        if (data.length === 0) {
           return res.status(404).json({
             status: [404, 'Failed'],
             halaman: 'Post',
@@ -187,7 +228,7 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | GET all data user_posts by terbaru, from params url ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET all data user_posts by terbaru, from params url ( middlewares : JWT | login needed ) (alot)
   static getPostByTerbaru(req, res, next) {
     User_post.findAll({
       order: [['id', 'DESC']],
@@ -197,7 +238,7 @@ class postController {
       }
     })
       .then(data => {
-        if (!data) {
+        if (data.length === 0) {
           return res.status(404).json({
             status: [404, 'Failed'],
             halaman: 'Post',
@@ -223,7 +264,7 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | GET all data user_posts by terlama, from params url ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET all data user_posts by terlama, from params url ( middlewares : JWT | login needed ) (alot)
   static getPostByTerlama(req, res, next) {
     User_post.findAll({
       order: [['id', 'ASC']],
@@ -233,7 +274,7 @@ class postController {
       }
     })
       .then(data => {
-        if (!data) {
+        if (data.length === 0) {
           return res.status(404).json({
             status: [404, 'Failed'],
             halaman: 'Post',

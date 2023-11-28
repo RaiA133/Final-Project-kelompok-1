@@ -119,6 +119,16 @@ async function getUserbyId(id) {
 }
 
 // get user by slug | slug otomatis dari title
+async function getPostByUniqueId(unique_id) {
+  try {
+    const response = await instance.get(`/post/all/${unique_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+// get user by slug | slug otomatis dari title
 async function getPostDetailBySlug(slug) {
   try {
     const response = await instance.get(`/post/${slug}`);
@@ -200,6 +210,7 @@ async function logout() {
 export { 
   register, login, 
   getAllPostingan, getUserbyId,
+  getPostByUniqueId,
   getPostDetailBySlug, userProfile, 
   createPost, updateProfile, 
   getYourPostingan, delYourPostinganById,
