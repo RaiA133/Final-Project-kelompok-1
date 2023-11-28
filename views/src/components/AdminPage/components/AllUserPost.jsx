@@ -120,7 +120,7 @@ function AllUserPost() {
             </tfoot>
           </table>
         ) : (
-          <div className="flex justify-center items-center py-10">Kamu belum melakukan posting</div>
+          <div className="flex justify-center items-center py-10 text-sm">User ini belum melakukan posting</div>
         )}
 
         <div className="join grid grid-cols-2 w-64 my-10">
