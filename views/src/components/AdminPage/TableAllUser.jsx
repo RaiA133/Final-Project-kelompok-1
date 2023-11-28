@@ -57,18 +57,17 @@ function TableAllUser() {
           <option value='1'>Administrator</option>
         </select>
       </div>
-      <div className="flex h-[31rem]">
-        <div className="overflow-x-auto w-screen h-30 mt-5 flex justify-center h-fit">
-          <table className="table w-[1400px] bg-base-100">
+      <div className="flex justify-center h-[31rem]">
+        <div className="overflow-x-auto w-screen h-30 mt-5 h-fit">
+          <table className="table w-[1000px] bg-base-100 mx-auto">
             {/* head */}
             <thead>
               <tr>
                 <th></th>
-                <th className="text-center text-black font-black">Action</th>
+                <th className="text-center text-black font-black px-0">Action</th>
                 <th className="text-center text-black font-black">Name, Role & Country</th>
                 <th className="text-center text-black font-black">Unique_id</th>
                 <th className="text-center text-black font-black">Company & Job</th>
-                <th className="text-center text-black font-black"></th>
               </tr>
             </thead>
             <tbody>
@@ -77,21 +76,21 @@ function TableAllUser() {
                 .filter(user => user.user_role_id === parseInt(tableRole) )
                 .map((user) => (
                   <tr key={user.unique_id}>
-                    <th className="ps-7">
+                    <th className="px-7 text-center">
                       {no++}
                     </th>
-                    <th className="px-0 flex justify-center pt-8">
+                    <th className="px-0 flex justify-center">
 
-                      <button className="btn btn-neutral btn-xs" onClick={() => {
+                      <button className="btn btn-neutral btn-xs absolute mt-2" onClick={() => {
                         handleDetail(user.unique_id)
                         document.getElementById('my_modal_2').showModal()
                       }}>details</button>
 
                     </th>
-                    <td>
+                    <td className="ps-10">
                       <div className="flex items-center gap-3">
                         <div className="avatar">
-                          <div className="mask mask-squircle w-12 h-12">
+                          <div className="mask mask-squircle w-12 h-12 px-0">
                             <img
                               src={import.meta.env.VITE_PROFILE_DEFAULT || `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${user.img_profile}`}
                               alt="Avatar Tailwind CSS Component"
@@ -99,7 +98,7 @@ function TableAllUser() {
                           </div>
                         </div>
                         <div>
-                          <div className="font-bold">{user.username}</div>
+                          <div className="font-bold truncate w-24" title={user.username}>{user.username}</div>
                           <span className={`badge ${parseInt(tableRole) === 1 ? 'badge-warning' : 'badge-success text-base-100'} badge-sm`}>
                             {parseInt(tableRole) === 1 ? getRole[0].role : getRole[1].role}
                           </span>
@@ -108,7 +107,7 @@ function TableAllUser() {
                         </div>
                       </div>
                     </td>
-                    <td className="min-w-[150px]">{user.unique_id}</td>
+                    <td className="min-w-[150px]" title={user.unique_id}>{user.unique_id}</td>
                     <td className="flex flex-col items-center">
                       <div className="text-center">
                         {user.company || '-'}
