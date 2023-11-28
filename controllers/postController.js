@@ -79,13 +79,8 @@ class postController {
         unique_id
       },
       order: [["id", "DESC"]],
-      // include: {
-      //   model: User,
-      //   as: 'user'
-      // }
     })
       .then(data => {
-        console.log(data)
         if (data.length === 0) {
           return res.status(404).json({
             status: [404, 'Failed'],
