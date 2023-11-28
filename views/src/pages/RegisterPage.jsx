@@ -48,8 +48,11 @@ function RegisterPage() {
       if (response.status[0] === 201) {
         const successMessage = response.message;
         toast.success(successMessage + ' Silahkan Login', {
-          duration: 2500,
+          duration: 3000,
         });
+        setTimeout(() => {
+          navigate("/login")
+        }, 3000)
       } 
     }
     catch (error) {
@@ -92,7 +95,8 @@ function RegisterPage() {
                   className="input input-bordered w-full max-w-xs" 
                   type="text" 
                   name="name" 
-                  placeholder="Name" 
+                  placeholder="Name"
+                  autoComplete='off'
                   required
                   />
               </div>
@@ -104,6 +108,7 @@ function RegisterPage() {
                   type="text" 
                   name="username" 
                   placeholder="Username"
+                  autoComplete='off'
                   required 
                   />
               </div>
@@ -114,7 +119,8 @@ function RegisterPage() {
                   className="input input-bordered w-full max-w-xs" 
                   type="email" 
                   name="email" 
-                  placeholder="Email" 
+                  placeholder="Email"
+                  autoComplete='off'
                   required
                 />
               </div>

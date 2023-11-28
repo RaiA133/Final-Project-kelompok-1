@@ -4,7 +4,6 @@ import iconGithub from '../../assets/icon/github.svg';
 import iconFacebook from '../../assets/icon/facebook.svg';
 import iconInstagram from '../../assets/icon/instagram.svg';
 
-
 function PostProfilePreview({ hisProfile }) {
   return (
     <div className='row-span-2 flex flex-col text-xl items-center pt-6 pb-7 bg-base-100 card shadow-md h-fit lg:sticky top-0'>
