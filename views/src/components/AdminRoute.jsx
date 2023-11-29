@@ -32,7 +32,7 @@ function AdminRoute({
       }
     }
     changeAllUserByRole()
-  }, [tableRole])
+  }, [allUser])
 
 
   useEffect(() => {
@@ -54,7 +54,7 @@ function AdminRoute({
       <AllUserContext.Provider value={{
         allUser, setAllUser,
         tableRole, setTableRole,
-        getRole,
+        getRole, setGetRole,
       }}>
         {isAdmin ? (
           children

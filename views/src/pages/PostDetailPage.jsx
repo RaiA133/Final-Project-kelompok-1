@@ -1,10 +1,12 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useContext } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import { PostContext } from '../contexts/PostContext';
 import PostProfilePreview from "../components/PostPage/PostProfilePreview";
 import Partner from "../components/Partner";
+// import toast, { Toaster } from 'react-hot-toast';
 
 function PostDetailPage() {
+  const location = useLocation()
   const navigate = useNavigate();
   const { slug } = useParams(); // Mendapatkan SLUG dari URL
   const { postState, post_img_link, set_post_img_link } = useContext(PostContext);
@@ -26,23 +28,34 @@ function PostDetailPage() {
   return (
     <div>
 
+      {/* <Toaster
+        toastOptions={{
+          style: {
+            maxWidth: '600px'
+          }
+        }}
+      /> */}
+
       <div className="grid grid-cols-1 lg:grid-cols-3 mb-16 mt-6 mx-5 card shadow-md bg-base-200">
 
         <div className="col-span-2 p-10 pt-8 bg-base-100 lg:sticky top-0">
-
           <div className="flex justify-between">
             <h3 className="text-2xl font-extrabold text-base-900 sm:text-3xl" id="title">{selectedPost.post_title}</h3>
-            <button className="btn btn-sm btn-circle btn-ghost right-2 top-2" onClick={() => navigate("/post")} >✕</button>
+            {location.pathname == `/post/${selectedPost.slug}` && <button className="btn btn-sm btn-circle btn-ghost right-2 top-2" onClick={() => navigate("/post")} >✕</button>}
           </div>
+          {location.pathname !== `/post/${selectedPost.slug}` && <div>Edit Post Preview</div>}
 
           <p className="mt-6 text-base text-base-500">
             {selectedPost.post_desc}
           </p>
 
-          <div className="flex gap-2 mt-5">
+          <div className="flex gap-2 my-5">
             {selectedPost.post_category && <kbd className="kbd kbd-md w-fit text-xs">{selectedPost.post_category}</kbd>}
             {selectedPost.post_tags && <kbd className="kbd kbd-md w-fit text-xs">#{selectedPost.post_tags}</kbd>}
           </div>
+
+          <p><span className="font-bold">Project Status: </span>On Going</p>
+          <p><span className="font-bold">Worktime: </span>{selectedPost.post_worktime}</p>
 
           <div className="divider divider-start text-primary mt-8">Skill Needed</div>
 

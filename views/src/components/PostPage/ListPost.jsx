@@ -23,6 +23,7 @@ function ListPost({ post, id }) {
       set_post_img_link(link)
     }
   }
+  
   return (
     <div className="bg-base-100 card shadow-md p-10">
       <h2 className="text-xl font-bold mb-2">{post.post_title}</h2>

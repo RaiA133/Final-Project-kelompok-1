@@ -131,7 +131,7 @@ async function getPostByUniqueId(unique_id) {
 // get user by slug | slug otomatis dari title
 async function getPostDetailBySlug(slug) {
   try {
-    const response = await instance.get(`/post/update/${slug}`);
+    const response = await instance.get(`/post/${slug}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || "Something went wrong");
@@ -158,10 +158,10 @@ async function createPost(formData) {
 }
 
 // Function for create post endpoint
-async function updatePostBySlug(formData) {
+async function updatePostBySlug(formData, slug) {
   const formDataObject = Object.fromEntries(formData.entries());
   try {
-    const response = await instance.put('/post/create', formData, {
+    const response = await instance.put(`/post/update/${slug}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;

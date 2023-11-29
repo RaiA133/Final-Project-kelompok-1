@@ -32,7 +32,7 @@ route.post("/post/create", middlewares.verifyToken, upload.single("file"), (req,
   const fileName = req.file.filename;
   postController.createPostingan(req, res, next, fileName); // mengirim nama file yg sama ke userController.updateProfile
 });
-route.put("/post/update/:id", middlewares.verifyToken, upload.single("file"), (req, res, next) => {
+route.put("/post/update/:slug", middlewares.verifyToken, upload.single("file"), (req, res, next) => {
   const fileName = req.file.filename;
   postController.updatePostingan(req, res, next, fileName); // mengirim nama file yg sama ke userController.updateProfile
 });

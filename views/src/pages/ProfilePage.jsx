@@ -36,6 +36,12 @@ function ProfilePage() {
 
   useEffect(() => {
     const toastMessage = localStorage.getItem('toastMessage')
+    if (toastMessage == 'Postingan berhasil di update!') {
+      toast.success(toastMessage, {
+        duration: 2500,
+      });
+      localStorage.removeItem('toastMessage');
+    }
     if (toastMessage == 'Hapus Photo Berhasil!') {
       toast.success(toastMessage, {
         duration: 2500,

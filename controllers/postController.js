@@ -109,7 +109,7 @@ class postController {
 
   // halaman POST PEKERJAAN | GET data user_posts by slug ( middlewares : JWT | login needed ) (one)
   static getPostBySlug(req, res, next) {
-    const { slug } = req.params; // hasil decoded dari middleware verifyToken
+    const { slug } = req.params;
     User_post.findOne({
       where: {
         slug,
@@ -353,6 +353,7 @@ class postController {
 
   // halaman EDIT POSTINGAN | UPDATE data POSTINGAN by id ( middlewares : JWT | login needed )
   static updatePostingan(req, res, next, fileName) {
+    const { slug } = req.params;
     const {
       post_title, post_desc,
       post_category, post_tags, skills,
@@ -380,8 +381,11 @@ class postController {
       max_price,
       post_worktime: post_worktime + ' ' + post_worktime_time,
     }
-
-    User_post.findByPk(req.params.id)
+    User_post.findOne({
+      where: {
+        slug,
+      }
+    })
       .then(data => {
         if (!data) {
           res.status(404).json({
@@ -391,7 +395,7 @@ class postController {
             data: updatedPostingan
           });
         } else {
-          return User_post.update(updatedPostingan, { where: { id: req.params.id } })
+          return User_post.update(updatedPostingan, { where: { slug } })
         }
       })
       .then(data => {

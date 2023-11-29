@@ -2,18 +2,40 @@ import { useNavigate, useParams } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import Partner from "../components/Partner";
 import { useEffect, useState, useContext } from "react";
-import ProfilePreview from "../components/ProfilePreview";
 import { PostContext } from "../contexts/PostContext";
 import DynamicInput from "../components/DynamicInput";
 import { NumericFormat } from "react-number-format";
-import { updatePostBySlug } from "../modules/fetch";
+import { getPostDetailBySlug, updatePostBySlug } from "../modules/fetch";
+import PostDetailPage from "./PostDetailPage";
 
 function EditPostPage({ PostForm }) {
   const navigate = useNavigate();
   const { slug } = useParams();
+  const { postState, categoryTags, postDetailState, setPostDetailState, set_post_img_link } = useContext(PostContext);
   const [GetOutputArray, setGetOutputArray] = useState([]);
-  const { postState, categoryTags } = useContext(PostContext);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // getPostDetailBySlug
+  useEffect(() => {
+    const handleDetailPost = async (slug) => {
+      try {
+        const response = await getPostDetailBySlug(slug);
+        if (response.status[1] === "Success") { setPostDetailState(response.data) }
+        const selectedPost = Array.isArray(postState) ? postState.find((post) => post.slug === slug) : null;
+        if (selectedPost.post_img) {
+          const link = `${import.meta.env.VITE_BACKEND_BASEURL}/post/picture/` + selectedPost.post_img;
+          set_post_img_link(link);
+        } else {
+          const link = import.meta.env.VITE_POST_PIC_DEFAULT;
+          set_post_img_link(link);
+        }
+      } catch (error) {
+        // Handle errors
+      } finally { setIsLoading(false) }
+    }
+    handleDetailPost(slug);
+  }, [slug]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,27 +52,12 @@ function EditPostPage({ PostForm }) {
     const formData = new FormData(e.target);
     formData.append("skills", GetOutputArray);
     try {
-      const response = await updatePostBySlug(formData);
+      const response = await updatePostBySlug(formData, slug);
       setSelectedImage("");
-      if (response.status[0] === 201) {
+      if (response.status[1] === "Success") {
         const successMessage = response.message;
-        const newPostSlug = response.data.slug;
-        toast.success(
-          <>
-            {postState.length > 0 && (
-              <div>
-                <span className="leading-normal">{successMessage}</span>
-                <button
-                  className="ms-4 btn btn-xs my-0"
-                  onClick={() => navigate(`/post/${newPostSlug}`)} // Menggunakan ID postingan baru di sini
-                >
-                  Lihat
-                </button>
-              </div>
-            )}
-          </>,
-          { duration: 2500 }
-        );
+        window.localStorage.setItem('toastMessage', successMessage);
+        navigate('/profile')
         e.target.reset(); // reset form ketika berhasil
       }
     } catch (error) {
@@ -77,11 +84,22 @@ function EditPostPage({ PostForm }) {
   const categories = categoryTags.categories
   const tags = categoryTags.tags
 
+  if (isLoading) { // loadoing animasi untuk mengatasi asycnchrounous handleDetailPost
+    return (
+      // loading animation
+      <div className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
+
+  console.log('postDetailState : ', postDetailState)
+
   return (
     <>
       <div className="p-5">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-16">
+          <div className="grid grid-cols-1 gap-6 mb-16">
 
             <Toaster
               toastOptions={{
@@ -98,7 +116,7 @@ function EditPostPage({ PostForm }) {
                   <button className="btn max-[640px]:px-10 max-[640px]:btn-sm btn-neutral px-10" type="submit">
                     SIMPAN
                   </button>
-                  <button className="btn max-[640px]:px-10 max-[640px]:btn-sm btn-neutral px-10" onClick={() => navigate("..", { relative: "path" })}>
+                  <button className="btn max-[640px]:px-10 max-[640px]:btn-sm btn-neutral px-10" onClick={() => navigate("/profile")}>
                     BATAL
                   </button>
                 </div>
@@ -108,7 +126,14 @@ function EditPostPage({ PostForm }) {
                 <label className="label">
                   <span className="label-text">Title Post</span>
                 </label>
-                <input className="input input-bordered w-full" type="text" name="post_title" placeholder="Title of your post / your demand" required />
+                <input 
+                  className="input input-bordered w-full" 
+                  type="text" 
+                  name="post_title" 
+                  placeholder="Title of your post / your demand" 
+                  defaultValue={postDetailState.post_title} 
+                  required 
+                />
               </div>
 
               <div className="form-control w-full"></div>
@@ -117,7 +142,14 @@ function EditPostPage({ PostForm }) {
                 <label className="label">
                   <span className="label-text">Description</span>
                 </label>
-                <textarea className="textarea textarea-bordered h-60" type="text" name="post_desc" placeholder="Description" required />
+                <textarea 
+                  className="textarea textarea-bordered h-60" 
+                  type="text" 
+                  name="post_desc" 
+                  placeholder="Description"
+                  defaultValue={postDetailState.post_desc}
+                  required 
+                />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-5">
@@ -125,7 +157,7 @@ function EditPostPage({ PostForm }) {
                   <label className="label">
                     <span className="label-text">Category</span>
                   </label>
-                  <select className="select select-bordered w-full" name="post_category" required defaultValue="">
+                  <select className="select select-bordered w-full" name="post_category" required defaultValue={postDetailState.post_category}>
                     <option value="" disabled hidden>
                       Post Category
                     </option>
@@ -141,7 +173,7 @@ function EditPostPage({ PostForm }) {
                   <label className="label">
                     <span className="label-text">Tags</span>
                   </label>
-                  <select className="select select-bordered w-full" name="post_tags" required defaultValue="">
+                  <select className="select select-bordered w-full" name="post_tags" required defaultValue={postDetailState.post_tags}>
                     <option value="" disabled hidden>
                       Post Tags
                     </option>
@@ -173,7 +205,7 @@ function EditPostPage({ PostForm }) {
                       <NumericFormat
                         className="input input-bordered w-full"
                         autoComplete="off"
-                        value={0}
+                        value={postDetailState.min_price}
                         name="min_price"
                         prefix={currency + ' '}
                         thousandSeparator="."
@@ -185,7 +217,7 @@ function EditPostPage({ PostForm }) {
                     <NumericFormat
                       className="input input-bordered w-full"
                       autoComplete="off"
-                      value={0}
+                      value={postDetailState.max_price}
                       name="max_price"
                       prefix={currency + ' '}
                       thousandSeparator="."
@@ -202,7 +234,7 @@ function EditPostPage({ PostForm }) {
                     <span className="label-text">Worktime</span>
                   </label>
                   <div className="flex justify-center">
-                    <input className="input input-bordered w-full me-2" type="number" name="post_worktime" placeholder="00" required />
+                    <input className="input input-bordered w-full me-2" type="number" name="post_worktime" placeholder="00" defaultValue={parseInt(postDetailState.post_worktime.split(/\D/)[0], 10)} required />
                     <select className="select select-bordered join-item" name="post_worktime_time" defaultValue="">
                       <option value="Day">Day</option>
                       <option value="Week">Week</option>
@@ -232,12 +264,12 @@ function EditPostPage({ PostForm }) {
               </div>
 
               <div className="form-control w-full">
-                <DynamicInput setGetOutputArray={setGetOutputArray} />
+                <DynamicInput setGetOutputArray={setGetOutputArray} dataDefault={postDetailState.skills} />
               </div>
 
             </div>
 
-            <ProfilePreview />
+            <PostDetailPage />
 
           </div>
 

@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from 'react-router-dom';
 import { PostContext } from "../../contexts/PostContext";
 import { delYourPostinganById } from "../../modules/fetch";
 
 function AllYourPost() {
   const navigate = useNavigate()
-  const { allYourPost } = useContext(PostContext);
+  const { allYourPost} = useContext(PostContext);
 
   // PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,7 +70,11 @@ function AllYourPost() {
                     }}>details</button>
                     <button className="btn btn-success btn-xs text-base-100 me-2" onClick={(e) => {
                       e.preventDefault();
-                      navigate(`/edit-post/${post.slug}`)
+                      window.location.href = `/edit-post/${post.slug}`
+                      window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth',
+                      });
                     }}
                     >Edit</button>
                     <button className="btn btn-error btn-xs text-base-100" onClick={(e) => {
