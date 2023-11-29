@@ -10,6 +10,7 @@ export const PostContextProvider = ({ children }) => {
   const [postDetailState, setPostDetailState] = useState({});
   const [post_img_link, set_post_img_link] = useState({});
   const [allYourPost, setAllYourPost] = useState([]);
+  const [userPostByUniqueId, setUserPostByUniqueId] = useState([]);
 
   const [categoryTags, setCageoryTags] = useState({
     categories: [
@@ -79,6 +80,7 @@ export const PostContextProvider = ({ children }) => {
     postDetailState, setPostDetailState,
     post_img_link, set_post_img_link,
     categoryTags, setCageoryTags,
-    allYourPost, setAllYourPost
+    allYourPost, setAllYourPost,
+    userPostByUniqueId, setUserPostByUniqueId,
   }}>{children}</PostContext.Provider>;
 };

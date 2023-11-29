@@ -321,7 +321,7 @@ class postController {
       const skillsArray = skills.split(',');
       const newUser_post = await User_post.create({
         unique_id,
-        slug: Date.now() + '_' + slugFormated,
+        slug: Date.now() + '-' + slugFormated,
         post_img: file,
         post_title,
         post_desc,
@@ -354,18 +354,33 @@ class postController {
   // halaman EDIT POSTINGAN | UPDATE data POSTINGAN by id ( middlewares : JWT | login needed )
   static updatePostingan(req, res, next, fileName) {
     const {
-      post_img, post_title,
-      post_desc, post_category,
-      post_tags, post_deadline,
-      post_pricing
+      post_title, post_desc,
+      post_category, post_tags, skills,
+      min_price, max_price, post_worktime, post_worktime_time
     } = req.body;
+
+    // Fungsi untuk membuat slug
+    const createSlug = (title) => {
+      const formattedTitle = title.toLowerCase().replace(/\s+/g, '-'); // Lowercase dan ganti spasi dengan strip
+      return formattedTitle
+    };
+    const slugFormated = createSlug(post_title);
+    const skillsArray = skills.split(',');
     const file = fileName;
+
     const updatedPostingan = {
-      post_img: file, post_title,
-      post_desc, post_category,
-      post_tags, post_deadline,
-      post_pricing
+      slug: Date.now() + '-' + slugFormated,
+      post_img: file, 
+      post_title,
+      post_desc, 
+      post_category,
+      post_tags, 
+      skills : skillsArray,
+      min_price,
+      max_price,
+      post_worktime: post_worktime + ' ' + post_worktime_time,
     }
+
     User_post.findByPk(req.params.id)
       .then(data => {
         if (!data) {

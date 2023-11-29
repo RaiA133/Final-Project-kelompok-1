@@ -118,7 +118,7 @@ async function getUserbyId(id) {
   }
 }
 
-// get user by slug | slug otomatis dari title
+// get user by unique_id 
 async function getPostByUniqueId(unique_id) {
   try {
     const response = await instance.get(`/post/all/${unique_id}`);
@@ -131,7 +131,7 @@ async function getPostByUniqueId(unique_id) {
 // get user by slug | slug otomatis dari title
 async function getPostDetailBySlug(slug) {
   try {
-    const response = await instance.get(`/post/${slug}`);
+    const response = await instance.get(`/post/update/${slug}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || "Something went wrong");
@@ -143,6 +143,25 @@ async function createPost(formData) {
   const formDataObject = Object.fromEntries(formData.entries());
   try {
     const response = await instance.post('/post/create', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  }
+  catch (error) {
+    if (formDataObject.file.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
+      throw new Error('File Tidak Boleh Lebih Dari 2MB')
+    }
+    // console.error(error) // code dibawah didapat dari error Axios dari sini
+    const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
+  }
+}
+
+// Function for create post endpoint
+async function updatePostBySlug(formData) {
+  const formDataObject = Object.fromEntries(formData.entries());
+  try {
+    const response = await instance.put('/post/create', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;
@@ -209,14 +228,9 @@ async function logout() {
 
 export { 
   register, login, 
-  getAllPostingan, getUserbyId,
-  getPostByUniqueId,
-  getPostDetailBySlug, userProfile, 
-  createPost, updateProfile, 
-  getYourPostingan, delYourPostinganById,
-  getPostTerbaru, getPostTerlama,
-  getAllDataUserAdmin, getUserRoleAdmin,
-  getUserByUniqueId, deleteUserByUniqueIdAdmin, 
+  getUserbyId, userProfile, getUserByUniqueId, updateProfile, 
+  getYourPostingan, getAllPostingan, getPostByUniqueId, getPostDetailBySlug, getPostTerbaru, getPostTerlama, createPost, updatePostBySlug, delYourPostinganById,
+  getAllDataUserAdmin, getUserRoleAdmin, deleteUserByUniqueIdAdmin, 
   testSession, logout 
 };
 

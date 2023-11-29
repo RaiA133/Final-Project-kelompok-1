@@ -68,7 +68,11 @@ function AllYourPost() {
                         behavior: 'smooth',
                       });
                     }}>details</button>
-                    <button className="btn btn-success btn-xs text-base-100 me-2">Edit</button>
+                    <button className="btn btn-success btn-xs text-base-100 me-2" onClick={(e) => {
+                      e.preventDefault();
+                      navigate(`/edit-post/${post.slug}`)
+                    }}
+                    >Edit</button>
                     <button className="btn btn-error btn-xs text-base-100" onClick={(e) => {
                       e.preventDefault();
                       document.getElementById('my_modal_1').showModal()

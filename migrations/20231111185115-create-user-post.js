@@ -20,7 +20,7 @@ module.exports = {
       },
       slug: {
         allowNull: true,
-        nique:true,
+        unique:true,
         type: Sequelize.TEXT
       },
       post_img: {
