@@ -1,6 +1,7 @@
 import { useFetchRecipientUser } from "../../../hooks/useFetchRecipient"
 import { ChatContext } from "../../../contexts/ChatContext"
 import { useContext } from "react"
+import PotentialChats from "./PotentialChats"
 
 const UserBoxChat = ({ chat, user }) => { // seluruh percakapan yg ada kitanya (sudah di map, tinggal taro dibawah langsung keforeach), profilekita
   // console.log('obrolan yg ada sayanya : ', chat.members)
@@ -23,7 +24,7 @@ const UserBoxChat = ({ chat, user }) => { // seluruh percakapan yg ada kitanya (
           <img className="rounded-full items-start flex-shrink-0 mr-3" src={otherUserPic} width="32" height="32" alt="Byrne McKenzie" />
           <div className="overflow-hidden w-full">
             <h4 className="text-sm font-semibold text-gray-900 truncate ...">
-              <span>{otherUserData.name}</span>
+              <span>{otherUserData.name} | <span className="font-light text-xs">{otherUserData.username}</span></span>
             </h4>
             <div className="text-[13px] flex justify-between">
               <span className="truncate">last Message</span>

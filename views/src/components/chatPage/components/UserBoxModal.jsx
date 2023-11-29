@@ -1,11 +1,44 @@
+import { useContext, useState } from "react";
+import { ChatContext } from "../../../contexts/ChatContext";
+
 function UserBoxModal() {
+  const [searchUsername, setSearchUsername] = useState('');
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [filteredChats, setFilteredChats] = useState([]);
+  const { potentialChats, findOrCreateChat } = useContext(ChatContext) // data semua user yg belum pernah ngobrol dengan kita
 
   async function AddFriend(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formDataObject = Object.fromEntries(formData);
-    console.log(formDataObject)
+    // console.log(formDataObject)
+
+    const { searchUsername } = formDataObject;
+
+    // Melakukan filter berdasarkan searchUsername
+    const filteredUsers = potentialChats.filter((user) => {
+      return searchUsername && user.username.includes(searchUsername);
+    });
+    console.log(filteredUsers);
+    return
+    
+    formData.append("usertwo_unique_id", filteredUsers.unique_id);
+    findOrCreateChat()
+
   }
+  const handleSearchChange = (e) => {
+    setSearchUsername(e.target.value);
+    const filteredUsers = potentialChats.filter((chat) => {
+      return chat.username.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+
+    setFilteredChats(filteredUsers);
+  };
+
+  const handleUsernameSelect = (selectedUsername) => {
+    setIsDropdownVisible(false);
+    setSearchUsername(selectedUsername); // Jika Anda ingin mengisi input dengan username yang dipilih
+  };
 
   return (
     <div className='flex justify-end mt-2'>
@@ -24,23 +57,39 @@ function UserBoxModal() {
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered w-full"
-                name='createChat'
+                name='searchUsername'
                 autoComplete='off'
+                value={searchUsername}
+                onChange={handleSearchChange}
+                onFocus={() => setIsDropdownVisible(true)}
               />
-              {/* <label className="label">
-                <span className="label-text-alt text-red-600">Username not found</span>
-              </label> */}
             </div>
-
             <div className="modal-action">
               <button className="btn btn-secondary btn-sm text-white" type='submit'>Submit</button>
             </div>
           </form>
-
         </div>
+
+        {/* Dropdown untuk menampilkan hasil filter */}
+        {isDropdownVisible && searchUsername && filteredChats.length > 0 && (
+          <ul className="p-2 shadow menu dropdown-content h-64 overflow-hidden z-[1] bg-base-100 rounded-box absolute w-60 top-36 md:top-[410px] md:w-fit">
+            {filteredChats.map((chat) => (
+              <li key={chat.unique_id}>
+                <button
+                  type="button"
+                  className="btn btn-ghost pt-[1rem]"
+                  onClick={() => handleUsernameSelect(chat.username)}
+                >
+                  {chat.username}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+
       </dialog>
     </div>
-  )
+  );
 }
 
 export default UserBoxModal

@@ -3,6 +3,7 @@ import { ChatContext } from "../../contexts/ChatContext"
 import { UserContext } from "../../contexts/UserContext"
 import UserBoxModal from "./components/UserBoxModal"
 import UserBoxChat from "./components/UserBoxChat";
+import PotentialChats from "./components/PotentialChats";
 
 function UserBox() {
   const { ChatFriendList, userChats } = useContext(ChatContext) // data dummy, seluruh data percakapan
@@ -12,6 +13,9 @@ function UserBox() {
 
   return (
     <div className='col-span-1'>
+
+      {/* <PotentialChats/> */}
+
       <div role="tablist" className="tabs tabs-lifted mt-5">
 
         {/* FRIEND MESSAGE */}

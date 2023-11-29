@@ -149,7 +149,7 @@ class chatController {
   }
 
   //  /messages/fidn-all/:chat_unique_id | get semua pesan
-  static async getMessage(req, res, next) {
+  static async getMessage(req, res, next) { 
     try {
       const { chat_unique_id } = req.params
       // const { unique_id: chat_unique_id  } = req.userData
