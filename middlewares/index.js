@@ -57,7 +57,6 @@ const verifyToken = async (req, res, next) => {
 
 const isAdminCheck = async (req, res, next) => {
   const { user_role_id } = req.userData
-  console.log(user_role_id)
   if (user_role_id == 1) {
     next();
   }

@@ -6,12 +6,22 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
+        unique:true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       unique_id: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references: {
+          model: "Users",
+          key: "unique_id"
+        }
+      },
+      slug: {
+        allowNull: true,
+        unique:true,
+        type: Sequelize.TEXT
       },
       post_img: {
         allowNull: true,
@@ -23,7 +33,7 @@ module.exports = {
       },
       post_desc: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       post_category: {
         allowNull: true,
@@ -45,13 +55,17 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+      skills: {
+        allowNull: true,
+        type: Sequelize.ARRAY(Sequelize.STRING)
+      },
       post_expired_in: {
         allowNull: true,
         type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       updatedAt: {
         allowNull: false,

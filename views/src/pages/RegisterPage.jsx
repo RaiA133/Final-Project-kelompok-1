@@ -20,6 +20,24 @@ function RegisterPage() {
     if (password !== confirmPassword) {
       return;
     }
+    if (password.length < 6) {
+      toast.error('Password minimal 6 digit!', {
+        duration: 2500,
+      });
+      return
+    }
+    if(e.target.name.value.length > 25) {
+      toast.error('Nama Terlalu Panjang Max 25 digit!', {
+        duration: 2500,
+      });
+      return
+    }
+    if(e.target.username.value.length > 10) {
+      toast.error('Username Terlalu Panjang Max 10 digit!', {
+        duration: 2500,
+      });
+      return
+    }
     try {
       const response = await register(
         e.target.name.value,
@@ -30,8 +48,11 @@ function RegisterPage() {
       if (response.status[0] === 201) {
         const successMessage = response.message;
         toast.success(successMessage + ' Silahkan Login', {
-          duration: 2500,
+          duration: 3000,
         });
+        setTimeout(() => {
+          navigate("/login")
+        }, 3000)
       } 
     }
     catch (error) {
@@ -40,11 +61,6 @@ function RegisterPage() {
       toast.error(failedMessage, {
         duration: 2500,
       });
-        
-        // Redirect ke halaman login setelah registrasi berhasil
-        setTimeout(() => {
-          navigate('/login');
-        }, 2000);
     }
       
   }
@@ -79,7 +95,9 @@ function RegisterPage() {
                   className="input input-bordered w-full max-w-xs" 
                   type="text" 
                   name="name" 
-                  placeholder="Name" 
+                  placeholder="Name"
+                  autoComplete='off'
+                  required
                   />
               </div>
 
@@ -89,7 +107,9 @@ function RegisterPage() {
                   className="input input-bordered w-full max-w-xs" 
                   type="text" 
                   name="username" 
-                  placeholder="Username" 
+                  placeholder="Username"
+                  autoComplete='off'
+                  required 
                   />
               </div>
 
@@ -99,7 +119,9 @@ function RegisterPage() {
                   className="input input-bordered w-full max-w-xs" 
                   type="email" 
                   name="email" 
-                  placeholder="Email" 
+                  placeholder="Email"
+                  autoComplete='off'
+                  required
                 />
               </div>
 
@@ -112,6 +134,7 @@ function RegisterPage() {
                   value={password}
                   autoComplete='off'
                   placeholder="Password"
+                  required
                 />
                 <label className="label place-content-end">
                   <a onClick={togglePasswordVisibility} className="label-text-alt text-xs underline" style={{ cursor: 'pointer' }}>
@@ -129,6 +152,7 @@ function RegisterPage() {
                   value={confirmPassword}
                   autoComplete='off'
                   placeholder="Confirm Password"
+                  required
                 />
                 <label className="label place-content-end">
                   {password !== confirmPassword && (

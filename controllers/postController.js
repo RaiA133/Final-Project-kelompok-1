@@ -1,13 +1,18 @@
 require('dotenv').config();
-const { User_post } = require('../models')
-const { v4: uuidv4 } = require('uuid');
+const { User_post, User } = require('../models')
 
 class postController {
 
-  // halaman POST PEKERJAAN | GET all data user_posts ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET all data user_posts ( middlewares : JWT | login needed ) (alot)
   static getPost(req, res, next) {
     // console.log(User_post)
-    User_post.findAll()
+    User_post.findAll({
+      order: [['id', 'DESC']],
+      include: {
+        model: User,
+        as: 'user'
+      }
+    })
       .then(data => {
         res.status(200).json({
           status: [200, 'Success'],
@@ -26,12 +31,17 @@ class postController {
       })
   }
 
-  // halaman POST PEKERJAAN | GET Yours all data user_posts ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET Yours all data user_posts ( middlewares : JWT | login needed ) (one)
   static getYourPost(req, res, next) {
     const { unique_id } = req.userData; // hasil decoded dari middleware verifyToken    
     User_post.findAll({
       where: {
         unique_id
+      },
+      order: [["id", "DESC"]],
+      include: {
+        model: User,
+        as: 'user'
       }
     })
       .then(data => {
@@ -46,7 +56,7 @@ class postController {
           return res.status(200).json({
             status: [200, 'Success'],
             halaman: 'Post',
-            message: `Semua Postinganmu Berdasarkan ${data.post_category}`,
+            message: `Semua Postinganmu Username : ${data.username}`,
             data
           });
         }
@@ -61,13 +71,53 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | GET data user_posts by id ( middlewares : JWT | login needed )
-  static getPostById(req, res, next) {
-    const { id } = req.params; // hasil decoded dari middleware verifyToken
+  // halaman POST PEKERJAAN | GET all data user_posts by unique_id ( middlewares : JWT | login needed ) (alot)
+  static getPostByUniqueId(req, res, next) {
+    const { unique_id } = req.params; // hasil decoded dari middleware verifyToken    
+    User_post.findAll({
+      where: {
+        unique_id
+      },
+      order: [["id", "DESC"]],
+    })
+      .then(data => {
+        if (data.length === 0) {
+          return res.status(404).json({
+            status: [404, 'Failed'],
+            halaman: 'getPostByUniqueId',
+            message: 'Data Post Tidak Ditemukan!'
+          });
+        }
+        else {
+          return res.status(200).json({
+            status: [200, 'Success'],
+            halaman: 'getPostByUniqueId',
+            message: `Semua Postingan Berdasarkan unique_id : ${unique_id}`,
+            data
+          });
+        }
+      })
+      .catch(err => {
+        return res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'getPostByUniqueId',
+          message: 'Something went wrong',
+          error: err
+        });
+      });
+  }
+
+  // halaman POST PEKERJAAN | GET data user_posts by slug ( middlewares : JWT | login needed ) (one)
+  static getPostBySlug(req, res, next) {
+    const { slug } = req.params;
     User_post.findOne({
       where: {
-        id,
+        slug,
       },
+      include: {
+        model: User,
+        as: 'user'
+      }
     })
       .then((data) => {
         if (!data) {
@@ -80,7 +130,7 @@ class postController {
           return res.status(200).json({
             status: [200, "Success"],
             halaman: "Post",
-            message: `Semua Postinganmu Berdasarkan Id ${data.id}`,
+            message: `Semua Postinganmu Berdasarkan Slug : ${data.slug}`,
             data,
           });
         }
@@ -95,16 +145,20 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | GET all data user_posts by category, from params url ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET all data user_posts by category, from params url ( middlewares : JWT | login needed ) (alot)
   static getPostByCategory(req, res, next) {
     const { post_category } = req.params;
-    User_post.findOne({
+    User_post.findAll({
       where: {
         post_category
+      },
+      include: {
+        model: User,
+        as: 'user'
       }
     })
       .then(data => {
-        if (!data) {
+        if (data.length === 0) {
           return res.status(404).json({
             status: [404, 'Failed'],
             halaman: 'Post',
@@ -130,16 +184,20 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | GET all data user_posts by tags, from params url ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET all data user_posts by tags, from params url ( middlewares : JWT | login needed ) (alot)
   static getPostByTags(req, res, next) {
     const { post_tags } = req.params;
-    User_post.findOne({
+    User_post.findAll({
       where: {
         post_tags
+      },
+      include: {
+        model: User,
+        as: 'user'
       }
     })
       .then(data => {
-        if (!data) {
+        if (data.length === 0) {
           return res.status(404).json({
             status: [404, 'Failed'],
             halaman: 'Post',
@@ -165,13 +223,17 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | GET all data user_posts by terbaru, from params url ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET all data user_posts by terbaru, from params url ( middlewares : JWT | login needed ) (alot)
   static getPostByTerbaru(req, res, next) {
     User_post.findAll({
       order: [['id', 'DESC']],
+      include: {
+        model: User,
+        as: 'user'
+      }
     })
       .then(data => {
-        if (!data) {
+        if (data.length === 0) {
           return res.status(404).json({
             status: [404, 'Failed'],
             halaman: 'Post',
@@ -197,13 +259,17 @@ class postController {
       });
   }
 
-  // halaman POST PEKERJAAN | GET all data user_posts by terlama, from params url ( middlewares : JWT | login needed )
+  // halaman POST PEKERJAAN | GET all data user_posts by terlama, from params url ( middlewares : JWT | login needed ) (alot)
   static getPostByTerlama(req, res, next) {
     User_post.findAll({
       order: [['id', 'ASC']],
+      include: {
+        model: User,
+        as: 'user'
+      }
     })
       .then(data => {
-        if (!data) {
+        if (data.length === 0) {
           return res.status(404).json({
             status: [404, 'Failed'],
             halaman: 'Post',
@@ -236,29 +302,37 @@ class postController {
     try {
       const {
         post_title, post_desc,
-        post_category, post_tags,
+        post_category, post_tags, skills,
         min_price, max_price, post_worktime, post_worktime_time
       } = req.body;
-
-
+      
       const currentDate = new Date(); // Dapatkan tanggal saat ini
       const expirationDate = new Date(); // Tambahkan 30 hari ke tanggal saat ini
       expirationDate.setDate(currentDate.getDate() + 30);
-
+      
+      // Fungsi untuk membuat slug
+      const createSlug = (title) => {
+        const formattedTitle = title.toLowerCase().replace(/\s+/g, '-'); // Lowercase dan ganti spasi dengan strip
+        return formattedTitle
+      };
+      
+      const slugFormated = createSlug(post_title); // Buat slug dari post_title
       const file = fileName;
+      const skillsArray = skills.split(',');
       const newUser_post = await User_post.create({
         unique_id,
+        slug: Date.now() + '-' + slugFormated,
         post_img: file,
         post_title,
         post_desc,
         post_category,
         post_tags,
+        skills : skillsArray,
         min_price,
         max_price,
         post_worktime: post_worktime + ' ' + post_worktime_time,
         post_expired_in: expirationDate,
       });
-
 
       res.status(201).json({
         status: [201, 'Success'],
@@ -279,37 +353,55 @@ class postController {
 
   // halaman EDIT POSTINGAN | UPDATE data POSTINGAN by id ( middlewares : JWT | login needed )
   static updatePostingan(req, res, next, fileName) {
+    const { slug } = req.params;
     const {
-      post_img, post_title,
-      post_desc, post_category,
-      post_tags, post_deadline,
-      post_pricing
+      post_title, post_desc,
+      post_category, post_tags, skills,
+      min_price, max_price, post_worktime, post_worktime_time
     } = req.body;
+
+    // Fungsi untuk membuat slug
+    const createSlug = (title) => {
+      const formattedTitle = title.toLowerCase().replace(/\s+/g, '-'); // Lowercase dan ganti spasi dengan strip
+      return formattedTitle
+    };
+    const slugFormated = createSlug(post_title);
+    const skillsArray = skills.split(',');
     const file = fileName;
+
     const updatedPostingan = {
-      post_img: file, post_title,
-      post_desc, post_category,
-      post_tags, post_deadline,
-      post_pricing
+      slug: Date.now() + '-' + slugFormated,
+      post_img: file, 
+      post_title,
+      post_desc, 
+      post_category,
+      post_tags, 
+      skills : skillsArray,
+      min_price,
+      max_price,
+      post_worktime: post_worktime + ' ' + post_worktime_time,
     }
-    User_post.findByPk(req.params.id)
+    User_post.findOne({
+      where: {
+        slug,
+      }
+    })
       .then(data => {
         if (!data) {
-          console.log(file)
           res.status(404).json({
             status: [404, 'Success'],
-            halaman: 'Post',
+            halaman: 'updatePostingan',
             message: 'Data tidak ditemukan!',
             data: updatedPostingan
           });
         } else {
-          return User_post.update(updatedPostingan, { where: { id: req.params.id } })
+          return User_post.update(updatedPostingan, { where: { slug } })
         }
       })
       .then(data => {
         res.status(200).json({
           status: [200, 'Success'],
-          halaman: 'Post',
+          halaman: 'updatePostingan',
           message: 'Postingan berhasil di update!',
           data: updatedPostingan
         });
@@ -317,7 +409,7 @@ class postController {
       .catch(err => {
         res.status(500).json({
           status: [500, 'Failed'],
-          halaman: 'Post',
+          halaman: 'updatePostingan',
           message: 'Something went wrong!',
           error: err
         });
@@ -329,8 +421,8 @@ class postController {
       .then(data => {
         if (!data) {
           res.status(404).json({
-            status: [404, 'Success'],
-            halaman: 'Post',
+            status: [404, 'Failed'],
+            halaman: 'deletePostingan',
             message: 'Data tidak ditemukan!',
           });
         } else {
@@ -340,14 +432,14 @@ class postController {
       .then(data => {
         res.status(200).json({
           status: [200, 'Success'],
-          halaman: 'Post',
+          halaman: 'deletePostingan',
           message: 'Postingan berhasil di delete!',
         });
       })
       .catch(err => {
         res.status(500).json({
           status: [500, 'Failed'],
-          halaman: 'Post',
+          halaman: 'deletePostingan',
           message: 'Something went wrong!',
           error: err
         });

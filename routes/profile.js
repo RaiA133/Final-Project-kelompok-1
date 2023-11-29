@@ -20,11 +20,16 @@ const upload = multer({
 
 route.get('/profile', middlewares.verifyToken, userController.getUserById)
 route.put('/profile/update', middlewares.verifyToken, upload.single('file'), (req, res, next) => {
-  const fileName = req.file.filename;
-  userController.updateProfile(req, res, next, fileName); // mengirim nama file yg sama ke userController.updateProfile
+  if (req.file) {
+    const fileName = req.file.filename;
+    userController.updateProfile(req, res, next, fileName);
+  } else {
+    userController.updateProfile(req, res, next); // sifat file gambar jadi tidak wajib diubah untuk profile
+  }
 });
 
 route.get('/profile/:unique_id', middlewares.verifyToken, userController.getUserByUniqueId)
+
 
 
 module.exports = route

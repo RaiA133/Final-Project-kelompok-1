@@ -3,20 +3,27 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
-      id: {
+      no: {
         allowNull: false,
+        unique: true,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      id: { // mau bagaimanapun foreign key akan tetap mengambil data kesini, 
+        allowNull: true,
+        unique: true,
+        primaryKey: true,
+        // autoIncrement: true,
+        type: Sequelize.STRING
+      },
+      unique_id: {
+        allowNull: false,
+        unique: true,
+        type: Sequelize.STRING
       },
       user_role_id: {
         allowNull: false,
         type: Sequelize.INTEGER
-      },
-      unique_id: {
-        unique: true,
-        allowNull: false,
-        type: Sequelize.STRING
       },
       name: {
         allowNull: false,
@@ -102,7 +109,7 @@ module.exports = {
       },
       remember_token: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
 
       createdAt: {

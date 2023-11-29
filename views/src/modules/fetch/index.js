@@ -1,4 +1,4 @@
-import { instance } from '../axios/index';
+import { instance } from "../axios/index";
 
 // Function for test-session user endpoint
 async function testSession() {
@@ -14,24 +14,72 @@ async function testSession() {
 // Function for register user endpoint
 async function register(name, username, email, password) {
   try {
-    const response = await instance.post('/register', { name, username, email, password });
-    return response.data
+    const response = await instance.post("/register", { name, username, email, password });
+    return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong');
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
 // Function for login user endpoint
 async function login(email, password) {
   try {
-    const response = await instance.post('/login', { email, password });
+    const response = await instance.post("/login", { email, password });
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong');
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
-//Function profile
+// function get semua postingan
+async function getAllPostingan() {
+  try {
+    const response = await instance.get("/post"); // Adjust the endpoint accordingly
+    return response.data; // Assuming response.data contains the necessary data
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+// get all your postingan
+async function getYourPostingan() {
+  try {
+    const response = await instance.get("/post/mine");
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+async function getPostTerbaru() {
+  try {
+    const response = await instance.get("/post/terbaru"); // Adjust the endpoint accordingly
+    return response.data; // Assuming response.data contains the necessary data
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+async function getPostTerlama() {
+  try {
+    const response = await instance.get("/post/terlama"); // Adjust the endpoint accordingly
+    return response.data; // Assuming response.data contains the necessary data
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+// get all your postingan
+async function delYourPostinganById(id) {
+  try {
+    const response = await instance.delete(`/post/delete/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+//Function get all user (not admin)
 async function getAllUser() {
   try {
     const response = await instance.get(`/user/all`);
@@ -41,6 +89,7 @@ async function getAllUser() {
   }
 }
 
+//Function profile
 async function userProfile() {
   try {
     const response = await instance.get(`/profile`);
@@ -50,24 +99,64 @@ async function userProfile() {
   }
 }
 
-async function getUserByUniqueId(unique_id) {
+
+//Update Profile
+async function updateProfile(formData) {
+  const formDataObject = Object.fromEntries(formData.entries());
   try {
-    const response = await instance.get(`/profile/${unique_id}`);
+    const response = await instance.put('/profile/update', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  } 
+  catch (error) {
+    if (formDataObject.file?.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
+      throw new Error('File Tidak Boleh Lebih Dari 2MB')
+    }
+    const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
+  }
+}
+
+// get user by id
+async function getUserbyId(id) {
+  try {
+    const response = await instance.get(`/profile/${id}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
+// get user by unique_id 
+async function getPostByUniqueId(unique_id) {
+  try {
+    const response = await instance.get(`/post/all/${unique_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+// get user by slug | slug otomatis dari title
+async function getPostDetailBySlug(slug) {
+  try {
+    const response = await instance.get(`/post/${slug}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
 // Function for create post endpoint
-async function createPost (formData) {
+async function createPost(formData) {
   const formDataObject = Object.fromEntries(formData.entries());
   try {
     const response = await instance.post('/post/create', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return response.data;
-  } 
+  }
   catch (error) {
     if (formDataObject.file.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
       throw new Error('File Tidak Boleh Lebih Dari 2MB')
@@ -78,7 +167,65 @@ async function createPost (formData) {
   }
 }
 
-//Function for chat endoint
+// Function for create post endpoint
+async function updatePostBySlug(formData, slug) {
+  const formDataObject = Object.fromEntries(formData.entries());
+  try {
+    const response = await instance.put(`/post/update/${slug}`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data;
+  }
+  catch (error) {
+    if (formDataObject.file.size > 2000000) { // cek jika yg diterima di formData sebelum dikirim ke axios lebih dari 2MB
+      throw new Error('File Tidak Boleh Lebih Dari 2MB')
+    }
+    // console.error(error) // code dibawah didapat dari error Axios dari sini
+    const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
+    throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
+  }
+}
+
+// Function Administrator Get All Data User
+async function getAllDataUserAdmin(user_role_id) {
+  try {
+    const response = await instance.get(`/administrator/${user_role_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+// Function Administrator Get Data User by unique_id
+async function getUserByUniqueId(unique_id) {
+  try {
+    const response = await instance.get(`/administrator/get/${unique_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+// Function Administrator Get All Data User
+async function getUserRoleAdmin() {
+  try {
+    const response = await instance.get(`/administrator/get/role`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+async function deleteUserByUniqueIdAdmin(unique_id) {
+  console.log(unique_id)
+  try {
+    const response = await instance.delete(`/administrator/${unique_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
 async function findAllUserChats() {
   try {
     const response = await instance.get(`/chats/find-all`);
@@ -98,6 +245,12 @@ async function logout() {
 }
 
 
-export { testSession, register, login, getAllUser, userProfile, getUserByUniqueId, createPost, findAllUserChats, logout};
-
+export { 
+  register, login, 
+  getUserbyId, userProfile, getUserByUniqueId, updateProfile, getAllUser,
+  getYourPostingan, getAllPostingan, getPostByUniqueId, getPostDetailBySlug, getPostTerbaru, getPostTerlama, createPost, updatePostBySlug, delYourPostinganById,
+  getAllDataUserAdmin, getUserRoleAdmin, deleteUserByUniqueIdAdmin, 
+  findAllUserChats,
+  testSession, logout 
+};
 

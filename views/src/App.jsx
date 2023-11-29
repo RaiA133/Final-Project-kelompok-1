@@ -1,6 +1,7 @@
 import './App.css'
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import RegisterPage from './pages/RegisterPage';
@@ -8,16 +9,21 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import PostPage from './pages/PostPage';
 import ProfilePage from './pages/ProfilePage';
+import PostDetailPage from './pages/PostDetailPage'
 import CreatePostPage from './pages/CreatePostPage';
 import ChatPage from './pages/ChatPage';
-import { useEffect, useState } from 'react';
+import AdminPage from './pages/AdminPage';
+import { useContext, useEffect, useState } from 'react';
+import { UserContext } from './contexts/UserContext';
+import EditPostPage from './pages/EditPostPage';
 
 function App() {
   let location = useLocation();
   const hideOnRegisterLogin = location.pathname !== '/register' && location.pathname !== '/login'; // location.pathname : untuk cek current url
-  
+  const { isAdmin } = useContext(UserContext)
+
   const [isLogin, setIsLogin] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     if (token) {
@@ -25,52 +31,49 @@ function App() {
     }
   }, [window.localStorage.getItem("token")]);
 
-  // console.log(import.meta.env.VITE_BACKEND_BASEURL);
-  // console.log(import.meta.env.VITE_PROFILE_DEFAULT);
-
   return (
-    <div className="container mx-auto bg-base-300 pt-3" data-theme="light">
+    <div className="mx-auto bg-base-300 pt-3 w-full" data-theme="light">
 
       <div className="drawer">
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col bg-base-300">
-
           {/* Navbar */}
-          { hideOnRegisterLogin && <Navbar />}
+          {hideOnRegisterLogin && <Navbar />}
 
           {/* Page content here SEKALIGUS Define ROUTE URL*/}
           <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/login' element={<LoginPage />} />
-            <Route path='/register' element={<RegisterPage />} />
-            <Route path='/post' element={<PrivateRoute> <PostPage /> </PrivateRoute>} />
-            <Route path='/profile' element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
-            <Route path='/create-post' element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
-            <Route path='/chat' element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/post" element={<PostPage />} />
+            <Route path="/post/:slug" element={<PostDetailPage />} />
+            <Route path="/profile" element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
+            <Route path="/create-post" element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
+            <Route path="/edit-post/:slug" element={<PrivateRoute> <EditPostPage /> </PrivateRoute>} />
+            <Route path="/chat" element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
+            <Route path='/administrator' element={<PrivateRoute> <AdminRoute> <AdminPage /> </AdminRoute> </PrivateRoute>} />
           </Routes>
 
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 min-h-full bg-base-200">
-
             {/* Sidebar content here */}
             <li><a onClick={() => navigate("/")}>Home</a></li>
-            {!isLogin && <li><a onClick={() => navigate("/login")}>Login</a></li>}
-            {!isLogin && <li><a onClick={() => navigate("/register")}>Register</a></li>}
-            {isLogin && <li><a onClick={() => navigate("/create-post")}>Create Post</a></li>}
-            {isLogin && <li><a onClick={() => navigate("/post")}>Post</a></li>}
-            {isLogin && <li><a onClick={() => navigate("/chat")}>Chat</a></li>}
-            
+            {!isLogin && (<li><a onClick={() => navigate("/login")}>Login</a></li>)}
+            {!isLogin && (<li><a onClick={() => navigate("/register")}>Register</a></li>)}
+            {isLogin && (<li><a onClick={() => navigate("/post")}>Cari Pekerjaan</a></li>)}
+            {isLogin && (<li><a onClick={() => navigate("/create-post")}>Buat Tawaram</a></li>)}
+            {isLogin && (<li><a onClick={() => navigate("/chat")}>Chat</a></li>)}
+            {isAdmin && <li><a onClick={() => navigate("/administrator")}>Administrator</a></li>}
           </ul>
         </div>
       </div>
 
       {/* Footer */}
-      { hideOnRegisterLogin && <Footer />}
-
+      {hideOnRegisterLogin && <Footer />}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
