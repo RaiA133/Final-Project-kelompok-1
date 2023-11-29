@@ -235,6 +235,16 @@ async function findAllUserChats() {
   }
 }
 
+// Function Get Data User by unique_id (none admin for chat)
+async function getUserByUniqueIdChat(unique_id) {
+  try {
+    const response = await instance.get(`/user/all/${unique_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
 async function logout() {
   try {
     const response = await instance.post('/logout');
@@ -250,7 +260,7 @@ export {
   getUserbyId, userProfile, getUserByUniqueId, updateProfile, getAllUser,
   getYourPostingan, getAllPostingan, getPostByUniqueId, getPostDetailBySlug, getPostTerbaru, getPostTerlama, createPost, updatePostBySlug, delYourPostinganById,
   getAllDataUserAdmin, getUserRoleAdmin, deleteUserByUniqueIdAdmin, 
-  findAllUserChats,
+  findAllUserChats, getUserByUniqueIdChat, 
   testSession, logout 
 };
 

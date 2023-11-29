@@ -158,6 +158,29 @@ class userController {
         });
       });
   }
+
+  // get all data user (none admin)
+  static getUser(req, res, next) {
+    User.findAll({
+      order: [['no', 'ASC']],
+    })
+      .then(data => {
+        res.status(200).json({
+          status: [200, 'Success'],
+          halaman: 'Home',
+          message: 'Berhasil GET all Data Users',
+          data,
+        })
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'Home',
+          message: 'Something went wrong',
+          error: err
+        })
+      })
+  }
   
 }
 

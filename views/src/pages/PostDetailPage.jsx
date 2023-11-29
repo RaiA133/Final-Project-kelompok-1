@@ -1,9 +1,8 @@
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { PostContext } from '../contexts/PostContext';
 import PostProfilePreview from "../components/PostPage/PostProfilePreview";
 import Partner from "../components/Partner";
-// import toast, { Toaster } from 'react-hot-toast';
 
 function PostDetailPage() {
   const location = useLocation()
@@ -27,14 +26,6 @@ function PostDetailPage() {
 
   return (
     <div>
-
-      {/* <Toaster
-        toastOptions={{
-          style: {
-            maxWidth: '600px'
-          }
-        }}
-      /> */}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 mb-16 mt-6 mx-5 card shadow-md bg-base-200">
 

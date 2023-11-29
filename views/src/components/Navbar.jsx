@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import LogoKelompok1B from '../assets/logo/LogoKelompok1B.jpg';
 import { logout } from "../modules/fetch" 
 import { UserContext } from "../contexts/UserContext";
+import { ChatContext } from "../contexts/ChatContext";
 
 function Navbar() {
-  const { userState, img_profile_link, set_img_profile_link, isAdmin, setIsAdmin } = useContext(UserContext)
+  const { setUser } = useContext(ChatContext)
+  const { userState, img_profile_link, set_img_profile_link, isAdmin } = useContext(UserContext)
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate()
 
@@ -21,6 +23,7 @@ function Navbar() {
     if (userState.img_profile) {
        const link = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${userState.img_profile}` || import.meta.env.VITE_PROFILE_DEFAULT
        set_img_profile_link(link)
+       setUser(userState)
     } 
   }, [userState])
 

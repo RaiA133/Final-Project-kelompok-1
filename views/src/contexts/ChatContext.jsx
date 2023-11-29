@@ -1,10 +1,11 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { findAllUserChats, getAllUser } from '../modules/fetch';
 import { useNavigate } from 'react-router-dom';
+// import { UserContext } from './UserContext';
 
 export const ChatContext = createContext();
 
-export const ChatContextProvider = ({ children, user }) => {
+export const ChatContextProvider = ({ children }) => {
   const navigate = useNavigate()
   const [ChatFriendList, setChatFriendList] = useState([
     { username: 'Alex', status: 'online', friend: true, lastMessage: 'Hallo bro !!' },
@@ -12,8 +13,11 @@ export const ChatContextProvider = ({ children, user }) => {
     { username: 'Irwan', status: 'offline', friend: false, lastMessage: 'Tgl 30 paling bisanya' },
   ]);
 
-  const [userChats, setUserChats] = useState() // get your user data
-  const [potentialChats, setPotentialChats] = useState([])
+  const [user, setUser] = useState([]) // profile kita
+  // console.log('user profile di chat kontext', user) 
+
+  const [userChats, setUserChats] = useState() // seluruh data percakapan / data table chats
+  const [potentialChats, setPotentialChats] = useState([]) // user lain yg belum ngobrol sama kita
   // console.log(userChats)
 
   // useEffect(() => {
@@ -24,7 +28,7 @@ export const ChatContextProvider = ({ children, user }) => {
   //     }
   //     const pChats = response.filter((u) => {
   //       let isChatCreated = false
-  //       // if ()
+  //       if (user.unique_id)
   //     })
   //   }
   //   getUsers()
@@ -34,7 +38,7 @@ export const ChatContextProvider = ({ children, user }) => {
   useEffect(() => {
     const getAllUserChat = async () => {
       try {
-        const response = await findAllUserChats();
+        const response = await findAllUserChats(); // get percakapan yg ada kitanya, berdasarkan unique_id hasil decoded token
         if (response.status[1] === 'Success') {
           setUserChats(response.data); 
         }
@@ -47,7 +51,12 @@ export const ChatContextProvider = ({ children, user }) => {
   }, [navigate])
 
   return (
-    <ChatContext.Provider value={{ ChatFriendList, setChatFriendList, userChats }}>
+    <ChatContext.Provider value={{ 
+      user, setUser,
+      ChatFriendList, 
+      setChatFriendList, 
+      userChats,
+    }}>
       {children}
     </ChatContext.Provider>
   )

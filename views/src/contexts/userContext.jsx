@@ -6,7 +6,7 @@ export const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
   const navigate = useNavigate()
-  const [userState, setUserState] = useState({});
+  const [userState, setUserState] = useState({}); // data profile kita
   const [img_profile_link, set_img_profile_link] = useState("");
   const [isAdmin, setIsAdmin] = useState(false)
 

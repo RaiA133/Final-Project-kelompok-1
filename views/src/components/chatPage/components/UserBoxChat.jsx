@@ -2,10 +2,15 @@ import { useFetchRecipientUser } from "../../../hooks/useFetchRecipient"
 import { ChatContext } from "../../../contexts/ChatContext"
 import { useContext } from "react"
 
-const UserBoxChat = ({ chat, user }) => {
-  const recipientUser = useFetchRecipientUser(chat, user)
+const UserBoxChat = ({ chat, user }) => { // seluruh percakapan yg ada kitanya (sudah di map, tinggal taro dibawah langsung keforeach), profilekita
+  // console.log('obrolan yg ada sayanya : ', chat.members)
+  // console.log('unique_id saya : ', user.unique_id)
+
+  const recipientUser = useFetchRecipientUser(chat, user) // profile user yg ngobrol sama kita (hooks)
   const otherUserData = recipientUser[0] || ''
-  const { userChats } = useContext(ChatContext)
+  // console.log('recipientUser', recipientUser[0])
+
+  const { userChats } = useContext(ChatContext) // seluruh percakapan yg ada kitanya (belum di map)
   const otherUserPic = import.meta.env.VITE_BACKEND_BASEURL + '/profile/picture/' + otherUserData.img_profile
   // console.log('table chat', userChats)
   // console.log('other', otherUserData)
@@ -18,7 +23,7 @@ const UserBoxChat = ({ chat, user }) => {
           <img className="rounded-full items-start flex-shrink-0 mr-3" src={otherUserPic} width="32" height="32" alt="Byrne McKenzie" />
           <div className="overflow-hidden w-full">
             <h4 className="text-sm font-semibold text-gray-900 truncate ...">
-              <span>{otherUserData.username}</span>
+              <span>{otherUserData.name}</span>
             </h4>
             <div className="text-[13px] flex justify-between">
               <span className="truncate">last Message</span>
