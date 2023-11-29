@@ -1,31 +1,39 @@
 import { useContext, useState } from "react";
 import { ChatContext } from "../../../contexts/ChatContext";
+import { createChat } from "../../../modules/fetch";
 
 function UserBoxModal() {
   const [searchUsername, setSearchUsername] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [filteredChats, setFilteredChats] = useState([]);
-  const { potentialChats, findOrCreateChat } = useContext(ChatContext) // data semua user yg belum pernah ngobrol dengan kita
+  const { user, potentialChats, findOrCreateChat } = useContext(ChatContext) // data semua user yg belum pernah ngobrol dengan kita
 
   async function AddFriend(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formDataObject = Object.fromEntries(formData);
-    // console.log(formDataObject)
-
     const { searchUsername } = formDataObject;
-
-    // Melakukan filter berdasarkan searchUsername
+  
     const filteredUsers = potentialChats.filter((user) => {
       return searchUsername && user.username.includes(searchUsername);
     });
-    console.log(filteredUsers);
-    return
-    
-    formData.append("usertwo_unique_id", filteredUsers.unique_id);
-    findOrCreateChat()
-
+  
+    try {
+      if (filteredUsers.length > 0) {
+        const response = await createChat(user.unique_id, filteredUsers[0].unique_id);        
+        if (response.status[1] === "Success") {
+          console.log("berhasil");
+        } else {
+          console.error("Gagal menambahkan teman. Respons tidak sesuai yang diharapkan.");
+        }
+      } else {
+        console.error("User tidak ditemukan berdasarkan pencarian.");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
+  
   const handleSearchChange = (e) => {
     setSearchUsername(e.target.value);
     const filteredUsers = potentialChats.filter((chat) => {

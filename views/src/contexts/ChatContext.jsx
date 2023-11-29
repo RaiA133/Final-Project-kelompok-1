@@ -40,13 +40,13 @@ export const ChatContextProvider = ({ children }) => {
   }, [user])
   
 
-  const findOrCreateChat = useCallback( async (formData) => {
-    const response = await findOrCreateChat(formData)
-    if (response.error) {
-      return console.log("Error creating chat", response)
-    }
-    setUserChats((prev) => [...prev, response])
-  })
+  // const findOrCreateChat = useCallback( async (formData) => {
+  //   const response = await findOrCreateChat(formData)
+  //   if (response.error) {
+  //     return console.log("Error creating chat", response)
+  //   }
+  //   setUserChats((prev) => [...prev, response])
+  // })
 
 
   useEffect(() => {
@@ -70,7 +70,8 @@ export const ChatContextProvider = ({ children }) => {
       ChatFriendList,
       setChatFriendList,
       userChats,
-      potentialChats, findOrCreateChat,
+      potentialChats, 
+      // findOrCreateChat,
     }}>
       {children}
     </ChatContext.Provider>

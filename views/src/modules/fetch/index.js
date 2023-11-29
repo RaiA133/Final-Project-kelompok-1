@@ -227,18 +227,12 @@ async function deleteUserByUniqueIdAdmin(unique_id) {
 }
 
 // Function find atau buat Chat / userone_unique_id, usertwo_unique_id
-async function findOrCreateChat(formData) {
-  const formDataObject = Object.fromEntries(formData.entries());
-  console.log('formDataObject', formDataObject)
-  return
+async function createChat( userone_unique_id, usertwo_unique_id ) {
   try {
-    const response = await instance.post('/chats/find-or-create', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    const response = await instance.post('/chats/find-or-create', { userone_unique_id, usertwo_unique_id })
     return response.data;
-  }
-  catch (error) {
-    throw new Error(error.response.data.message || 'Something went wrong');
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
   }
 }
 
@@ -277,7 +271,7 @@ export {
   getUserbyId, userProfile, getUserByUniqueId, updateProfile, getAllUser,
   getYourPostingan, getAllPostingan, getPostByUniqueId, getPostDetailBySlug, getPostTerbaru, getPostTerlama, createPost, updatePostBySlug, delYourPostinganById,
   getAllDataUserAdmin, getUserRoleAdmin, deleteUserByUniqueIdAdmin, 
-  findAllUserChats, getUserByUniqueIdChat, findOrCreateChat,
+  findAllUserChats, getUserByUniqueIdChat, createChat,
   testSession, logout 
 };
 
