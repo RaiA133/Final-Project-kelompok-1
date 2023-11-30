@@ -6,9 +6,7 @@ function UserBoxModal() {
   const [searchUsername, setSearchUsername] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [filteredChats, setFilteredChats] = useState([]);
-  const { user, potentialChats, findOrCreateChat } = useContext(ChatContext) // data semua user yg belum pernah ngobrol dengan kita
-  // console.log('potentialChats', potentialChats)
-
+  const { user, potentialChats } = useContext(ChatContext) // data semua user yg belum pernah ngobrol dengan kita
 
   async function AddFriend(e) {
     e.preventDefault();
@@ -21,13 +19,14 @@ function UserBoxModal() {
     });
   
     try {
+      const friend = true
       if (filteredUsers.length > 0) {
-        const response = await createUserChat(user.unique_id, filteredUsers[0].unique_id);        
+        const response = await createUserChat(user.unique_id, filteredUsers[0].unique_id, friend);        
         if (response.status[1] === "Success") {
           window.location.reload()
           console.log("berhasil");
         } else {
-          console.error("Gagal menambahkan teman. Respons tidak sesuai yang diharapkan.");
+          console.error("Gagal menambahkan teman");
         }
       } else {
         console.error("User tidak ditemukan berdasarkan pencarian.");

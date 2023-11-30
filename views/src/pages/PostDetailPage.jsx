@@ -3,6 +3,8 @@ import { useContext } from "react";
 import { PostContext } from '../contexts/PostContext';
 import PostProfilePreview from "../components/PostPage/PostProfilePreview";
 import Partner from "../components/Partner";
+import { createUserChat } from "../modules/fetch";
+import { ChatContext } from "../contexts/ChatContext";
 
 function PostDetailPage() {
   const location = useLocation()
@@ -10,6 +12,21 @@ function PostDetailPage() {
   const { slug } = useParams(); // Mendapatkan SLUG dari URL
   const { postState, post_img_link, set_post_img_link } = useContext(PostContext);
   const selectedPost = Array.isArray(postState) ? postState.find((post) => post.slug === slug) : null;
+  const { user, userChats, updateCurrentChat } = useContext(ChatContext)
+
+  // console.log('userChats', userChats)
+  // console.log('user.unique_id', user?.unique_id)
+  // console.log('selectedPost.user.unique_id', selectedPost?.user?.unique_id)
+
+  const findDataWithMembers = (data, user1, user2) => {
+    return data?.filter(item => {
+      return (
+        item.members.includes(user1) && item.members.includes(user2) ||
+        item.members.includes(user2) && item.members.includes(user1)
+      );
+    });
+  };
+  const resultData = findDataWithMembers(userChats, user?.unique_id, selectedPost?.user?.unique_id);
 
   if (!selectedPost) {
     return <div className="flex justify-center items-center h-64">Postingan tidak ditemukan.</div>;
@@ -22,6 +39,22 @@ function PostDetailPage() {
   else {
     const link = import.meta.env.VITE_POST_PIC_DEFAULT
     set_post_img_link(link)
+  }
+
+  async function directMessage(e) {
+    e.preventDefault();
+    const friend = false
+    try {
+      const response = await createUserChat(user?.unique_id, selectedPost?.user?.unique_id, friend);
+      if (response.status[1] === "Success") {
+        navigate("/chat")
+      } else {
+        console.error("Gagal direct message");
+      }
+      updateCurrentChat(resultData[0])
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
@@ -82,10 +115,12 @@ function PostDetailPage() {
                 <div className="divider mb-2 divider-secondary" />
                 <div className="stat-title text-base-100">Maximum Revenue</div>
                 <div className="stat-value">{selectedPost.max_price}</div>
-                <div className="stat-actions">
-                  <button className="btn btn-sm mr-2">Chat Owner</button>
-                  <button className="btn btn-sm">Ambil Kerjaan</button>
-                </div>
+                {selectedPost.user.unique_id !== user.unique_id && (
+                  <div className="stat-actions">
+                      <button className="btn btn-sm mr-2" onClick={directMessage}>Chat Owner</button>
+                      <button className="btn btn-sm">Ambil Kerjaan</button>
+                  </div>
+                )}
               </div>
             </div>
             <div className="stats text-base-content w-full md:w-1/2 lg:w-full mx-auto lg:ms-0 mb-0">

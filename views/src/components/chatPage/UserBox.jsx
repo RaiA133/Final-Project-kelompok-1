@@ -5,7 +5,7 @@ import UserBoxModal from "./components/UserBoxModal"
 import UserBoxChat from "./components/UserBoxChat";
 
 function UserBox() {
-  const { ChatFriendList, userChats, updateCurrentChat } = useContext(ChatContext) // data dummy, seluruh data percakapan
+  const { userChats, updateCurrentChat } = useContext(ChatContext) // data dummy, seluruh data percakapan
   const { userState } = useContext(UserContext) // data profile kita
   // console.log('unique_id saya : ', userState.unique_id)
   // console.log('chat yg ada sayanya : ', userChats)
@@ -21,6 +21,7 @@ function UserBox() {
 
           {/* FRIEND BOX */}
           {userChats?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+            .filter(chat => chat.friend === true)
             .map((chat, index) => (
               <div key={index} onClick={() => updateCurrentChat(chat)}>
                 <UserBoxChat chat={chat} user={userState} />
@@ -33,33 +34,13 @@ function UserBox() {
         <input type="radio" name="my_tabs_2" role="tab" className="tab font-bold w-44" aria-label="Direct Message" />
         <div role="tabpanel" className="tab-content bg-base-100 rounded-box p-5 h-96 overflow-auto">
 
-          {ChatFriendList
-            .filter(friend => friend.friend === false)
-            .map(filteredFriend => (
-              <div className="indicator w-full col-span-1 py-2 px-3 bg-base-200 card shadow mt-2" key={filteredFriend.username}>
-                <span className="indicator-item badge badge-success"></span> 
-                <button className="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50">
-                  <div className="flex items-center">
-                    <img className="rounded-full items-start flex-shrink-0 mr-3" src={import.meta.env.VITE_PROFILE_DEFAULT} width="32" height="32" alt="Byrne McKenzie" />
-                    <div className="overflow-hidden w-full">
-                      <h4 className="text-sm font-semibold text-gray-900 truncate ...">
-                        <span>{filteredFriend.username}</span>
-                      </h4>
-                      <div className="text-[13px] flex justify-between">
-                        <span className="truncate">{filteredFriend.lastMessage}</span>
-                        <span className="ms-2">14/12/2021</span>
-                      </div>
-                    </div>
-                    <div className="avatar placeholder ms-2">
-                      <div className="bg-neutral text-neutral-content rounded-full w-6">
-                        <span className="text-xs">1</span>
-                      </div>
-                    </div>
-                  </div>
-                </button>
+        {userChats?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+            .filter(chat => chat.friend === false)
+            .map((chat, index) => (
+              <div key={index} onClick={() => updateCurrentChat(chat)}>
+                <UserBoxChat chat={chat} user={userState} />
               </div>
             ))}
-
 
         </div>
 

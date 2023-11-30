@@ -1,5 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { createUserMessage, deleteAllMessageByUniqueId, deleteUserChatByUniqueId, findAllUserChats, findAllUserChatsByChatUniqueId, getAllUser } from '../modules/fetch';
+import { createUserMessage, deleteAllMessageByUniqueId, deleteUserChatByUniqueId, findAllUserChats, findAllUserChatsByChatUniqueId, getAllUser, updateUserByChatUniqueIdChat } from '../modules/fetch';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -7,12 +7,6 @@ export const ChatContext = createContext();
 
 export const ChatContextProvider = ({ children }) => {
   const navigate = useNavigate()
-  const [ChatFriendList, setChatFriendList] = useState([
-    { username: 'Alex', status: 'online', friend: true, lastMessage: 'Hallo bro !!' },
-    { username: 'Johnny', status: 'offline', friend: true, lastMessage: 'Aku sedang Diluar ini tolong chat nanti lagi ya' },
-    { username: 'Irwan', status: 'offline', friend: false, lastMessage: 'Tgl 30 paling bisanya' },
-  ]);
-
   const [user, setUser] = useState([]) // profile kita
   const [userChats, setUserChats] = useState() // seluruh data percakapan / data table chats
   const [potentialChats, setPotentialChats] = useState([]) // user lain yg belum ngobrol sama kita
@@ -81,6 +75,7 @@ export const ChatContextProvider = ({ children }) => {
     setTextMessage("")
   }, [])
 
+
   // hapus semua riwayat pesan / message by chat_unique_id
   const deleteAllMessage = useCallback( async(chat_unique_id, setTextMessage) => {
     const response = await deleteAllMessageByUniqueId(chat_unique_id, setTextMessage);
@@ -95,9 +90,21 @@ export const ChatContextProvider = ({ children }) => {
     });
   }, [])
 
+
+  // update User Chat 
+  const updateUserChat = useCallback( async(friend, chat_unique_id, setTextMessage) => {
+    const response = await updateUserByChatUniqueIdChat(friend, chat_unique_id, setTextMessage);
+    if (response.error) {
+      return console.error("Error delete all messages")
+    }
+    setMessages(null)
+    localStorage.setItem('toastMessage', response.message);
+    window.location.reload();
+  }, [])
+
+
   // hapus semua riwayat pesan / message by chat_unique_id
   const deleteUserChat = useCallback( async(chat_unique_id, setTextMessage) => {
-    console.log('asdasdsdsds', chat_unique_id)
     const response = await deleteUserChatByUniqueId(chat_unique_id, setTextMessage);
     if (response.error) {
       return console.error("Error delete all messages")
@@ -112,11 +119,10 @@ export const ChatContextProvider = ({ children }) => {
     setCurrentChat(chat) // menyimpan percakapan ke currentChat, berdasarkan userBox yg diklik
   },[])
 
+
   return (
     <ChatContext.Provider value={{
       user, setUser,
-      ChatFriendList,
-      setChatFriendList,
       userChats,
       potentialChats, 
       updateCurrentChat,
@@ -124,7 +130,8 @@ export const ChatContextProvider = ({ children }) => {
       messages,
       sendTextMessage,
       deleteAllMessage,
-      deleteUserChat
+      updateUserChat,
+      deleteUserChat,
     }}>
       {children}
     </ChatContext.Provider>

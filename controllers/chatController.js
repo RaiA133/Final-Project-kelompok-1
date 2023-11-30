@@ -7,7 +7,7 @@ class chatController {
 
   //  /chats/find-or-create | buat obrolan chat jika yg di input di body tidak ada / ada salah satu yg tidak ada
   static createUserChat(req, res, next) {
-    const { userone_unique_id, usertwo_unique_id } = req.body
+    const { userone_unique_id, usertwo_unique_id, friend } = req.body
     Chat.findOne({
       where: {
         members: [userone_unique_id, usertwo_unique_id]
@@ -26,6 +26,7 @@ class chatController {
           const newChat = await Chat.create({
             chat_unique_id: uuidv4(),
             members: [userone_unique_id, usertwo_unique_id],
+            friend,
           });
           res.status(201).json({
             status: [201, 'Success'],
@@ -119,6 +120,53 @@ class chatController {
         });
       });
   }
+
+  //  /chats/update/:chat_unique_id | update obrolan, misal status friend
+  static updateUserChat(req, res, next) {
+    const { chat_unique_id } = req.params;
+    const {
+      friend, last_message
+    } = req.body;
+
+    const updatedChat = {
+      friend, last_message
+    };
+
+    Chat.findOne({
+      where: {
+        chat_unique_id,
+      }
+    })
+      .then(data => {
+        if (!data) {
+          return res.status(404).json({
+            status: [404, 'Success'],
+            halaman: 'updateUserChat',
+            message: 'Data tidak ditemukan!',
+            data: updatedChat
+          });
+        } else {
+          return Chat.update(updatedChat, { where: { chat_unique_id } })
+            .then(() => {
+              res.status(200).json({
+                status: [200, 'Success'],
+                halaman: 'updateUserChat',
+                message: 'Chat berhasil di update!',
+                data: updatedChat
+              });
+            });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'updateUserChat',
+          message: 'Something went wrong!',
+          error: err
+        });
+      });
+  }
+
 
 
   //  /messages | kirim pesan

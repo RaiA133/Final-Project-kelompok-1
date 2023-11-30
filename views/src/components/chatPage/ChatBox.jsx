@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import InputEmoji from "react-input-emoji";
 
 function ChatBox() {
-  const { user, currentChat, messages, sendTextMessage, deleteAllMessage, deleteUserChat } = useContext(ChatContext) // profile kita dari chatContext | Obrolan yg mana | Pesan Obrolan di userBox yg kita klik
+  const { user, currentChat, messages, sendTextMessage, deleteAllMessage, updateUserChat, deleteUserChat } = useContext(ChatContext) // profile kita dari chatContext | Obrolan yg mana | Pesan Obrolan di userBox yg kita klik
   const recipientUser = useFetchRecipientUser(currentChat, user) // get data orang yg ngobrol dengan kita dari userBox yg kita klik
   const otherUserData = recipientUser[0] || ''
   const otherUserPic = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${otherUserData.img_profile}`
@@ -36,6 +36,11 @@ function ChatBox() {
     deleteUserChat(currentChat?.chat_unique_id, setTextMessage)
   }
 
+  function handleOnUserChatUpdate() {
+    const friend = true
+    updateUserChat(friend, currentChat?.chat_unique_id, setTextMessage)
+  }
+
 
 
   return (
@@ -60,11 +65,20 @@ function ChatBox() {
               </div>
             </div>
             <div className='ms-4 w-full'>
-              <p className='font-bold'>{otherUserData.username}</p>
+              <div className="flex justify-between w-full">
+                <p className='font-bold'>{otherUserData.username}</p>
+                <p className="text-sm mr-2">{otherUserData.name}</p>
+              </div>
               <div className="flex justify-between w-full">
                 <p className=''>{otherUserData.status}</p>
                 <div className="flex items-center">
-                  <p className="text-sm mr-2">{otherUserData.name}</p>
+
+                  {currentChat?.friend == false && (
+                    <button className="btn btn-xs btn-primary mr-1" onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('modal_add_friend_dirrect_message').showModal()
+                    }}>Add Friend</button>
+                  )}
 
                   {messages?.length > 0 ? (<btn className="btn btn-warning btn-xs" onClick={(e) => {
                     e.preventDefault();
@@ -125,6 +139,21 @@ function ChatBox() {
           <div className="modal-action flex justify-between gap-20">
             <form method="dialog">
               <button className="btn btn-error w-20" onClick={handleOnUserChatDelete}>Yes</button>
+            </form>
+            <form method="dialog">
+              <button className="btn w-20">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+
+      <dialog id="modal_add_friend_dirrect_message" className="modal">
+        <div className="modal-box w-fit">
+          <h3 className="font-bold text-lg text-center">Add Friend</h3>
+          <p className="pt-4 text-center">Are you sure ?</p>
+          <div className="modal-action flex justify-between gap-20">
+            <form method="dialog">
+              <button className="btn btn-primary w-20" onClick={handleOnUserChatUpdate}>Yes</button>
             </form>
             <form method="dialog">
               <button className="btn w-20">Close</button>
