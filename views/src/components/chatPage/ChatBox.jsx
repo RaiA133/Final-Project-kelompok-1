@@ -12,6 +12,7 @@ function ChatBox() {
   const otherUserPic = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${otherUserData.img_profile}`
   const [textMessage, setTextMessage] = useState("");
 
+  // console.log('currentChat', currentChat)
 
   useEffect(() => {
     const toastMessage = localStorage.getItem('toastMessage')
@@ -36,11 +37,9 @@ function ChatBox() {
     deleteUserChat(currentChat?.chat_unique_id, setTextMessage)
   }
 
-  function handleOnUserChatUpdate() {
-    const friend = true
-    updateUserChat(friend, currentChat?.chat_unique_id, setTextMessage)
+  function handleOnUserChatUpdate(friend, friend_req) {
+    updateUserChat(friend, friend_req, currentChat?.chat_unique_id, setTextMessage)
   }
-
 
 
   return (
@@ -149,11 +148,11 @@ function ChatBox() {
 
       <dialog id="modal_add_friend_dirrect_message" className="modal">
         <div className="modal-box w-fit">
-          <h3 className="font-bold text-lg text-center">Add Friend</h3>
+          <h3 className="font-bold text-lg text-center">Send Friend Request to {otherUserData.username}</h3>
           <p className="pt-4 text-center">Are you sure ?</p>
           <div className="modal-action flex justify-between gap-20">
             <form method="dialog">
-              <button className="btn btn-primary w-20" onClick={handleOnUserChatUpdate}>Yes</button>
+              <button className="btn btn-primary w-20" onClick={() => handleOnUserChatUpdate(false, user.unique_id)}>Yes</button>
             </form>
             <form method="dialog">
               <button className="btn w-20">Close</button>

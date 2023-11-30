@@ -125,11 +125,11 @@ class chatController {
   static updateUserChat(req, res, next) {
     const { chat_unique_id } = req.params;
     const {
-      friend, last_message
+      friend, friend_req, last_message
     } = req.body;
 
     const updatedChat = {
-      friend, last_message
+      friend, friend_req, last_message
     };
 
     Chat.findOne({
@@ -146,12 +146,12 @@ class chatController {
             data: updatedChat
           });
         } else {
-          return Chat.update(updatedChat, { where: { chat_unique_id } })
+          return data.update(updatedChat, { where: { chat_unique_id } })
             .then(() => {
               res.status(200).json({
                 status: [200, 'Success'],
                 halaman: 'updateUserChat',
-                message: 'Chat berhasil di update!',
+                message: ['Chat berhasil di update!', 'Friend Request telah dikirim'],
                 data: updatedChat
               });
             });

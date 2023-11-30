@@ -19,6 +19,10 @@ module.exports = {
         allowNull: true,
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
+      friend_req: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       friend: {
         allowNull: true,
         type: Sequelize.BOOLEAN

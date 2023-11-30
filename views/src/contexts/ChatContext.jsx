@@ -8,6 +8,7 @@ export const ChatContext = createContext();
 export const ChatContextProvider = ({ children }) => {
   const navigate = useNavigate()
   const [user, setUser] = useState([]) // profile kita
+  const [otherUserByUniqueId, setOtherUserByUniqueId] = useState([]) 
   const [userChats, setUserChats] = useState() // seluruh data percakapan / data table chats
   const [potentialChats, setPotentialChats] = useState([]) // user lain yg belum ngobrol sama kita
   const [currentChat, setCurrentChat] = useState(null) // state penampung ketika user di userbox di klik, menyimpan percakapan/chat
@@ -16,7 +17,6 @@ export const ChatContextProvider = ({ children }) => {
   const [sendTextMessageError, setSendTextMessageError] = useState(null)
   const [newMessage, setNewMessage] = useState(null)
   
-
   useEffect(() => {
     const getUsers = async () => {
       const response = await getAllUser(); // get semua user (none admin)
@@ -37,7 +37,7 @@ export const ChatContextProvider = ({ children }) => {
     }
     getUsers()
   }, [user])
-  
+
 
   useEffect(() => {
     const getAllUserChat = async () => {
@@ -92,8 +92,9 @@ export const ChatContextProvider = ({ children }) => {
 
 
   // update User Chat 
-  const updateUserChat = useCallback( async(friend, chat_unique_id, setTextMessage) => {
-    const response = await updateUserByChatUniqueIdChat(friend, chat_unique_id, setTextMessage);
+  const updateUserChat = useCallback( async(friend, friend_req, chat_unique_id, setTextMessage) => {
+    const response = await updateUserByChatUniqueIdChat(friend, friend_req, chat_unique_id, setTextMessage);
+    console.log(response)
     if (response.error) {
       return console.error("Error delete all messages")
     }
@@ -123,6 +124,7 @@ export const ChatContextProvider = ({ children }) => {
   return (
     <ChatContext.Provider value={{
       user, setUser,
+      otherUserByUniqueId, setOtherUserByUniqueId,
       userChats,
       potentialChats, 
       updateCurrentChat,

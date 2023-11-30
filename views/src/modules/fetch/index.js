@@ -286,9 +286,9 @@ async function findAllUserChatsByChatUniqueId(chat_unique_id) {
 }
 
 // Function update data user (friend & last_messge(not necessary))
-async function updateUserByChatUniqueIdChat(friend, chat_unique_id) {
+async function updateUserByChatUniqueIdChat(friend, friend_req, chat_unique_id) {
   try {
-    const response = await instance.put(`/chats/update/${chat_unique_id}`, {friend}); // tambahkan last_message jika diperlukan
+    const response = await instance.put(`/chats/update/${chat_unique_id}`, {friend, friend_req}); // tambahkan last_message jika diperlukan
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || 'Something went wrong');

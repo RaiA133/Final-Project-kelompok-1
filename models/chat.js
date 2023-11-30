@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   chat.init({
     chat_unique_id: DataTypes.STRING,
     members: DataTypes.ARRAY(DataTypes.STRING),
+    friend_req: DataTypes.STRING,
     friend: DataTypes.BOOLEAN,
     last_message: DataTypes.STRING,
   }, {
