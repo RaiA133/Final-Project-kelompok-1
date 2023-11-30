@@ -1,6 +1,7 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { createUserMessage, findAllUserChats, findAllUserChatsByChatUniqueId, getAllUser } from '../modules/fetch';
+import { createUserMessage, deleteAllMessageByUniqueId, deleteUserChatByUniqueId, findAllUserChats, findAllUserChatsByChatUniqueId, getAllUser } from '../modules/fetch';
 import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 export const ChatContext = createContext();
 
@@ -16,13 +17,11 @@ export const ChatContextProvider = ({ children }) => {
   const [userChats, setUserChats] = useState() // seluruh data percakapan / data table chats
   const [potentialChats, setPotentialChats] = useState([]) // user lain yg belum ngobrol sama kita
   const [currentChat, setCurrentChat] = useState(null) // state penampung ketika user di userbox di klik, menyimpan percakapan/chat
+  const [userOrMessageDel, setUserOrMessageDel] = useState(null) // untuk merefresh get data chat / messages dibawah
   const [messages, setMessages] = useState(null)
   const [sendTextMessageError, setSendTextMessageError] = useState(null)
   const [newMessage, setNewMessage] = useState(null)
-
-  // console.log('profile kita', user)
-  // console.log('currentChat (table chats)', currentChat?.members)
-  // console.log('messages (table messages)', messages)
+  
 
   useEffect(() => {
     const getUsers = async () => {
@@ -54,7 +53,7 @@ export const ChatContextProvider = ({ children }) => {
       }
     }
     getAllUserChat()
-  }, [navigate])
+  }, [navigate, userOrMessageDel])
 
   
   useEffect(() => {
@@ -67,7 +66,7 @@ export const ChatContextProvider = ({ children }) => {
       }
     }
     getMessages()
-  }, [currentChat])
+  }, [currentChat, userOrMessageDel])
 
 
   // kirim pesan di chatBox | before : textMessage, sender, currentChatId, setTextMessage
@@ -80,6 +79,32 @@ export const ChatContextProvider = ({ children }) => {
     setNewMessage(response.data)
     setMessages((prev) => [...prev, response.data])
     setTextMessage("")
+  }, [])
+
+  // hapus semua riwayat pesan / message by chat_unique_id
+  const deleteAllMessage = useCallback( async(chat_unique_id, setTextMessage) => {
+    const response = await deleteAllMessageByUniqueId(chat_unique_id, setTextMessage);
+    if (response.error) {
+      return console.error("Error delete all messages")
+    }
+    const toastMessage = response.message
+    setMessages(null)
+    setUserOrMessageDel(true)
+    toast.success(toastMessage, {
+      duration: 2500,
+    });
+  }, [])
+
+  // hapus semua riwayat pesan / message by chat_unique_id
+  const deleteUserChat = useCallback( async(chat_unique_id, setTextMessage) => {
+    console.log('asdasdsdsds', chat_unique_id)
+    const response = await deleteUserChatByUniqueId(chat_unique_id, setTextMessage);
+    if (response.error) {
+      return console.error("Error delete all messages")
+    }
+    setMessages(null)
+    localStorage.setItem('toastMessage', response.message);
+    window.location.reload();
   }, [])
 
 
@@ -97,7 +122,9 @@ export const ChatContextProvider = ({ children }) => {
       updateCurrentChat,
       currentChat,
       messages,
-      sendTextMessage
+      sendTextMessage,
+      deleteAllMessage,
+      deleteUserChat
     }}>
       {children}
     </ChatContext.Provider>

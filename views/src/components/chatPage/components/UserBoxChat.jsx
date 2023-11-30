@@ -1,17 +1,10 @@
 import { useFetchRecipientUser } from "../../../hooks/useFetchRecipient"
 
 const UserBoxChat = ({ chat, user }) => { // seluruh percakapan yg ada kitanya (sudah di map, tinggal taro dibawah langsung keforeach), profilekita
-  // console.log('obrolan yg ada sayanya : ', chat.members)
-  // console.log('unique_id saya : ', user.unique_id)
-
   const recipientUser = useFetchRecipientUser(chat, user) // profile user yg ngobrol sama kita (hooks)
   const otherUserData = recipientUser[0] || ''
-  // console.log('recipientUser', recipientUser[0])
-
   const otherUserPic = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${otherUserData.img_profile}` 
-  // console.log('table chat', userChats)
-  // console.log('other', otherUserData)
-
+  
   return (
     <div className="w-full indicator col-span-1 py-2 px-3 bg-base-200 card shadow mt-2" title={otherUserData.name}>
       {otherUserData.status == "online" ? (<span className="indicator-item badge badge-success" /> ) : (<></>)}
@@ -23,7 +16,7 @@ const UserBoxChat = ({ chat, user }) => { // seluruh percakapan yg ada kitanya (
               <span>{otherUserData.username || 'Deleted User'}</span>
             </h4>
             <div className="text-[13px] flex justify-between">
-              <span className="truncate">{chat.last_message}</span>
+              <span className="truncate">{chat.last_message || 'Belum ada pesan'}</span>
               <span className="ms-2">14/12/2021</span>
             </div>
           </div>

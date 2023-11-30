@@ -13,4 +13,7 @@ route.get('/messages/find-all/:chat_unique_id', middlewares.verifyToken, chatCon
 route.get('/user/all', middlewares.verifyToken, userController.getUser) // tambah /:chat_unique_id jika ingin pakai params
 route.get('/user/all/:unique_id', middlewares.verifyToken, userController.getUserByUniqueId) // tambah /:chat_unique_id jika ingin pakai params
 
+route.delete('/messages/delete/:chat_unique_id', middlewares.verifyToken, chatController.deleteMessagesByUniqueId) 
+route.delete('/chat/delete/:chat_unique_id', middlewares.verifyToken, chatController.deleteChatByUniqueId) 
+
 module.exports = route

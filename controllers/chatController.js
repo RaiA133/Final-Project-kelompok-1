@@ -136,10 +136,10 @@ class chatController {
           chat_unique_id
         }
       }).then(data => {
-          data.update({
-            last_message: text,
-          })
-        })        
+        data.update({
+          last_message: text,
+        })
+      })
       res.status(201).json({
         status: [201, 'Success'],
         halaman: 'createMessage',
@@ -183,6 +183,84 @@ class chatController {
       })
     }
   }
+
+
+  // /chat-messages/delete/:chat_unique_id | hapus semua pesan
+  static deleteMessagesByUniqueId(req, res, next) {
+    const { chat_unique_id } = req.params;
+
+    Message.destroy({
+      where: {
+        chat_unique_id,
+      },
+    })
+      .then(deletedMessages => {
+        if (deletedMessages === 0) {
+          return res.status(404).json({
+            status: [404, 'Failed'],
+            halaman: 'deleteMessagesByUniqueId',
+            message: `Tidak ada messages ditemukan`,
+          });
+        }
+        Chat.findOne({
+          where: {
+            chat_unique_id
+          }
+        }).then(data => {
+          data.update({
+            last_message: null,
+          })
+        })
+        return res.status(200).json({
+          status: [200, 'Success'],
+          halaman: 'deleteMessagesByUniqueId',
+          message: `Semua messages berhasil dihapus!`,
+        });
+      })
+      .catch(err => {
+        return res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'deleteMessagesByUniqueId',
+          message: 'Gagal menghapus messages',
+          error: err,
+        });
+      });
+  }
+
+  // /chat/delete/:chat_unique_id | hapus semua obrolan
+  static deleteChatByUniqueId(req, res, next) {
+    const { chat_unique_id } = req.params;
+
+    Chat.destroy({
+      where: {
+        chat_unique_id,
+      },
+    })
+      .then(deletedChat => {
+        if (deletedChat === 0) {
+          return res.status(404).json({
+            status: [404, 'Failed'],
+            halaman: 'deleteChatByUniqueId',
+            message: `Data Chat Tidak Ditemukan`,
+          });
+        }
+
+        return res.status(200).json({
+          status: [200, 'Success'],
+          halaman: 'deleteChatByUniqueId',
+          message: `Semua Chat berhasil dihapus!`,
+        });
+      })
+      .catch(err => {
+        return res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'deleteChatByUniqueId',
+          message: 'Gagal menghapus Chat',
+          error: err,
+        });
+      });
+  }
+
 
 }
 

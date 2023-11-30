@@ -276,6 +276,25 @@ async function getUserByUniqueIdChat(unique_id) {
   }
 }
 
+async function deleteAllMessageByUniqueId(chat_unique_id) {
+  try {
+    const response = await instance.delete(`/messages/delete/${chat_unique_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+async function deleteUserChatByUniqueId(chat_unique_id) {
+  console.log("asdasdasdas" , chat_unique_id)
+  try {
+    const response = await instance.delete(`/chat/delete/${chat_unique_id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
 async function logout() {
   try {
     const response = await instance.post('/logout');
@@ -292,8 +311,8 @@ export {
   getYourPostingan, getAllPostingan, getPostByUniqueId, getPostDetailBySlug, getPostTerbaru, getPostTerlama, createPost, updatePostBySlug, delYourPostinganById,
   getAllDataUserAdmin, getUserRoleAdmin, deleteUserByUniqueIdAdmin, 
   findAllUserChats, getUserByUniqueIdChat, createUserChat,
-  createUserMessage, 
-  findAllUserChatsByChatUniqueId,
+  createUserMessage, deleteAllMessageByUniqueId,
+  findAllUserChatsByChatUniqueId, deleteUserChatByUniqueId,
   testSession, logout 
 };
 

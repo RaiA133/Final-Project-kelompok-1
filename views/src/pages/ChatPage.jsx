@@ -1,13 +1,11 @@
 import { useContext } from 'react';
 import { DecodedTokenContext } from '../components/PrivateRoute';
 import toast, { Toaster } from 'react-hot-toast';
-import socket from '../modules/socket';
 import UserBox from '../components/chatPage/UserBox';
 import ChatBox from '../components/chatPage/ChatBox';
 
 function ChatPage() {
   const { decodedTokenState } = useContext(DecodedTokenContext)
-  // console.log(decodedTokenState)
 
   return (
     <>
