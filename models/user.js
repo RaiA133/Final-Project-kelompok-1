@@ -23,7 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     username: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    status: DataTypes.STRING,
+    status: {
+      type: DataTypes.STRING, 
+      defaultValue: 'offline'
+    },
     img_profile: {
       type: DataTypes.STRING, 
       defaultValue: 'default.png'

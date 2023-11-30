@@ -25,6 +25,7 @@ module.exports = {
         city: 'Bandung',
         address: 'Jl. Dago atas No.23',
         contact: '08123456789',
+        status: "offline",
         web_link: 'https://raie-site.link',
         github_link: 'https://github.com/RaiA133',
         fb_link: 'https://www.facebook.com/zuck/?locale=id_ID',
@@ -44,6 +45,7 @@ module.exports = {
         email: 'ikhsan@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('321', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -56,6 +58,7 @@ module.exports = {
         email: 'nabil@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('111', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -68,6 +71,7 @@ module.exports = {
         email: 'janedoe123@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('password123', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -80,6 +84,7 @@ module.exports = {
         email: 'mike@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('securepass', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -92,6 +97,7 @@ module.exports = {
         email: 'sarah@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('sarahpass', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -104,6 +110,7 @@ module.exports = {
         email: 'alex@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('alexpass123', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -116,6 +123,7 @@ module.exports = {
         email: 'emily@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('emilypass', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -128,6 +136,7 @@ module.exports = {
         email: 'david@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('davidpass123', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -140,6 +149,7 @@ module.exports = {
         email: 'megan@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('meganpass', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -152,6 +162,7 @@ module.exports = {
         email: 'robert@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('robertpass123', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -164,6 +175,7 @@ module.exports = {
         email: 'sophie@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('sophiepass', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -176,6 +188,7 @@ module.exports = {
         email: 'daniel@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('danielpass', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -188,6 +201,7 @@ module.exports = {
         email: 'ella@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('ellapass', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -200,6 +214,7 @@ module.exports = {
         email: 'chris@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('chrispass123', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -212,6 +227,7 @@ module.exports = {
         email: 'olivia@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('oliviapass', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -224,6 +240,7 @@ module.exports = {
         email: 'ryan@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('ryanpass123', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -236,6 +253,7 @@ module.exports = {
         email: 'isabella@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('isabellapass', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -248,6 +266,7 @@ module.exports = {
         email: 'nathan@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('nathanpass123', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -260,6 +279,7 @@ module.exports = {
         email: 'sophia@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('sophiapass', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -272,6 +292,7 @@ module.exports = {
         email: 'matthew@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('matthewpass123', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -284,6 +305,7 @@ module.exports = {
         email: 'ava@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('avapass', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -296,6 +318,7 @@ module.exports = {
         email: 'william@gmail.com',
         img_profile: 'default.png',
         password: await bcrypt.hash('williampass123', 10),
+        status: "offline",
         createdAt: new Date(),
         updatedAt: new Date()
       }, 

@@ -62,7 +62,7 @@ function ChatBox() {
             <div className='ms-4 w-full'>
               <p className='font-bold'>{otherUserData.username}</p>
               <div className="flex justify-between w-full">
-                <p className=''>{otherUserData.status || 'offline'}</p>
+                <p className=''>{otherUserData.status}</p>
                 <div className="flex items-center">
                   <p className="text-sm mr-2">{otherUserData.name}</p>
 
