@@ -8,11 +8,11 @@ class chatController {
   //  /chats/find-or-create | buat obrolan chat jika yg di input di body tidak ada / ada salah satu yg tidak ada
   static createUserChat(req, res, next) {
     const { userone_unique_id, usertwo_unique_id } = req.body
-      Chat.findOne({
-        where: {
-          members: [userone_unique_id, usertwo_unique_id]
-        }
-      })
+    Chat.findOne({
+      where: {
+        members: [userone_unique_id, usertwo_unique_id]
+      }
+    })
       .then(async data => {
         if (data) {
           return res.status(200).json({
@@ -48,7 +48,7 @@ class chatController {
   //  /chats/find-all | cari semua obrolan chat yang ada kitanya , untuk user box
   static findAllUserChats(req, res, next) {
     // const { chat_unique_id } = req.params  // ubah route juga jika ingin pakai params
-    const { unique_id: chat_unique_id  } = req.userData
+    const { unique_id: chat_unique_id } = req.userData
     console.log(chat_unique_id)
     Chat.findAll({
       where: {
@@ -58,7 +58,7 @@ class chatController {
       }
     })
       .then(async data => {
-        
+
         if (data) {
           return res.status(200).json({
             status: [200, 'Success'],
@@ -125,12 +125,21 @@ class chatController {
   static async createMessage(req, res, next) {
     try {
       const { chat_unique_id, text } = req.body
-      const { unique_id: sender_unique_id  } = req.userData
+      const { unique_id: sender_unique_id } = req.userData
       const newMessage = await Message.create({
         chat_unique_id,
         sender_unique_id,
         text,
       })
+      Chat.findOne({
+        where: {
+          chat_unique_id
+        }
+      }).then(data => {
+          data.update({
+            last_message: text,
+          })
+        })        
       res.status(201).json({
         status: [201, 'Success'],
         halaman: 'createMessage',
@@ -149,14 +158,14 @@ class chatController {
   }
 
   //  /messages/fidn-all/:chat_unique_id | get semua pesan
-  static async getMessage(req, res, next) { 
+  static async getMessage(req, res, next) {
     try {
       const { chat_unique_id } = req.params
       // const { unique_id: chat_unique_id  } = req.userData
       const response = await Message.findAll({
         where: {
           chat_unique_id,
-        }
+        },
       })
       res.status(200).json({
         status: [200, 'Success'],

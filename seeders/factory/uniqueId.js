@@ -6,7 +6,7 @@ function uniqueId() {
   const user3 = 'b18cf3e7-4acd-44f7-8b7e-aa172e0ad8be'
   const user4 = uuidv4()
   const user5 = uuidv4()
-  const user6 = uuidv4()
+  const user6 = '4bdd57bd-df0b-4011-820a-2a4e37e1f7cb'
   const user7 = uuidv4()
   const user8 = uuidv4()
   const user9 = uuidv4()

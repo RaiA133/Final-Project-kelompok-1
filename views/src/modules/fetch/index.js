@@ -226,8 +226,18 @@ async function deleteUserByUniqueIdAdmin(unique_id) {
   }
 }
 
+// Function get semua chat obrolan
+async function findAllUserChats() {
+  try {
+    const response = await instance.get(`/chats/find-all`);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
 // Function find atau buat Chat / userone_unique_id, usertwo_unique_id
-async function createChat( userone_unique_id, usertwo_unique_id ) {
+async function createUserChat( userone_unique_id, usertwo_unique_id ) {
   try {
     const response = await instance.post('/chats/find-or-create', { userone_unique_id, usertwo_unique_id })
     return response.data;
@@ -236,10 +246,20 @@ async function createChat( userone_unique_id, usertwo_unique_id ) {
   }
 }
 
-// Function get semua chat obrolan
-async function findAllUserChats() {
+// Function send messsage, 
+async function createUserMessage( text, chat_unique_id, setTextMessage ) {
   try {
-    const response = await instance.get(`/chats/find-all`);
+    const response = await instance.post('/messages', { text, chat_unique_id, setTextMessage })
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
+// Function get semua Messages, berdasarkan chat_unique_id di obrolan
+async function findAllUserChatsByChatUniqueId(chat_unique_id) {
+  try {
+    const response = await instance.get(`/messages/find-all/${chat_unique_id}`);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || 'Something went wrong');
@@ -271,7 +291,9 @@ export {
   getUserbyId, userProfile, getUserByUniqueId, updateProfile, getAllUser,
   getYourPostingan, getAllPostingan, getPostByUniqueId, getPostDetailBySlug, getPostTerbaru, getPostTerlama, createPost, updatePostBySlug, delYourPostinganById,
   getAllDataUserAdmin, getUserRoleAdmin, deleteUserByUniqueIdAdmin, 
-  findAllUserChats, getUserByUniqueIdChat, createChat,
+  findAllUserChats, getUserByUniqueIdChat, createUserChat,
+  createUserMessage, 
+  findAllUserChatsByChatUniqueId,
   testSession, logout 
 };
 

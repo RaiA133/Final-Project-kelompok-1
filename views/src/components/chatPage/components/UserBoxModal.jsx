@@ -1,12 +1,14 @@
 import { useContext, useState } from "react";
 import { ChatContext } from "../../../contexts/ChatContext";
-import { createChat } from "../../../modules/fetch";
+import { createUserChat } from "../../../modules/fetch";
 
 function UserBoxModal() {
   const [searchUsername, setSearchUsername] = useState('');
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [filteredChats, setFilteredChats] = useState([]);
   const { user, potentialChats, findOrCreateChat } = useContext(ChatContext) // data semua user yg belum pernah ngobrol dengan kita
+  // console.log('potentialChats', potentialChats)
+
 
   async function AddFriend(e) {
     e.preventDefault();
@@ -20,8 +22,9 @@ function UserBoxModal() {
   
     try {
       if (filteredUsers.length > 0) {
-        const response = await createChat(user.unique_id, filteredUsers[0].unique_id);        
+        const response = await createUserChat(user.unique_id, filteredUsers[0].unique_id);        
         if (response.status[1] === "Success") {
+          window.location.reload()
           console.log("berhasil");
         } else {
           console.error("Gagal menambahkan teman. Respons tidak sesuai yang diharapkan.");

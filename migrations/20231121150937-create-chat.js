@@ -25,7 +25,7 @@ module.exports = {
       },
       last_message: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,

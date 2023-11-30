@@ -15,6 +15,7 @@ import ChatPage from './pages/ChatPage';
 import AdminPage from './pages/AdminPage';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from './contexts/UserContext';
+import EditPostPage from './pages/EditPostPage';
 
 function App() {
   let location = useLocation();
@@ -45,9 +46,10 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/post" element={<PostPage />} />
-            <Route path="/post/:slug" element={<PostDetailPage  />} />
+            <Route path="/post/:slug" element={<PostDetailPage />} />
             <Route path="/profile" element={<PrivateRoute> <ProfilePage /> </PrivateRoute>} />
             <Route path="/create-post" element={<PrivateRoute> <CreatePostPage /> </PrivateRoute>} />
+            <Route path="/edit-post/:slug" element={<PrivateRoute> <EditPostPage /> </PrivateRoute>} />
             <Route path="/chat" element={<PrivateRoute> <ChatPage /> </PrivateRoute>} />
             <Route path='/administrator' element={<PrivateRoute> <AdminRoute> <AdminPage /> </AdminRoute> </PrivateRoute>} />
           </Routes>

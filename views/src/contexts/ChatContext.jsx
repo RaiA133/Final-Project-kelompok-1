@@ -1,5 +1,5 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
-import { findAllUserChats, getAllUser } from '../modules/fetch';
+import { createUserMessage, findAllUserChats, findAllUserChatsByChatUniqueId, getAllUser } from '../modules/fetch';
 import { useNavigate } from 'react-router-dom';
 
 export const ChatContext = createContext();
@@ -15,8 +15,14 @@ export const ChatContextProvider = ({ children }) => {
   const [user, setUser] = useState([]) // profile kita
   const [userChats, setUserChats] = useState() // seluruh data percakapan / data table chats
   const [potentialChats, setPotentialChats] = useState([]) // user lain yg belum ngobrol sama kita
+  const [currentChat, setCurrentChat] = useState(null) // state penampung ketika user di userbox di klik, menyimpan percakapan/chat
+  const [messages, setMessages] = useState(null)
+  const [sendTextMessageError, setSendTextMessageError] = useState(null)
+  const [newMessage, setNewMessage] = useState(null)
 
-  // console.log(user.unique_id)
+  // console.log('profile kita', user)
+  // console.log('currentChat (table chats)', currentChat?.members)
+  // console.log('messages (table messages)', messages)
 
   useEffect(() => {
     const getUsers = async () => {
@@ -40,29 +46,46 @@ export const ChatContextProvider = ({ children }) => {
   }, [user])
   
 
-  // const findOrCreateChat = useCallback( async (formData) => {
-  //   const response = await findOrCreateChat(formData)
-  //   if (response.error) {
-  //     return console.log("Error creating chat", response)
-  //   }
-  //   setUserChats((prev) => [...prev, response])
-  // })
-
-
   useEffect(() => {
     const getAllUserChat = async () => {
-      try {
-        const response = await findAllUserChats(); // get percakapan yg ada kitanya, berdasarkan unique_id hasil decoded token
-        if (response.status[1] === 'Success') {
-          setUserChats(response.data);
-        }
-      }
-      catch (err) {
-        // console.log(err)
+      const response = await findAllUserChats(); // get percakapan yg ada kitanya, berdasarkan unique_id hasil decoded token
+      if (response.status[1] === 'Success') {
+        setUserChats(response.data);
       }
     }
     getAllUserChat()
   }, [navigate])
+
+  
+  useEffect(() => {
+    const getMessages = async () => {
+      if (currentChat?.chat_unique_id) {
+        const response = await findAllUserChatsByChatUniqueId(currentChat.chat_unique_id); 
+        if (response.status[1] === 'Success') {
+          setMessages(response.data);
+        }
+      }
+    }
+    getMessages()
+  }, [currentChat])
+
+
+  // kirim pesan di chatBox | before : textMessage, sender, currentChatId, setTextMessage
+  const sendTextMessage = useCallback( async(textMessage, chat_unique_id, setTextMessage) => {
+    if (!textMessage) return console.log("Tulis sesuatu...")
+    const response = await createUserMessage(textMessage, chat_unique_id, setTextMessage);
+    if (response.error) {
+      return setSendTextMessageError(response.message)
+    }
+    setNewMessage(response.data)
+    setMessages((prev) => [...prev, response.data])
+    setTextMessage("")
+  }, [])
+
+
+  const updateCurrentChat = useCallback((chat) => {
+    setCurrentChat(chat) // menyimpan percakapan ke currentChat, berdasarkan userBox yg diklik
+  },[])
 
   return (
     <ChatContext.Provider value={{
@@ -71,7 +94,10 @@ export const ChatContextProvider = ({ children }) => {
       setChatFriendList,
       userChats,
       potentialChats, 
-      // findOrCreateChat,
+      updateCurrentChat,
+      currentChat,
+      messages,
+      sendTextMessage
     }}>
       {children}
     </ChatContext.Provider>

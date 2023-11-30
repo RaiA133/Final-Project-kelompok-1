@@ -1,57 +1,62 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { ChatContext } from "../../contexts/ChatContext"
+import ChatBoxMessage from "./components/ChatBoxMessage"
+import { useFetchRecipientUser } from "../../hooks/useFetchRecipient"
+import InputEmoji from "react-input-emoji";
 
 function ChatBox() {
-  const { ChatFriendList } = useContext(ChatContext)
+  const { user, currentChat, sendTextMessage } = useContext(ChatContext) // profile kita dari chatContext | Obrolan yg mana | Pesan Obrolan di userBox yg kita klik
+  const recipientUser = useFetchRecipientUser(currentChat, user) // get data orang yg ngobrol dengan kita dari userBox yg kita klik
+  const otherUserData = recipientUser[0] || ''
+  const otherUserPic = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${otherUserData.img_profile}`
+  const [textMessage, setTextMessage] = useState("");
+
+  function handleOnEnter(textMessage) {
+    sendTextMessage(textMessage, currentChat.chat_unique_id, sendTextMessage)
+  }
+
 
   return (
     <div className="col-span-2 bg-base-100 card shadow-md md:ms-5 mt-5 h-[40rem]">
 
-      {ChatFriendList.length > 0 ? (
-        <>
-          <div>
-            <div className="col-span-1 py-2 px-5 bg-base-200 card shadow mt-0">
-              <div className='join'>
-                <div className="avatar online">
-                  <div className="w-12 rounded-full">
-                    <img src={import.meta.env.VITE_PROFILE_DEFAULT} />
-                  </div>
-                </div>
-                <div className='ms-4'>
-                  <p className='font-bold'>Username</p>
-                  <p className=''>online</p>
-                </div>
+      <div>
+        <div className="col-span-1 py-2 px-5 bg-base-200 card shadow mt-0">
+          <div className='join'>
+            <div className="avatar">
+              <div className="w-12 rounded-full">
+                {recipientUser[0] && (
+                  <img src={otherUserPic} />
+                )}
+              </div>
+            </div>
+            <div className='ms-4 w-full'>
+              <p className='font-bold'>{otherUserData.username}</p>
+              <div className="flex justify-between w-full">
+                <p className=''>{otherUserData.status}</p>
+                <p className="text-sm">{otherUserData.name}</p>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div className='p-5 h-[32rem]'>
-            <div className="chat chat-start">
-              <div className="chat-bubble">You were the Chosen One!</div>
-              <div className="chat-footer opacity-50">
-                <span className=''> Delivered </span>
-                <time className="text-xs opacity-50 ms-2">12:45</time>
-              </div>
-            </div>
-            <div className="chat chat-end">
-              <div className="chat-bubble">I hate you!</div>
-              <div className="chat-footer opacity-50">
-                <span className=''> Read </span>
-                <time className="text-xs opacity-50 ms-2">12:46</time>
-              </div>
-            </div>
-          </div>
+      <div className='p-5 h-[32rem] overflow-auto'>
 
-          <div className="join mx-2">
-            <div className='form-control w-full'>
-              <input className="input input-bordered join-item" name='chat-box' placeholder="Chat..." />
-            </div>
-            <button className="btn join-item">Send</button>
-          </div>
-        </>
-      ) : (
-        <div className='flex justify-center items-center h-screen'>
-          <div className='text-lg font-bold'>Tidak ada teman</div>
+        <ChatBoxMessage />
+
+      </div>
+
+      {otherUserData && (
+        <div className="join mx-2 mt-2">
+          <InputEmoji
+            value={textMessage}
+            onChange={setTextMessage}
+            cleanOnEnter
+            onEnter={handleOnEnter}
+            placeholder="Type a message"
+            theme="light"
+          />
+          <button className="btn me-2" onClick={() => sendTextMessage(textMessage, currentChat.chat_unique_id, sendTextMessage)}>Send</button>
         </div>
       )}
 

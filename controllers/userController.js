@@ -133,21 +133,21 @@ class userController {
       }
     })
       .then(data => {
-        if (!data) {
-          return res.status(404).json({
-            status: [404, 'Failed'],
-            halaman: 'getUserByUniqueId',
-            message: 'Data User Tidak Ditemukan'
-          });
-        }
-        else {
+        // if (!data) {
+        //   return res.status(404).json({
+        //     status: [404, 'Failed'],
+        //     halaman: 'getUserByUniqueId',
+        //     message: 'Data User Tidak Ditemukan'
+        //   });
+        // }
+        // else {
           return res.status(200).json({
             status: [200, 'Success'],
             halaman: 'getUserByUniqueId',
             message: `Data User Dengan unique_id: ${unique_id} ditemukan`,
             data
           });
-        }
+        // }
       })
       .catch(err => {
         return res.status(500).json({

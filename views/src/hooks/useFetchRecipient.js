@@ -17,7 +17,7 @@ export const useFetchRecipientUser = (chat, user) => { // seluruh percakapan yg 
       setRecipientUser(response.data)
     }
     getUser()
-  }, [user])
+  }, [chat, user])
 
   
   return [recipientUser, error]
