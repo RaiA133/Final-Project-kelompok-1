@@ -248,7 +248,7 @@ class chatController {
         return res.status(200).json({
           status: [200, 'Success'],
           halaman: 'deleteChatByUniqueId',
-          message: `Semua Chat berhasil dihapus!`,
+          message: `User berhasil dihapus!`,
         });
       })
       .catch(err => {

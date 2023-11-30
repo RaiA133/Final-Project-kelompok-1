@@ -15,7 +15,7 @@ function ChatBox() {
 
   useEffect(() => {
     const toastMessage = localStorage.getItem('toastMessage')
-    if (toastMessage == 'Semua messages berhasil dihapus!') {
+    if (toastMessage == 'User berhasil dihapus!') {
       toast.success(toastMessage, {
         duration: 2500,
       });
