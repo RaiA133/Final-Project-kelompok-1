@@ -12,9 +12,8 @@ function ChatBox() {
   const [textMessage, setTextMessage] = useState("");
 
   function handleOnEnter(textMessage) {
-    sendTextMessage(textMessage, currentChat.chat_unique_id, sendTextMessage)
+    sendTextMessage(textMessage, currentChat.chat_unique_id, setTextMessage)
   }
-
 
   return (
     <div className="col-span-2 bg-base-100 card shadow-md md:ms-5 mt-5 h-[40rem]">
@@ -56,7 +55,7 @@ function ChatBox() {
             placeholder="Type a message"
             theme="light"
           />
-          <button className="btn me-2" onClick={() => sendTextMessage(textMessage, currentChat.chat_unique_id, sendTextMessage)}>Send</button>
+          <button className="btn me-2" onClick={() => sendTextMessage(textMessage, currentChat.chat_unique_id, setTextMessage)}>Send</button>
         </div>
       )}
 
