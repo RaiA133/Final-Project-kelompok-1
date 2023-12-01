@@ -6,11 +6,12 @@ import toast, { Toaster } from 'react-hot-toast';
 import InputEmoji from "react-input-emoji";
 
 function ChatBox() {
-  const { user, currentChat, messages, sendTextMessage, deleteAllMessage, updateUserChat, deleteUserChat } = useContext(ChatContext) // profile kita dari chatContext | Obrolan yg mana | Pesan Obrolan di userBox yg kita klik
+  const { user, currentChat, messages, sendTextMessage, deleteAllMessage, updateUserChat, deleteUserChat, onlineUsers } = useContext(ChatContext) // profile kita dari chatContext | Obrolan yg mana | Pesan Obrolan di userBox yg kita klik
   const recipientUser = useFetchRecipientUser(currentChat, user) // get data orang yg ngobrol dengan kita dari userBox yg kita klik
   const otherUserData = recipientUser[0] || ''
   const otherUserPic = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${otherUserData.img_profile}`
   const [textMessage, setTextMessage] = useState("");
+  const isOnline = onlineUsers?.some((user) => user?.userUniqueId === otherUserData.unique_id)
 
   // console.log('currentChat', currentChat)
 
@@ -69,7 +70,10 @@ function ChatBox() {
                 <p className="text-sm mr-2">{otherUserData.name}</p>
               </div>
               <div className="flex justify-between w-full">
-                <p className=''>{otherUserData.status}</p>
+                {otherUserData && 
+                  <p className=''>{ isOnline ? "Online" : "Offline"}</p>
+                }
+                {/* <p className=''>{otherUserData.status}</p> */}
                 <div className="flex items-center">
 
                   {currentChat?.friend == false && (

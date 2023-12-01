@@ -15,12 +15,12 @@ function Navbar() {
 
 
   const friendReqActive = userChats?.filter(item => item.friend_req !== null); // data percakapan/obrolan yg belum acc friend request
-  const friendReqSender = friendReqActive && friendReqActive.length > 0 ? friendReqActive[0] : null;
+  const friendReqSender = friendReqActive && friendReqActive?.length > 0 ? friendReqActive[0] : null;
   useEffect(() => {
     const getAllUserChat = async () => {
       const response = await getUserByUniqueIdChat(friendReqSender?.friend_req); // get users by unique_id
       if (response.status[1] === 'Success') {
-        setOtherUserByUniqueId(response.data); // orang yg ngirim friend req, disimpan di otherUserByUniqueId
+        setOtherUserByUniqueId(response?.data); // orang yg ngirim friend req, disimpan di otherUserByUniqueId
       }
     }
     getAllUserChat()
@@ -31,15 +31,13 @@ function Navbar() {
     const token = window.localStorage.getItem("token");
     if (token) {
       setIsLogin(true);
-    } else {
-      setIsLogin(false);
     }
   }, [window.localStorage.getItem("token")]);
 
 
   useEffect(() => { // ketika userState / profile kita diupdate, ubah state context link gambar
     if (userState.img_profile) {
-      const link = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${userState.img_profile}` || import.meta.env.VITE_PROFILE_DEFAULT
+      const link = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${userState?.img_profile}` || import.meta.env.VITE_PROFILE_DEFAULT
       set_img_profile_link(link)
       setUser(userState)
     } 
@@ -89,7 +87,7 @@ function Navbar() {
                       
                   <summary>
                     <div className="indicator">
-                      {otherUserByUniqueId && otherUserByUniqueId?.unique_id !== user.unique_id && (
+                      {otherUserByUniqueId && otherUserByUniqueId?.unique_id !== user?.unique_id && (
                         <span className="indicator-item indicator-middle indicator-start badge badge-secondary ms-[-15px]"></span>
                       )}
                       <div>
@@ -98,7 +96,7 @@ function Navbar() {
                     </div>
                   </summary>
 
-                  {otherUserByUniqueId && otherUserByUniqueId?.unique_id !== user.unique_id ? (
+                  {otherUserByUniqueId && otherUserByUniqueId?.unique_id !== user?.unique_id ? (
                     <ul className="p-2 bg-base-200 rounded-t-none rounded-box w-56 absolute right-0 z-10">
                       <li>
                         <div className="flex">

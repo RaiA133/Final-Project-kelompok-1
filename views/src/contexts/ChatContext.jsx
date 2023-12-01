@@ -2,12 +2,13 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 import { createUserMessage, deleteAllMessageByUniqueId, deleteUserChatByUniqueId, findAllUserChats, findAllUserChatsByChatUniqueId, getAllUser, updateUserByChatUniqueIdChat } from '../modules/fetch';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { io } from "socket.io-client";
 
 export const ChatContext = createContext();
 
 export const ChatContextProvider = ({ children }) => {
   const navigate = useNavigate()
-  const [user, setUser] = useState([]) // profile kita
+  const [user, setUser] = useState(null) // profile kita
   const [otherUserByUniqueId, setOtherUserByUniqueId] = useState([]) 
   const [userChats, setUserChats] = useState() // seluruh data percakapan / data table chats
   const [potentialChats, setPotentialChats] = useState([]) // user lain yg belum ngobrol sama kita
@@ -16,6 +17,60 @@ export const ChatContextProvider = ({ children }) => {
   const [messages, setMessages] = useState(null)
   const [sendTextMessageError, setSendTextMessageError] = useState(null)
   const [newMessage, setNewMessage] = useState(null)
+  const [socket, setSocket] = useState(null)
+  const [onlineUsers, setOnlineUsers] = useState([])
+
+  // console.log("onlineUsers", onlineUsers)
+  // console.log("messages", messages)
+  // const recipientUniqueId = currentChat?.members.find((unique_id) => unique_id !== user?.unique_id)
+  // console.log('recipientUniqueId', recipientUniqueId)
+
+/* socket.io-client */ 
+  useEffect(() => {
+    const newSocket = io("http://localhost:5000");
+    setSocket(newSocket);
+    return () => { // cleanup function
+      newSocket.disconnect()
+    }
+  }, [user])
+
+  // add online user
+  useEffect(() => {
+    if(socket === null) return
+    socket.emit("addNewUser", user?.unique_id)
+    socket.on("getOnlineUsers", (res) => {
+      setOnlineUsers(res)
+    })
+    // return () => {
+    //   socket.off("getOnlineUsers")
+    // }
+  }, [socket])
+
+  // send/kirim message realtime
+  useEffect(() => {
+    if(socket === null) return
+    const recipientUniqueId = currentChat?.members.find((unique_id) => unique_id !== user.unique_id)
+    // console.log('recipientUniqueId', recipientUniqueId)
+    socket.emit("sendMessage", {...newMessage, recipientUniqueId})
+  }, [newMessage])  
+
+  // recieve/terima message
+  useEffect(() => {
+    if(socket === null) return
+    socket.on("getMessage", res => {
+      if(currentChat.chat_unique_id !== res.chat_unique_id) return
+      setMessages((prev) => [...prev, res])
+    })
+
+    return () => {
+      socket.off("getMessage")
+    }
+
+  }, [socket, currentChat]) 
+
+/* END socket.io-client */ 
+
+
   
   useEffect(() => {
     const getUsers = async () => {
@@ -134,6 +189,7 @@ export const ChatContextProvider = ({ children }) => {
       deleteAllMessage,
       updateUserChat,
       deleteUserChat,
+      onlineUsers,
     }}>
       {children}
     </ChatContext.Provider>
