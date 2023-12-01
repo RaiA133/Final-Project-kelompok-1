@@ -115,7 +115,7 @@ function PostDetailPage() {
                 <div className="divider mb-2 divider-secondary" />
                 <div className="stat-title text-base-100">Maximum Revenue</div>
                 <div className="stat-value">{selectedPost.max_price}</div>
-                {selectedPost.user.unique_id !== user.unique_id && (
+                {selectedPost?.user?.unique_id !== user?.unique_id && (
                   <div className="stat-actions">
                       <button className="btn btn-sm mr-2" onClick={directMessage}>Chat Owner</button>
                       <button className="btn btn-sm">Ambil Kerjaan</button>
