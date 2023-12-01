@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "fresh": "node test/migrate.fresh.js",
+    "dev" : "nodemon app.js",
     "start": "concurrently \"npm run server\" \"npm run client\" \"npm run socket\"",
     "server": "nodemon app.js",
     "client": "cd views && npm run dev",

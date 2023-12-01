@@ -9,6 +9,7 @@ export const ChatContext = createContext();
 export const ChatContextProvider = ({ children }) => {
   const navigate = useNavigate()
   const [user, setUser] = useState(null) // profile kita
+  const [allUsers, setAllUsers] = useState([]) // semua users
   const [otherUserByUniqueId, setOtherUserByUniqueId] = useState([]) // simpan data user lain yg diget berdasarkan unique_id
   const [userChats, setUserChats] = useState() // seluruh data percakapan / data table chats
   const [potentialChats, setPotentialChats] = useState([]) // user lain yg belum ngobrol sama kita
@@ -18,14 +19,16 @@ export const ChatContextProvider = ({ children }) => {
   const [sendTextMessageError, setSendTextMessageError] = useState(null)
   const [newMessage, setNewMessage] = useState(null) // penampung message yg dikirim dari socket io, diterukan ke messages
   const [socket, setSocket] = useState(null) // baseurl socket.io
-  const [onlineUsers, setOnlineUsers] = useState([])
+  const [onlineUsers, setOnlineUsers] = useState([]) // status online/offline user (socket.io)
+  const [notifications, setNotifications] = useState([])
 
-  // console.log("onlineUsers", onlineUsers)
-  // console.log("messages", messages)
+  console.log("notifications", notifications)
+  // console.log("currentChat", currentChat)
   // const recipientUniqueId = currentChat?.members.find((unique_id) => unique_id !== user?.unique_id)
   // console.log('recipientUniqueId', recipientUniqueId)
 
 /* socket.io-client */ 
+
   useEffect(() => {
     const newSocket = io("http://localhost:5000");
     setSocket(newSocket);
@@ -34,6 +37,7 @@ export const ChatContextProvider = ({ children }) => {
     }
   }, [user])
 
+
   // add online user
   useEffect(() => {
     if(socket === null) return
@@ -41,10 +45,8 @@ export const ChatContextProvider = ({ children }) => {
     socket.on("getOnlineUsers", (res) => {
       setOnlineUsers(res)
     })
-    // return () => {
-    //   socket.off("getOnlineUsers")
-    // }
   }, [socket])
+
 
   // send/kirim message realtime
   useEffect(() => {
@@ -53,17 +55,28 @@ export const ChatContextProvider = ({ children }) => {
     socket.emit("sendMessage", {...newMessage, recipientUniqueId})
   }, [newMessage])  
 
-  // recieve/terima message
+
+  // recieve/terima message & notification
   useEffect(() => {
     if(socket === null) return
     socket.on("getMessage", res => {
       if(currentChat.chat_unique_id !== res.chat_unique_id) return
       setMessages((prev) => [...prev, res])
     })
+    socket.on("getNotification", res => {
+      const isChatOpen = currentChat?.members.some(unique_id => unique_id === res.senderId)
+      if(isChatOpen) {
+        setNotifications((prev) => [{ ...res, isRead: true }, ...prev]);
+      } else {
+        setNotifications((prev) => [res, ...prev]);
+      }
+    })
     return () => {
       socket.off("getMessage")
+      socket.off("getNotification")
     }
   }, [socket, currentChat]) 
+
 
 /* END socket.io-client */ 
 
@@ -86,6 +99,7 @@ export const ChatContextProvider = ({ children }) => {
         return !isChatCreated
       });
       setPotentialChats(pChats)
+      setAllUsers(response.data)
     }
     getUsers()
   }, [user])
@@ -95,7 +109,7 @@ export const ChatContextProvider = ({ children }) => {
     const getAllUserChat = async () => {
       const response = await findAllUserChats(); // get percakapan yg ada kitanya, berdasarkan unique_id hasil decoded token
       if (response.status[1] === 'Success') {
-        setUserChats(response.data);
+        setUserChats(response?.data);
       }
     }
     getAllUserChat()
@@ -145,7 +159,6 @@ export const ChatContextProvider = ({ children }) => {
 
   // update User Chat 
   const updateUserChat = useCallback( async(friend, friend_req, chat_unique_id, setTextMessage) => {
-    console.log('friend, friend_req, chat_unique_id', friend, friend_req, chat_unique_id)
     const response = await updateUserByChatUniqueIdChat(friend, friend_req, chat_unique_id, setTextMessage);
     console.log(response)
     if (response.error) {
@@ -188,6 +201,8 @@ export const ChatContextProvider = ({ children }) => {
       updateUserChat,
       deleteUserChat,
       onlineUsers,
+      notifications,
+      allUsers
     }}>
       {children}
     </ChatContext.Provider>

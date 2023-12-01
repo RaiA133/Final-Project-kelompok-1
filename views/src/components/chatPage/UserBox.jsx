@@ -5,7 +5,7 @@ import UserBoxModal from "./components/UserBoxModal"
 import UserBoxChat from "./components/UserBoxChat";
 
 function UserBox() {
-  const { userChats, updateCurrentChat } = useContext(ChatContext) // data dummy, seluruh data percakapan
+  const { userChats, updateCurrentChat } = useContext(ChatContext) // seluruh data percakapan
   const { userState } = useContext(UserContext) // data profile kita
   // console.log('unique_id saya : ', userState.unique_id)
   // console.log('chat yg ada sayanya : ', userChats)

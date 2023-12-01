@@ -13,8 +13,6 @@ function ChatBox() {
   const [textMessage, setTextMessage] = useState("");
   const isOnline = onlineUsers?.some((user) => user?.userUniqueId === otherUserData.unique_id)
 
-  // console.log('currentChat', currentChat)
-
   useEffect(() => {
     const toastMessage = localStorage.getItem('toastMessage')
     if (toastMessage == 'User berhasil dihapus!') {
@@ -59,7 +57,7 @@ function ChatBox() {
           <div className='join'>
             <div className="avatar">
               <div className="w-12 rounded-full">
-                {recipientUser[0] && (
+                {messages && (
                   <img src={otherUserPic} />
                 )}
               </div>
@@ -70,10 +68,9 @@ function ChatBox() {
                 <p className="text-sm mr-2">{otherUserData.name}</p>
               </div>
               <div className="flex justify-between w-full">
-                {otherUserData && 
+                {messages && 
                   <p className=''>{ isOnline ? "Online" : "Offline"}</p>
                 }
-                {/* <p className=''>{otherUserData.status}</p> */}
                 <div className="flex items-center">
 
                   {currentChat?.friend == false && (
@@ -83,14 +80,14 @@ function ChatBox() {
                     }}>Add Friend</button>
                   )}
 
-                  {messages?.length > 0 ? (<btn className="btn btn-warning btn-xs" onClick={(e) => {
+                  {messages?.length > 0 ? (<button className="btn btn-warning btn-xs" onClick={(e) => {
                     e.preventDefault();
                     document.getElementById('modal_message_del').showModal()
-                  }} >Delete Message</btn>) : (<></>)}
-                  {messages?.length === 0 ? (<btn className="btn btn-error btn-xs" onClick={(e) => {
+                  }} >Delete Message</button>) : (<></>)}
+                  {messages?.length === 0 ? (<button className="btn btn-error btn-xs" onClick={(e) => {
                     e.preventDefault();
                     document.getElementById('modal_userChat_del').showModal()
-                  }} >Delete User</btn>) : (<></>)}
+                  }} >Delete User</button>) : (<></>)}
 
                 </div>
               </div>
@@ -114,8 +111,8 @@ function ChatBox() {
             onEnter={handleOnEnter}
             placeholder="Type a message"
             theme="light"
-          />
-          <button className="btn me-2" onClick={() => sendTextMessage(textMessage, currentChat.chat_unique_id, setTextMessage)}>Send</button>
+            />
+            <button className="btn btn-sm mr-1 px-4 absolute z-10 right-14 bottom-3.5 rounded-full" onClick={() => sendTextMessage(textMessage, currentChat.chat_unique_id, setTextMessage)}>Send</button>
         </div>
       )}
 

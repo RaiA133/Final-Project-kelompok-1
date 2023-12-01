@@ -19,10 +19,15 @@ io.on("connection", (socket) => {
   });
 
   // add message dari message yg dikirim
-  socket.on("sendMessage", (message) => {
+  socket.on("sendMessage", (message) => { // messages : table messages
     const user = onlineUsers.find(user => user.userUniqueId === message.recipientUniqueId)
     if (user) {
       io.to(user.socketId).emit("getMessage", message)
+      io.to(user.socketId).emit("getNotification", {
+        senderId: message.sender_unique_id,
+        isRead: false,
+        date: new Date(),
+      })
     }
   })
 
