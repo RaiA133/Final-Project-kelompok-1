@@ -15,13 +15,21 @@ module.exports = {
         unique: true,
         type: Sequelize.STRING
       },
-      userone_unique_id: {
-        allowNull: false,
+      members: {
+        allowNull: true,
+        type: Sequelize.ARRAY(Sequelize.STRING)
+      },
+      friend_req: {
+        allowNull: true,
         type: Sequelize.STRING
       },
-      usertwo_unique_id: {
-        allowNull: false,
-        type: Sequelize.STRING
+      friend: {
+        allowNull: true,
+        type: Sequelize.BOOLEAN
+      },
+      last_message: {
+        allowNull: true,
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,

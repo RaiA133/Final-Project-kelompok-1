@@ -11,13 +11,13 @@ import { PostContextProvider } from "./contexts/PostContext.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
-      <ChatContextProvider>
-        <UserContextProvider>
+      <UserContextProvider>
+        <ChatContextProvider>
           <PostContextProvider>
             <App />
           </PostContextProvider>
-        </UserContextProvider>
-      </ChatContextProvider>
+        </ChatContextProvider>
+      </UserContextProvider>
     </Router>
   </React.StrictMode>
 );

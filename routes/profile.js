@@ -28,6 +28,8 @@ route.put('/profile/update', middlewares.verifyToken, upload.single('file'), (re
   }
 });
 
+route.get('/profile/:unique_id', middlewares.verifyToken, userController.getUserByUniqueId)
+
 
 
 module.exports = route

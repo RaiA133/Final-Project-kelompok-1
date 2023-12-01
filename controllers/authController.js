@@ -23,6 +23,7 @@ class authController {
         username: username,
         email: email,
         password: hashedPassword,
+        status: "offline",
       });
 
       res.status(201).json({
