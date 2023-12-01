@@ -6,7 +6,12 @@ import toast, { Toaster } from 'react-hot-toast';
 import InputEmoji from "react-input-emoji";
 
 function ChatBox() {
-  const { user, currentChat, messages, sendTextMessage, deleteAllMessage, updateUserChat, deleteUserChat, onlineUsers } = useContext(ChatContext) // profile kita dari chatContext | Obrolan yg mana | Pesan Obrolan di userBox yg kita klik
+  const { 
+    user, currentChat, messages, 
+    sendTextMessage, deleteAllMessage, 
+    updateUserChat, deleteUserChat, 
+    onlineUsers,
+  } = useContext(ChatContext) // profile kita dari chatContext | Obrolan yg mana | Pesan Obrolan di userBox yg kita klik
   const recipientUser = useFetchRecipientUser(currentChat, user) // get data orang yg ngobrol dengan kita dari userBox yg kita klik
   const otherUserData = recipientUser[0] || ''
   const otherUserPic = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${otherUserData.img_profile}`

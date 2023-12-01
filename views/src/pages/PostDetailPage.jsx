@@ -5,6 +5,7 @@ import PostProfilePreview from "../components/PostPage/PostProfilePreview";
 import Partner from "../components/Partner";
 import { createUserChat } from "../modules/fetch";
 import { ChatContext } from "../contexts/ChatContext";
+import toast, { Toaster } from 'react-hot-toast';
 
 function PostDetailPage() {
   const location = useLocation()
@@ -13,10 +14,6 @@ function PostDetailPage() {
   const { postState, post_img_link, set_post_img_link } = useContext(PostContext);
   const selectedPost = Array.isArray(postState) ? postState.find((post) => post.slug === slug) : null;
   const { user, userChats, updateCurrentChat } = useContext(ChatContext)
-
-  // console.log('userChats', userChats)
-  // console.log('user.unique_id', user?.unique_id)
-  // console.log('selectedPost.user.unique_id', selectedPost?.user?.unique_id)
 
   const findDataWithMembers = (data, user1, user2) => {
     return data?.filter(item => {
@@ -47,6 +44,7 @@ function PostDetailPage() {
     try {
       const response = await createUserChat(user?.unique_id, selectedPost?.user?.unique_id, friend);
       if (response.status[1] === "Success") {
+        window.localStorage.setItem("chatCreated", `${selectedPost?.user?.username}`)
         navigate("/chat")
       } else {
         console.error("Gagal direct message");

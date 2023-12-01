@@ -8,7 +8,12 @@ import moment from "moment";
 
 const Notification = () => {
   const navigate = useNavigate()
-  const { user, userChats, notifications, allUsers, otherUserByUniqueId, setOtherUserByUniqueId, updateUserChat, setTextMessage } = useContext(ChatContext)
+  const { 
+    user, userChats, notifications, 
+    allUsers, otherUserByUniqueId, 
+    setOtherUserByUniqueId, updateUserChat, 
+    setTextMessage, markNotifificationAsRead 
+  } = useContext(ChatContext)
   const friendReqActive = userChats?.filter(item => item.friend_req !== null); // data percakapan/obrolan yg belum acc friend request
   const friendReqSender = friendReqActive && friendReqActive?.length > 0 ? friendReqActive : null 
   
@@ -37,9 +42,6 @@ const Notification = () => {
     getAllUserChat();
   }, [userChats]);
 
-  // console.log("allUsers", allUsers);
-  // console.log("otherUserByUniqueId", otherUserByUniqueId);
-  // console.log("notifications", notifications);
 
 
   const newArrayForUserChatUpdate = friendReqSender?.map((friendReq) => {
@@ -57,9 +59,6 @@ const Notification = () => {
     updateUserChat(friend, friend_req, chat_unique_id, setTextMessage)
   }
 
-  // console.log('otherUserByUniqueId', otherUserByUniqueId)
-
-
 
   // notif pesan message
   const unreadNotifications = unreadNotificationsFunc(notifications) // mencari notif yg belum di read
@@ -70,8 +69,8 @@ const Notification = () => {
       senderName: sender?.username
     }
   })
-  console.log("un", unreadNotifications)
-  console.log("mn", modifiedNotifications)
+  // console.log("un", unreadNotifications)
+  // console.log("mn", modifiedNotifications)
 
 
   
@@ -97,9 +96,9 @@ const Notification = () => {
                     {otherUserByUniqueId.length + notifications.length || 0}
                   </span>
                 )} */}
-                {(notifications?.length > 0 || (otherUserByUniqueId[0]?.unique_id && otherUserByUniqueId.length > 0)) && ( // notif chat masuk, friend req, friend req pending
+                {(unreadNotifications?.length !== 0 || (otherUserByUniqueId[0]?.unique_id && otherUserByUniqueId.length > 0)) && ( // notif chat masuk, friend req, friend req pending
                   <span className="indicator-item indicator-middle indicator-start badge badge-secondary ms-[-15px]">
-                    {otherUserByUniqueId.length + notifications.length || 0}
+                    {otherUserByUniqueId.length + unreadNotifications.length || 0}
                   </span>
                 )}
                 <div>
@@ -107,9 +106,10 @@ const Notification = () => {
                 </div>
               </div>
             </summary>
-            {/* notif acc friend req / friend req pending */}
+
             {notifications?.length > 0 || newArrayForUserChatUpdate && newArrayForUserChatUpdate?.length > 0 && newArrayForUserChatUpdate[0] !== null ? (
               <ul className="p-2 bg-base-200 rounded-t-none rounded-box w-56 absolute right-0 z-10">
+                {/* NOTIF FRIEND REQUEST / ACC FRIEND REQUEST */}
                 {newArrayForUserChatUpdate?.map(userNotif => (
                   <li key={userNotif?.chat_unique_id}>
                     {userNotif?.friend_req === user?.unique_id ? (
@@ -126,14 +126,31 @@ const Notification = () => {
                     )}
                   </li>
                 ))}
+                {/* NOTIF MESSAGE */}
                 {modifiedNotifications && modifiedNotifications.map((n, index) => (
-                  <li key={index}>
+                  <li 
+                    key={index} 
+                    className={n.isRead ? `bg-base-300` : ``} 
+                    title={n.isRead ? `Sudah dibaca` : ``}
+                    onClick={() => {
+                      navigate("/chat")
+                      markNotifificationAsRead(n, userChats, user, notifications)
+                    }}
+                  >
                     <div className="flex">
-                      <a className="text-xs">You have a message from 
+                      <a className="text-xs">You have a message from
                         <span className="font-bold"> {n.senderName}</span>
                         <span className=""> {moment(n.date).calendar()}</span>
                       </a>
-                      <button className="btn btn-xs btn-primary" onClick={() => navigate("/chat")}>See</button>
+                      {!n.isRead && (
+                        <button 
+                          className="btn btn-xs btn-primary" 
+                          onClick={() => {
+                            navigate("/chat")
+                            markNotifificationAsRead(n, userChats, user, notifications)
+                          }}
+                        >See</button>
+                      )} 
                     </div>
                   </li>
                 ))}
@@ -143,6 +160,7 @@ const Notification = () => {
                 <p className="pb-2 text-center">Anda tidak memiliki notifikasi</p>
               </ul>
             )}
+
           </details>
         </li>
       </ul>

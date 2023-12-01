@@ -22,7 +22,7 @@ export const ChatContextProvider = ({ children }) => {
   const [onlineUsers, setOnlineUsers] = useState([]) // status online/offline user (socket.io)
   const [notifications, setNotifications] = useState([])
 
-  console.log("notifications", notifications)
+  // console.log("notifications", notifications)
   // console.log("currentChat", currentChat)
   // const recipientUniqueId = currentChat?.members.find((unique_id) => unique_id !== user?.unique_id)
   // console.log('recipientUniqueId', recipientUniqueId)
@@ -181,11 +181,50 @@ export const ChatContextProvider = ({ children }) => {
     window.location.reload();
   }, [])
 
-
+  // menyimpan percakapan ke currentChat, berdasarkan userBox yg diklik
   const updateCurrentChat = useCallback((chat) => {
-    setCurrentChat(chat) // menyimpan percakapan ke currentChat, berdasarkan userBox yg diklik
+    setCurrentChat(chat) 
   },[])
 
+  // klik notif pesan, langsung mengarah ke pesannya
+  const markNotifificationAsRead = useCallback((n, userChats, user, notifications) => {
+    console.log("n, userChats, user, notifications", n, userChats, user, notifications)
+    // find chat to open
+    const desiredChat = userChats.find((chat) => { 
+      const chatMembers = [user.unique_id, n.senderId];
+      const isDesiredChat = chat?.members.every((member) => {
+        return chatMembers.includes(member);
+      })
+      return isDesiredChat
+    })
+    // mark notif as read / notif jadi terbaca
+    const mNotifications = notifications.map(el => { 
+      if(n.senderId === el.senderId) {
+        return { ...n, isRead: true }
+      } else {
+        return el
+      }
+    })
+    updateCurrentChat(desiredChat) // arahkan ke chatBox
+    setNotifications(mNotifications) // update keadaan notif jadi read
+  }, [])
+
+  // menghapus notif di userBox dan notif ketika user userBox diklik
+  const markThisUserNotificationsAsRead = useCallback((thisUserNotifications, notifications) => {
+    // mark notif as read
+    const mNotifications = notifications.map(el => {
+      let notification;
+      thisUserNotifications.forEach(n => {
+        if(n.senderId === el.senderId) {
+          notification = { ...n, isRead: true }
+        } else {
+          notification = el 
+        }
+      })
+      return notification
+    })
+    setNotifications(mNotifications)
+  }, [])
 
   return (
     <ChatContext.Provider value={{
@@ -202,7 +241,9 @@ export const ChatContextProvider = ({ children }) => {
       deleteUserChat,
       onlineUsers,
       notifications,
-      allUsers
+      allUsers, 
+      markNotifificationAsRead,
+      markThisUserNotificationsAsRead,
     }}>
       {children}
     </ChatContext.Provider>
