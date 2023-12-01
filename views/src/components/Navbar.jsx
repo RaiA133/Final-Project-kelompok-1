@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import LogoKelompok1B from '../assets/logo/LogoKelompok1B.jpg';
+import BellAlert from '../assets/icon/bell-alert.svg'
 import { getUserByUniqueIdChat, logout } from "../modules/fetch"
 import { UserContext } from "../contexts/UserContext";
 import { ChatContext } from "../contexts/ChatContext";
@@ -30,6 +31,8 @@ function Navbar() {
     const token = window.localStorage.getItem("token");
     if (token) {
       setIsLogin(true);
+    } else {
+      setIsLogin(false);
     }
   }, [window.localStorage.getItem("token")]);
 
@@ -39,7 +42,7 @@ function Navbar() {
       const link = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${userState.img_profile}` || import.meta.env.VITE_PROFILE_DEFAULT
       set_img_profile_link(link)
       setUser(userState)
-    }
+    } 
   }, [userState])
 
 
@@ -73,26 +76,30 @@ function Navbar() {
 
         </ul>
       </div>
+      
       {isLogin && (
         <div className="flex-noneblock gap-2">
 
           <div className="flex-none">
-            <ul className="menu menu-horizontal px-10">
+            <ul className="menu menu-horizontal px-0 relative">
 
               <li>
-                <details>
+                <details className="">
 
+                      
                   <summary>
                     <div className="indicator">
                       {otherUserByUniqueId && otherUserByUniqueId?.unique_id !== user.unique_id && (
                         <span className="indicator-item indicator-middle indicator-start badge badge-secondary ms-[-15px]"></span>
                       )}
-                      Notification
+                      <div>
+                        <img src={BellAlert} width={20} />
+                      </div>
                     </div>
                   </summary>
 
                   {otherUserByUniqueId && otherUserByUniqueId?.unique_id !== user.unique_id ? (
-                    <ul className="p-2 bg-base-200 rounded-t-none z-5 rounded-box w-56">
+                    <ul className="p-2 bg-base-200 rounded-t-none rounded-box w-56 absolute right-0 z-10">
                       <li>
                         <div className="flex">
                           <a className="text-xs">You have friend request from {otherUserByUniqueId?.username}</a>
@@ -102,12 +109,13 @@ function Navbar() {
                       </li>
                     </ul>
                   ) : (
-                    <ul className="p-2 bg-base-200 rounded-t-none z-10 rounded-box w-56">
+                    <ul className="p-2 bg-base-200 rounded-t-none rounded-box w-56 absolute right-0 z-10">
                       <p className="pb-2 text-center">Anda tidak memiliki notifikasi</p>
                     </ul>
                   )}
 
                 </details>
+                
               </li>
             </ul>
 
