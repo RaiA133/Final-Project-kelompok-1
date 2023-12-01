@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Partner from '../components/Partner';
 import toast, { Toaster } from 'react-hot-toast';
 import affan from '../../../assets/img/team/affan.jpeg';

@@ -7,7 +7,7 @@ class chatController {
 
   //  /chats/find-or-create | buat obrolan chat jika yg di input di body tidak ada / ada salah satu yg tidak ada
   static createUserChat(req, res, next) {
-    const { userone_unique_id, usertwo_unique_id, friend } = req.body
+    const { userone_unique_id, usertwo_unique_id, friend ,friend_req } = req.body
     Chat.findOne({
       where: {
         members: [userone_unique_id, usertwo_unique_id]
@@ -27,6 +27,7 @@ class chatController {
             chat_unique_id: uuidv4(),
             members: [userone_unique_id, usertwo_unique_id],
             friend,
+            friend_req,
           });
           res.status(201).json({
             status: [201, 'Success'],

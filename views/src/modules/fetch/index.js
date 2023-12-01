@@ -247,9 +247,9 @@ async function getUserByUniqueIdChat(unique_id) {
 }
 
 // Function find atau buat Chat / userone_unique_id, usertwo_unique_id
-async function createUserChat( userone_unique_id, usertwo_unique_id, friend ) {
+async function createUserChat( userone_unique_id, usertwo_unique_id, friend, friend_req ) {
   try {
-    const response = await instance.post('/chats/find-or-create', { userone_unique_id, usertwo_unique_id, friend })
+    const response = await instance.post('/chats/find-or-create', { userone_unique_id, usertwo_unique_id, friend, friend_req })
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message || "Something went wrong");

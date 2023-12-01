@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ChatContext } from "../../../contexts/ChatContext";
 import { createUserChat } from "../../../modules/fetch";
+import toast, { Toaster } from 'react-hot-toast';
 
 function UserBoxModal() {
   const [searchUsername, setSearchUsername] = useState('');
@@ -19,12 +20,13 @@ function UserBoxModal() {
     });
   
     try {
-      const friend = true
+      const friend = false
       if (filteredUsers.length > 0) {
-        const response = await createUserChat(user.unique_id, filteredUsers[0].unique_id, friend);        
+        const response = await createUserChat(user.unique_id, filteredUsers[0].unique_id, friend, user.unique_id );        
         if (response.status[1] === "Success") {
           window.location.reload()
-          console.log("berhasil");
+          window.localStorage.setItem('toastMessage', 'Tunggu konfirmasi accept pertemanan')
+          console.log("Tunggu konfirmasi accept pertemanan");
         } else {
           console.error("Gagal menambahkan teman");
         }
@@ -50,8 +52,28 @@ function UserBoxModal() {
     setSearchUsername(selectedUsername); // Jika Anda ingin mengisi input dengan username yang dipilih
   };
 
+  useEffect(() => {
+    const toastMessage = localStorage.getItem('toastMessage')
+    // TOAST ACC pertemanan : Muncul ketika ada yang mengirim
+    if (toastMessage == 'Tunggu konfirmasi accept pertemanan') {
+      toast.success(toastMessage, {
+        duration: 2500,
+      });
+      localStorage.removeItem('toastMessage');
+    }
+  }, []);
+
   return (
     <div className='flex justify-end mt-2'>
+
+      <Toaster
+        toastOptions={{
+          style: {
+            maxWidth: '600px'
+          }
+        }}
+      />
+
       <button className="btn btn-primary btn-sm" onClick={() => document.getElementById('my_modal_5').showModal()}>Add Friend</button>
       <dialog id="my_modal_5" className="modal modal-top sm:modal-middle">
         <div className="modal-box">
