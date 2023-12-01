@@ -108,7 +108,7 @@ const Notification = () => {
               </div>
             </summary>
             {/* notif acc friend req / friend req pending */}
-            {newArrayForUserChatUpdate && newArrayForUserChatUpdate?.length > 0 && newArrayForUserChatUpdate[0] !== null ? (
+            {notifications?.length > 0 || newArrayForUserChatUpdate && newArrayForUserChatUpdate?.length > 0 && newArrayForUserChatUpdate[0] !== null ? (
               <ul className="p-2 bg-base-200 rounded-t-none rounded-box w-56 absolute right-0 z-10">
                 {newArrayForUserChatUpdate?.map(userNotif => (
                   <li key={userNotif?.chat_unique_id}>
