@@ -15,17 +15,32 @@ function Navbar() {
 
 
   const friendReqActive = userChats?.filter(item => item.friend_req !== null); // data percakapan/obrolan yg belum acc friend request
-  const friendReqSender = friendReqActive && friendReqActive?.length > 0 ? friendReqActive[0] : null;
+  const friendReqSender = friendReqActive && friendReqActive?.length > 0 ? friendReqActive : null;
   useEffect(() => {
     const getAllUserChat = async () => {
-      const response = await getUserByUniqueIdChat(friendReqSender?.friend_req); // get users by unique_id
-      if (response.status[1] === 'Success') {
-        setOtherUserByUniqueId(response?.data); // orang yg ngirim friend req, disimpan di otherUserByUniqueId
+      if (userChats && userChats.length > 0) { // memastikan userChats tidak kosong sebelum buat request
+        const responses = await Promise.all( // menggunakan Promise.all untuk execute requests bersamaan
+          userChats.map(async (chat) => {
+            const response = await getUserByUniqueIdChat(chat.friend_req); // friend_req = unique_id pengirim request friend yg ingin digunakan untuk request mencari user berdasarkan siapa yg ngirim (isi friend_req)
+            return response;
+          })
+        );
+        // console.log('responses', responses); // hasil respose
+        if (responses && responses.every(response => response !== null)) { // menyatukan semua hasil request ke 1 buah array, jika null jangan kirim
+          const allData = responses.reduce((acc, response) => { 
+            if (response.status[1] === 'Success') {
+              return acc.concat(response.data);
+            }
+            return acc;
+          }, []);
+          setOtherUserByUniqueId(allData); // update ke otherUserByUniqueId
+        }
       }
-    }
-    getAllUserChat()
-  }, [userChats])
+    };
 
+    getAllUserChat();
+  }, [userChats]);
+  
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
@@ -43,11 +58,19 @@ function Navbar() {
     } 
   }, [userState])
 
-
-  function handleOnUserChatUpdate(friend, friend_req) {
-    updateUserChat(friend, friend_req, friendReqSender?.chat_unique_id, setTextMessage)
+  
+  const newArrayForUserChatUpdate = friendReqSender?.map((friendReq) => {
+    const user = otherUserByUniqueId?.find((user) => user?.unique_id === friendReq?.friend_req);
+    return { // memfilter data yg dibutuhkan saja untuk notifikasi dibawah
+      chat_unique_id: friendReq?.chat_unique_id,
+      friend_req: friendReq?.friend_req,
+      username: user ? user?.username : null,
+    };
+  });
+  function handleOnUserChatUpdate(friend, friend_req, chat_unique_id) {
+    console.log("friend, friend_req, chat_unique_id", friend, friend_req, chat_unique_id)
+    updateUserChat(friend, friend_req, chat_unique_id, setTextMessage)
   }
-
 
   return (
     <div className="w-full navbar rounded-2xl bg-base-100">
@@ -87,7 +110,7 @@ function Navbar() {
                       
                   <summary>
                     <div className="indicator">
-                      {otherUserByUniqueId && otherUserByUniqueId?.unique_id !== user?.unique_id && (
+                      {otherUserByUniqueId[0]?.unique_id && otherUserByUniqueId[0]?.unique_id !== user?.unique_id && (
                         <span className="indicator-item indicator-middle indicator-start badge badge-secondary ms-[-15px]"></span>
                       )}
                       <div>
@@ -96,21 +119,26 @@ function Navbar() {
                     </div>
                   </summary>
 
-                  {otherUserByUniqueId && otherUserByUniqueId?.unique_id !== user?.unique_id ? (
+
+                  {newArrayForUserChatUpdate && newArrayForUserChatUpdate.length > 0 && newArrayForUserChatUpdate[0] !== null ? (
                     <ul className="p-2 bg-base-200 rounded-t-none rounded-box w-56 absolute right-0 z-10">
-                      <li>
-                        <div className="flex">
-                          <a className="text-xs">You have friend request from {otherUserByUniqueId?.username}</a>
-                          <button className="btn btn-xs btn-primary" onClick={() => handleOnUserChatUpdate(true, null)}>✔</button>
-                          <button className="btn btn-xs btn-primary" onClick={() => handleOnUserChatUpdate(false, null)}>X</button>
-                        </div>
-                      </li>
+                        {newArrayForUserChatUpdate?.map(user => (
+                          <li key={user?.chat_unique_id}>
+                            <div className="flex">
+                              <a className="text-xs">You have a friend request from {user?.username}</a>
+                              <button className="btn btn-xs btn-primary" onClick={() => handleOnUserChatUpdate(true, null, user?.chat_unique_id)}>✓</button>
+                              <button className="btn btn-xs btn-primary" onClick={() => handleOnUserChatUpdate(false, null, user?.chat_unique_id)}>X</button>
+                            </div>
+                          </li>
+                        ))}
                     </ul>
                   ) : (
                     <ul className="p-2 bg-base-200 rounded-t-none rounded-box w-56 absolute right-0 z-10">
                       <p className="pb-2 text-center">Anda tidak memiliki notifikasi</p>
                     </ul>
                   )}
+
+
 
                 </details>
                 

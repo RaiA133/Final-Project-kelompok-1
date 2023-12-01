@@ -9,15 +9,15 @@ export const ChatContext = createContext();
 export const ChatContextProvider = ({ children }) => {
   const navigate = useNavigate()
   const [user, setUser] = useState(null) // profile kita
-  const [otherUserByUniqueId, setOtherUserByUniqueId] = useState([]) 
+  const [otherUserByUniqueId, setOtherUserByUniqueId] = useState([]) // simpan data user lain yg diget berdasarkan unique_id
   const [userChats, setUserChats] = useState() // seluruh data percakapan / data table chats
   const [potentialChats, setPotentialChats] = useState([]) // user lain yg belum ngobrol sama kita
   const [currentChat, setCurrentChat] = useState(null) // state penampung ketika user di userbox di klik, menyimpan percakapan/chat
   const [userOrMessageDel, setUserOrMessageDel] = useState(null) // untuk merefresh get data chat / messages dibawah
-  const [messages, setMessages] = useState(null)
+  const [messages, setMessages] = useState(null) // menampung semua pesan yg di pilih dari user yg ada di userbox, yg dikirim ke client
   const [sendTextMessageError, setSendTextMessageError] = useState(null)
-  const [newMessage, setNewMessage] = useState(null)
-  const [socket, setSocket] = useState(null)
+  const [newMessage, setNewMessage] = useState(null) // penampung message yg dikirim dari socket io, diterukan ke messages
+  const [socket, setSocket] = useState(null) // baseurl socket.io
   const [onlineUsers, setOnlineUsers] = useState([])
 
   // console.log("onlineUsers", onlineUsers)
@@ -50,7 +50,6 @@ export const ChatContextProvider = ({ children }) => {
   useEffect(() => {
     if(socket === null) return
     const recipientUniqueId = currentChat?.members.find((unique_id) => unique_id !== user.unique_id)
-    // console.log('recipientUniqueId', recipientUniqueId)
     socket.emit("sendMessage", {...newMessage, recipientUniqueId})
   }, [newMessage])  
 
@@ -61,11 +60,9 @@ export const ChatContextProvider = ({ children }) => {
       if(currentChat.chat_unique_id !== res.chat_unique_id) return
       setMessages((prev) => [...prev, res])
     })
-
     return () => {
       socket.off("getMessage")
     }
-
   }, [socket, currentChat]) 
 
 /* END socket.io-client */ 
@@ -80,7 +77,7 @@ export const ChatContextProvider = ({ children }) => {
       }
       const pChats = response.data.filter((u) => { // cari user mana saja yg pernah ngobrol dengan kita
         let isChatCreated = false
-        if (user.unique_id == u.unique_id) return false
+        if (user?.unique_id == u?.unique_id) return false
         if (userChats) { // cek jika pernah ngobrol
           isChatCreated = userChats?.some((chat) => {
             return chat.members[0] === u.unique_id || chat.members[1] === u.unique_id // cek jika ada unique_id kita di field members semua user 
@@ -148,6 +145,7 @@ export const ChatContextProvider = ({ children }) => {
 
   // update User Chat 
   const updateUserChat = useCallback( async(friend, friend_req, chat_unique_id, setTextMessage) => {
+    console.log('friend, friend_req, chat_unique_id', friend, friend_req, chat_unique_id)
     const response = await updateUserByChatUniqueIdChat(friend, friend_req, chat_unique_id, setTextMessage);
     console.log(response)
     if (response.error) {

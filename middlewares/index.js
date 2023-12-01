@@ -7,14 +7,6 @@ const secretKey = process.env.JWT_SECRET || 'defaultSecretKey';
 const verifyToken = async (req, res, next) => {
   const token = req.headers.authorization;
 
-  // if (!token) {
-  //   return res.status(401).json({
-  //     status: 'Failed',
-  //     halaman: 'Middleware JWT',
-  //     message: 'Token Belum Dimasukan.'
-  //   });
-  // }
-
   await User.findOne({
     where: {
       remember_token: token
