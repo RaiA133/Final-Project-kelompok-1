@@ -2,54 +2,31 @@ import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import LogoKelompok1B from '../assets/logo/LogoKelompok1B.jpg';
-import BellAlert from '../assets/icon/bell-alert.svg'
-import { getUserByUniqueIdChat, logout } from "../modules/fetch"
+import { logout } from "../modules/fetch"
 import { UserContext } from "../contexts/UserContext";
 import { ChatContext } from "../contexts/ChatContext";
+import Notification from "./Notification";
 
 function Navbar() {
   const navigate = useNavigate()
   const { userState, img_profile_link, set_img_profile_link, isAdmin } = useContext(UserContext)
-  const { user, setUser, userChats, otherUserByUniqueId, setOtherUserByUniqueId, updateUserChat, setTextMessage } = useContext(ChatContext)
-  const [isLogin, setIsLogin] = useState(false);
-
-
-  const friendReqActive = userChats?.filter(item => item.friend_req !== null); // data percakapan/obrolan yg belum acc friend request
-  const friendReqSender = friendReqActive && friendReqActive.length > 0 ? friendReqActive[0] : null;
-  useEffect(() => {
-    const getAllUserChat = async () => {
-      const response = await getUserByUniqueIdChat(friendReqSender?.friend_req); // get users by unique_id
-      if (response.status[1] === 'Success') {
-        setOtherUserByUniqueId(response.data); // orang yg ngirim friend req, disimpan di otherUserByUniqueId
-      }
-    }
-    getAllUserChat()
-  }, [userChats])
-
+  const { setUser} = useContext(ChatContext)
+  const [isLogin, setIsLogin] = useState(false);  
 
   useEffect(() => {
     const token = window.localStorage.getItem("token");
     if (token) {
       setIsLogin(true);
-    } else {
-      setIsLogin(false);
     }
   }, [window.localStorage.getItem("token")]);
 
-
   useEffect(() => { // ketika userState / profile kita diupdate, ubah state context link gambar
     if (userState.img_profile) {
-      const link = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${userState.img_profile}` || import.meta.env.VITE_PROFILE_DEFAULT
+      const link = `${import.meta.env.VITE_BACKEND_BASEURL}/profile/picture/${userState?.img_profile}` || import.meta.env.VITE_PROFILE_DEFAULT
       set_img_profile_link(link)
       setUser(userState)
     } 
   }, [userState])
-
-
-  function handleOnUserChatUpdate(friend, friend_req) {
-    updateUserChat(friend, friend_req, friendReqSender?.chat_unique_id, setTextMessage)
-  }
-
 
   return (
     <div className="w-full navbar rounded-2xl bg-base-100">
@@ -61,10 +38,10 @@ function Navbar() {
       {/* <div className="flex-1 px-2 mx-3 font-bold text-3xl"><a style={{ cursor: 'pointer' }} onClick={() => navigate("/")}><img className="w-10" alt="Tailwind CSS Navbar component" src={LogoKelompok1B} /></a></div> */}
       <div className="flex-1 font-bold text-3xl">
         <a style={{ cursor: 'pointer' }} onClick={() => navigate("/")}>
-          <img className="w-10 rounded-full" alt="Tailwind CSS Navbar component " src={LogoKelompok1B} />
+          <img className="w-10 rounded-full lg:ms-5" src={LogoKelompok1B} />
         </a>
       </div>
-      <div className="flex-none hidden lg:block gap-2">
+      <div className="flex-none hidden md:block gap-2">
         <ul className="menu menu-horizontal">
           {/* Navbar menu content here */}
           {!isLogin && (
@@ -80,46 +57,7 @@ function Navbar() {
       {isLogin && (
         <div className="flex-noneblock gap-2">
 
-          <div className="flex-none">
-            <ul className="menu menu-horizontal px-0 relative">
-
-              <li>
-                <details className="">
-
-                      
-                  <summary>
-                    <div className="indicator">
-                      {otherUserByUniqueId && otherUserByUniqueId?.unique_id !== user.unique_id && (
-                        <span className="indicator-item indicator-middle indicator-start badge badge-secondary ms-[-15px]"></span>
-                      )}
-                      <div>
-                        <img src={BellAlert} width={20} />
-                      </div>
-                    </div>
-                  </summary>
-
-                  {otherUserByUniqueId && otherUserByUniqueId?.unique_id !== user.unique_id ? (
-                    <ul className="p-2 bg-base-200 rounded-t-none rounded-box w-56 absolute right-0 z-10">
-                      <li>
-                        <div className="flex">
-                          <a className="text-xs">You have friend request from {otherUserByUniqueId?.username}</a>
-                          <button className="btn btn-xs btn-primary" onClick={() => handleOnUserChatUpdate(true, null)}>✔</button>
-                          <button className="btn btn-xs btn-primary" onClick={() => handleOnUserChatUpdate(false, null)}>X</button>
-                        </div>
-                      </li>
-                    </ul>
-                  ) : (
-                    <ul className="p-2 bg-base-200 rounded-t-none rounded-box w-56 absolute right-0 z-10">
-                      <p className="pb-2 text-center">Anda tidak memiliki notifikasi</p>
-                    </ul>
-                  )}
-
-                </details>
-                
-              </li>
-            </ul>
-
-          </div>
+          <Notification />
 
           <div className="dropdown dropdown-end me-5">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -127,7 +65,7 @@ function Navbar() {
                 <img alt="Tailwind CSS Navbar component" src={img_profile_link} />
               </div>
             </label>
-            <ul tabIndex={0} className="mt-5 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+            <ul tabIndex={0} className="mt-5 z-[50] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
               <li>
                 <div className="avatar" onClick={() => navigate("/profile")}>
                   <div className="w-8 rounded-full">

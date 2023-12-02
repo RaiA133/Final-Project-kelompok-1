@@ -71,7 +71,7 @@ function App() {
       </div>
 
       {/* Footer */}
-      {hideOnRegisterLogin && <Footer />}
+      {hideOnRegisterLogin && location.pathname !== '/chat' && <Footer />}
     </div>
   );
 }
