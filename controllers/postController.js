@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { User_post, User } = require('../models')
+const slug = require('slug')
 
 class postController {
 
@@ -312,7 +313,7 @@ class postController {
       
       // Fungsi untuk membuat slug
       const createSlug = (title) => {
-        const formattedTitle = title.toLowerCase().replace(/\s+/g, '-'); // Lowercase dan ganti spasi dengan strip
+        const formattedTitle = slug(title)
         return formattedTitle
       };
       
@@ -362,7 +363,7 @@ class postController {
 
     // Fungsi untuk membuat slug
     const createSlug = (title) => {
-      const formattedTitle = title.toLowerCase().replace(/\s+/g, '-'); // Lowercase dan ganti spasi dengan strip
+      const formattedTitle = slug(title)
       return formattedTitle
     };
     const slugFormated = createSlug(post_title);
