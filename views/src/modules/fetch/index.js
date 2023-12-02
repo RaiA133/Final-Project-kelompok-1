@@ -190,6 +190,8 @@ async function createPost(formData) {
 // Function for create post endpoint
 async function updatePostBySlug(formData, slug) {
   const formDataObject = Object.fromEntries(formData.entries());
+  console.log("formData", formData)
+  return
   try {
     const response = await instance.put(`/post/update/${slug}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },

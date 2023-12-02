@@ -1,5 +1,5 @@
-import { createContext, useEffect, useState } from "react";
-import { getAllPostingan, getYourPostingan } from "../modules/fetch";
+import { createContext, useCallback, useEffect, useState } from "react";
+import { getAllPostingan, getYourPostingan, updatePostBySlug } from "../modules/fetch";
 import { useNavigate } from "react-router-dom";
 
 export const PostContext = createContext();
@@ -11,6 +11,7 @@ export const PostContextProvider = ({ children }) => {
   const [post_img_link, set_post_img_link] = useState({});
   const [allYourPost, setAllYourPost] = useState([]);
   const [userPostByUniqueId, setUserPostByUniqueId] = useState([]);
+  const [statusPostChange, setStatusPostChange] = useState(null);
 
   const [categoryTags, setCageoryTags] = useState({
     categories: [
@@ -71,8 +72,16 @@ export const PostContextProvider = ({ children }) => {
       }
     };
     fetchData();
-  }, [navigate]); // Re-fetch data when navigate changes
+  }, [navigate, statusPostChange]); // Re-fetch data when navigate changes
 
+  const postStatusChange = useCallback(async (formData, slug) => {
+    try {
+      const response = await updatePostBySlug(formData, slug);
+      setStatusPostChange(response.data)
+    } catch (error) {
+      console.error(error.message);
+    }
+  }, []);
 
 
   return <PostContext.Provider value={{
@@ -82,5 +91,6 @@ export const PostContextProvider = ({ children }) => {
     categoryTags, setCageoryTags,
     allYourPost, setAllYourPost,
     userPostByUniqueId, setUserPostByUniqueId,
+    postStatusChange,
   }}>{children}</PostContext.Provider>;
 };

@@ -40,7 +40,7 @@ function ListPost({ post, id }) {
       <div className="text-sm mt-3">
         <span>Max Revenue :</span>
         {post.max_price}
-        <p>Project Status: On Going</p>
+        <p>Project Status: {post.status}</p>
         <p>Worktime: {post.post_worktime}</p>
       </div>
       <div className="mt-4">

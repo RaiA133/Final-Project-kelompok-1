@@ -11,9 +11,10 @@ function PostDetailPage() {
   const location = useLocation()
   const navigate = useNavigate();
   const { slug } = useParams(); // Mendapatkan SLUG dari URL
-  const { postState, post_img_link, set_post_img_link } = useContext(PostContext);
+  const { postState, post_img_link, set_post_img_link, postStatusChange } = useContext(PostContext);
   const selectedPost = Array.isArray(postState) ? postState.find((post) => post.slug === slug) : null;
   const { user, userChats, updateCurrentChat } = useContext(ChatContext)
+  const statusPostChange = user?.unique_id === selectedPost?.unique_id
 
   const findDataWithMembers = (data, user1, user2) => {
     return data?.filter(item => {
@@ -55,6 +56,15 @@ function PostDetailPage() {
     }
   }
 
+
+  function handleOnPostStatusChange(event) {
+    const formData = new FormData(event.target);
+    const slug = selectedPost.slug
+    postStatusChange(formData, slug);
+  }
+  
+
+
   return (
     <div>
 
@@ -76,8 +86,29 @@ function PostDetailPage() {
             {selectedPost.post_tags && <kbd className="kbd kbd-md w-fit text-xs">#{selectedPost.post_tags}</kbd>}
           </div>
 
-          <p><span className="font-bold">Project Status: </span>On Going</p>
-          <p><span className="font-bold">Worktime: </span>{selectedPost.post_worktime}</p>
+          <div className="flex justify-between">
+            <div>
+              <p><span className="font-bold">Project Status: </span>{selectedPost.status}</p>
+              <p><span className="font-bold">Worktime: </span>{selectedPost.post_worktime}</p>
+            </div>
+
+            {statusPostChange && (
+              <label className="form-control w-fit max-w-xs">
+                <select
+                  className="select select-bordered select-xs w-fit max-w-xs"
+                  name="status"
+                  onChange={handleOnPostStatusChange}
+                >
+                  <option value="On Going">On Going</option>
+                  <option value="Already Taken">Already Taken</option>
+                </select>
+                <div className="label">
+                  <span className="label-text-alt"></span>
+                  <span className="label-text-alt">Ubah Project Status</span>
+                </div>
+              </label>
+            )}
+          </div>
 
           <div className="divider divider-start text-primary mt-8">Skill Needed</div>
 
@@ -115,8 +146,8 @@ function PostDetailPage() {
                 <div className="stat-value">{selectedPost.max_price}</div>
                 {selectedPost?.user?.unique_id !== user?.unique_id && (
                   <div className="stat-actions">
-                      <button className="btn btn-sm mr-2" onClick={directMessage}>Chat Owner</button>
-                      <button className="btn btn-sm">Ambil Kerjaan</button>
+                    <button className="btn btn-sm mr-2" onClick={directMessage}>Chat Owner</button>
+                    <button className="btn btn-sm">Ambil Kerjaan</button>
                   </div>
                 )}
               </div>

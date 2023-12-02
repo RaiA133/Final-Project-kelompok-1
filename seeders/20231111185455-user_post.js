@@ -8,7 +8,7 @@ module.exports = {
     const addUser_posts = [
       {
         unique_id: users.user2,
-        slug: Date.now() + '-' + 'logo-design',
+        slug: '1' + '-' + 'logo-design',
         post_title: "Logo Design",
         post_desc: "Saya mencari seorang desainer logo yang kreatif untuk menciptakan logo yang mencerminkan identitas merek saya. Dengan fokus pada desain yang sederhana dan mengesankan, saya mencari seseorang yang dapat menghasilkan konsep logo yang dapat menonjol dan mudah diingat. Proyek ini memiliki batas waktu 14 hari, dan saya berharap untuk bekerja dengan desainer yang dapat memberikan hasil yang memuaskan.",
         post_category: "Design",
@@ -22,7 +22,7 @@ module.exports = {
       },
       {
         unique_id: users.user2,
-        slug: Date.now() + '-' + 'social-media-marketing',
+        slug: '2' + '-' + 'social-media-marketing',
         post_title: "Social Media Marketing",
         post_desc: "Saya membutuhkan seorang spesialis pemasaran media sosial untuk meningkatkan kehadiran online bisnis saya. Dengan fokus pada platform seperti Instagram dan Facebook, saya mencari seseorang yang dapat membuat strategi pemasaran yang efektif, termasuk pembuatan konten dan manajemen kampanye iklan. Proyek ini memiliki batas waktu 21 hari, dan saya berharap untuk bekerja dengan seorang ahli pemasaran yang dapat menghasilkan hasil yang positif.",
         post_category: "Marketing",
@@ -36,7 +36,7 @@ module.exports = {
       },
       {
         unique_id: users.user2,
-        slug: Date.now() + '-' + 'video-editing',
+        slug: '3' + '-' + 'video-editing',
         post_title: "Video Editing",
         post_desc: "Saya mencari seorang editor video berbakat untuk mengedit video presentasi bisnis. Dengan fokus pada penyuntingan yang kreatif dan pemahaman akan narasi visual, saya mencari seseorang yang dapat meningkatkan kualitas video saya. Proyek ini memiliki batas waktu 10 hari, dan saya berharap untuk bekerja dengan seorang editor yang dapat memberikan sentuhan profesional pada materi video saya.",
         post_category: "Video Editing",

@@ -93,7 +93,7 @@ function EditPostPage({ PostForm }) {
     );
   }
 
-  console.log('postDetailState : ', postDetailState)
+  // console.log('postDetailState : ', postDetailState)
 
   return (
     <>

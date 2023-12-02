@@ -36,7 +36,7 @@ function DeatilPost({ data }) {
                     {data.min_price} <br />
                     <span className="font-bold">Max Revenue : </span>
                     {data.max_price}
-                    <p><span className="font-bold">Project Status: </span>On Going</p>
+                    <p><span className="font-bold">Project Status: </span>{data.status}</p>
                     <p><span className="font-bold">Worktime: </span>{data.post_worktime}</p>
                     <button onClick={() => navigate(`/post/${data.slug}`)} className="btn btn-primary mt-5">
                       More Detail

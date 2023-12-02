@@ -21,7 +21,11 @@ module.exports = {
       slug: {
         allowNull: true,
         unique:true,
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        references: {
+          model: "User_post_statuses",
+          key: "slug"
+        }
       },
       post_img: {
         allowNull: true,
