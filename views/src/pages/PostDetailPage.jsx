@@ -56,14 +56,12 @@ function PostDetailPage() {
     }
   }
 
-
+  // ubah status project
   function handleOnPostStatusChange(event) {
-    const formData = new FormData(event.target);
-    const slug = selectedPost.slug
-    postStatusChange(formData, slug);
+    const selectedStatus = event.target.value;
+    postStatusChange(selectedStatus, selectedPost.slug);
   }
   
-
 
   return (
     <div>

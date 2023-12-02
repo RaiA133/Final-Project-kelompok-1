@@ -14,8 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User_post_status.init({
-    post_slug: DataTypes.TEXT,
-    status: DataTypes.STRING
+    post_slug: DataTypes.STRING,
+    status: {
+      type: DataTypes.STRING, 
+      defaultValue: 'On Going'
+    },
   }, {
     sequelize,
     modelName: 'User_post_status',

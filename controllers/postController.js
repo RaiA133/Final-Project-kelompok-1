@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { User_post, User } = require('../models')
+const { User_post, User_post_status, User } = require('../models')
 const slug = require('slug')
 
 class postController {
@@ -306,29 +306,36 @@ class postController {
         post_category, post_tags, skills,
         min_price, max_price, post_worktime, post_worktime_time
       } = req.body;
-      
+
       const currentDate = new Date(); // Dapatkan tanggal saat ini
       const expirationDate = new Date(); // Tambahkan 30 hari ke tanggal saat ini
       expirationDate.setDate(currentDate.getDate() + 30);
-      
+
       // Fungsi untuk membuat slug
       const createSlug = (title) => {
         const formattedTitle = slug(title)
         return formattedTitle
       };
-      
+
       const slugFormated = createSlug(post_title); // Buat slug dari post_title
       const file = fileName;
       const skillsArray = skills.split(',');
+      const createSlugWithDate = Date.now() + '-' + slugFormated
+
+      User_post_status.create({
+        post_slug: createSlugWithDate,
+        status: "On Going",
+      })
+
       const newUser_post = await User_post.create({
         unique_id,
-        slug: Date.now() + '-' + slugFormated,
+        slug: createSlugWithDate,
         post_img: file,
         post_title,
         post_desc,
         post_category,
         post_tags,
-        skills : skillsArray,
+        skills: skillsArray,
         min_price,
         max_price,
         post_worktime: post_worktime + ' ' + post_worktime_time,
@@ -372,12 +379,12 @@ class postController {
 
     const updatedPostingan = {
       slug: Date.now() + '-' + slugFormated,
-      post_img: file, 
+      post_img: file,
       post_title,
-      post_desc, 
+      post_desc,
       post_category,
-      post_tags, 
-      skills : skillsArray,
+      post_tags,
+      skills: skillsArray,
       min_price,
       max_price,
       post_worktime: post_worktime + ' ' + post_worktime_time,
@@ -417,6 +424,7 @@ class postController {
       })
   }
 
+  // halaman DELETE POSTINGAN | DELETE data POSTINGAN by id
   static deletePostingan(req, res, next) {
     User_post.findByPk(req.params.id)
       .then(data => {
@@ -427,7 +435,8 @@ class postController {
             message: 'Data tidak ditemukan!',
           });
         } else {
-          return User_post.destroy({ where: { id: req.params.id } })
+          User_post.destroy({ where: { id: req.params.id } })
+          User_post_status.destroy({ where: { post_slug: data.slug } })
         }
       })
       .then(data => {
@@ -446,6 +455,101 @@ class postController {
         });
       })
   }
+
+
+
+  static getAllPostStatus(req, res, next) {
+    User_post_status.findAll({
+      order: [['id', 'DESC']],
+    })
+      .then(data => {
+        res.status(200).json({
+          status: [200, 'Success'],
+          halaman: 'Home',
+          message: 'Berhasil GET all Data User_posts_status',
+          data,
+        })
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'Home',
+          message: 'Something went wrong',
+          error: err
+        })
+      })
+  }
+
+  static updateStatusPostBySlug(req, res, next) {
+    const { slug } = req.params;
+    const { status } = req.body;
+
+    User_post_status.findOne({
+      where: {
+        post_slug: slug,
+      }
+    })
+      .then(data => {
+        if (!data) {
+          res.status(404).json({
+            status: [404, 'Success'],
+            halaman: 'updateStatusPost',
+            message: 'Data Status tidak ditemukan!',
+            data
+          });
+        } else {
+          User_post_status.update({ status }, { where: { post_slug: slug } });
+          res.status(200).json({
+            status: [200, 'Success'],
+            halaman: 'updateStatusPost',
+            message: 'Postingan Status berhasil di update!',
+            data
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'updateStatusPost',
+          message: 'Something went wrong!',
+          error: err
+        });
+      });
+  }
+
+  static getPostStatusBySlug(req, res, next) {
+    const { slug } = req.params;
+    User_post_status.findOne({
+      where: {
+        post_slug: slug,
+      }
+    })
+      .then((data) => {
+        if (!data) {
+          return res.status(404).json({
+            status: [404, "Failed"],
+            halaman: "Post",
+            message: "Data Post Status Tidak Ditemukan!",
+          });
+        } else {
+          return res.status(200).json({
+            status: [200, "Success"],
+            halaman: "Post",
+            message: `Post Status Berdasarkan Slug : ${data.slug}`,
+            data,
+          });
+        }
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          status: [500, "Failed"],
+          halaman: "Post",
+          message: "Something went wrong",
+          error: err,
+        });
+      });
+  }
+
 }
 
 module.exports = postController

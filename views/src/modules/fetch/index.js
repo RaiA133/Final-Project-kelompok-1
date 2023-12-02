@@ -190,8 +190,6 @@ async function createPost(formData) {
 // Function for create post endpoint
 async function updatePostBySlug(formData, slug) {
   const formDataObject = Object.fromEntries(formData.entries());
-  console.log("formData", formData)
-  return
   try {
     const response = await instance.put(`/post/update/${slug}`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -205,6 +203,36 @@ async function updatePostBySlug(formData, slug) {
     // console.error(error) // code dibawah didapat dari error Axios dari sini
     const cekSesi = JSON.parse(error.request.response) // cek jika sesi login berakhir
     throw new Error(cekSesi?.message || error?.message || 'Something went wrong');
+  }
+}
+
+// Function POST STATUS
+async function getAllPostStatus() {
+  try {
+    const response = await instance.get(`/post/status/all`); // tambahkan last_message jika diperlukan
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+// Function POST STATUS
+async function updatePostStatusBySlug(status, slug) {
+  try {
+    const response = await instance.put(`/post/status/update/${slug}`, {status}); // tambahkan last_message jika diperlukan
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
+  }
+}
+
+// Function POST STATUS
+async function getPostStatusBySlug(slug) {
+  try {
+    const response = await instance.get(`/post/status/${slug}`); // tambahkan last_message jika diperlukan
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || 'Something went wrong');
   }
 }
 
@@ -339,8 +367,9 @@ async function logout() {
 
 export { 
   register, verifyUserEmail, resendVerifyUserEmail, login, 
-  getUserbyId, userProfile, getUserByUniqueId, updateProfile, getAllUser,
+  getUserbyId, userProfile, getUserByUniqueId, updateProfile, getAllUser, 
   getYourPostingan, getAllPostingan, getPostByUniqueId, getPostDetailBySlug, getPostTerbaru, getPostTerlama, createPost, updatePostBySlug, delYourPostinganById,
+  updatePostStatusBySlug, getAllPostStatus, getPostStatusBySlug,
   getAllDataUserAdmin, getUserRoleAdmin, deleteUserByUniqueIdAdmin, 
   findAllUserChats, getUserByUniqueIdChat, createUserChat, 
   createUserMessage, deleteAllMessageByUniqueId,

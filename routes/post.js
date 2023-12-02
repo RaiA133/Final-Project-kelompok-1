@@ -38,4 +38,8 @@ route.put("/post/update/:slug", middlewares.verifyToken, upload.single("file"), 
 });
 route.delete("/post/delete/:id", middlewares.verifyToken, postController.deletePostingan);
 
+route.put("/post/status/all", middlewares.verifyToken, postController.getAllPostStatus);
+route.put("/post/status/update/:slug", middlewares.verifyToken, postController.updateStatusPostBySlug);
+route.put("/post/status/:slug", middlewares.verifyToken, postController.getPostStatusBySlug);
+
 module.exports = route;

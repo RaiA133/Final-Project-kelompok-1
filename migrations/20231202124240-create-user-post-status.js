@@ -13,7 +13,7 @@ module.exports = {
       post_slug: {
         allowNull: true,
         unique:true,
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
       },
       status: {
         type: Sequelize.ENUM("On Going", "Already Taken"),
