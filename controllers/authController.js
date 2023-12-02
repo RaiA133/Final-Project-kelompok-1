@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const secretKey = process.env.JWT_SECRET || 'defaultSecretKey';
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require("bcrypt");
-const crypto = require("crypto")
+const crypto = require("crypto");
+const { sendVerificationMail } = require('../utils/sendVerificationMail');
 
 class authController {
 
@@ -27,6 +28,8 @@ class authController {
         status: "offline",
         emailToken: crypto.randomBytes(64).toString("hex")
       });
+
+      sendVerificationMail(newUser) // kirim email asli
 
       res.status(201).json({
         status: [201, 'Success'],
