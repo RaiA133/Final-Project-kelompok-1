@@ -27,7 +27,6 @@ const UserBoxChat = ({ chat, user }) => { // seluruh percakapan yg ada kitanya (
       }}
     >
       { isOnline && <span className="indicator-item badge badge-success" />}
-      {/* {otherUserData.status == "online" ? (<span className="indicator-item badge badge-success" /> ) : (<></>)} */}
       <button className="w-full text-left py-2 focus:outline-none focus-visible:bg-indigo-50">
         <div className="flex items-center text-xs">
           <img className="rounded-full items-start flex-shrink-0 mr-3 w-10 h-10" src={otherUserPic} alt="Byrne McKenzie" />

@@ -16,10 +16,12 @@ import AdminPage from './pages/AdminPage';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from './contexts/UserContext';
 import EditPostPage from './pages/EditPostPage';
+import VerifyEmail from './pages/VerifyEmail';
+import ResendVerificationPage from './pages/ResendVerificationPage';
 
 function App() {
   let location = useLocation();
-  const hideOnRegisterLogin = location.pathname !== '/register' && location.pathname !== '/login'; // location.pathname : untuk cek current url
+  const hideOnRegisterLogin = location.pathname !== '/register' && location.pathname !== '/login' && location.pathname !== '/verify-email' && location.pathname !== '/verify-email/resend'; // location.pathname : untuk cek current url
   const { isAdmin } = useContext(UserContext)
 
   const [isLogin, setIsLogin] = useState(false);
@@ -44,6 +46,8 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/verify-email/resend" element={<ResendVerificationPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/post" element={<PostPage />} />
             <Route path="/post/:slug" element={<PostDetailPage />} />

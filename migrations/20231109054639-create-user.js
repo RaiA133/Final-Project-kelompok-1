@@ -107,9 +107,18 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+
+      isVerified: {
+        allowNull: true,
+        type: Sequelize.BOOLEAN
+      },
       remember_token: {
         allowNull: true,
         type: Sequelize.TEXT
+      },
+      emailToken: {
+        allowNull: true,
+        type: Sequelize.STRING
       },
 
       createdAt: {

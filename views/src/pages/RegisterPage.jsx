@@ -32,7 +32,7 @@ function RegisterPage() {
       });
       return
     }
-    if(e.target.username.value.length > 10) {
+    if(e.target.username.value.length > 20) {
       toast.error('Username Terlalu Panjang Max 10 digit!', {
         duration: 2500,
       });
@@ -47,8 +47,8 @@ function RegisterPage() {
       );
       if (response.status[0] === 201) {
         const successMessage = response.message;
-        toast.success(successMessage + ' Silahkan Login', {
-          duration: 3000,
+        toast.success(successMessage, {
+          duration: 6000,
         });
         setTimeout(() => {
           navigate("/login")
@@ -170,6 +170,9 @@ function RegisterPage() {
                   <span className='underline text-sky-600 decoration-sky-600 ms-1' style={{ cursor: 'pointer' }} onClick={() => navigate("/login")}>Login</span>
                 </p>
               </div>
+                <p className='text-sm text-center mt-1'>
+                  <span className='underline text-sky-600 decoration-sky-600 ms-1' style={{ cursor: 'pointer' }} onClick={() => navigate("/verify-email/resend")}>Resend Email Verification</span>
+                </p>
 
             </form>
 

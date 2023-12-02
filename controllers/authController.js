@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const secretKey = process.env.JWT_SECRET || 'defaultSecretKey';
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const { sendVerificationMail } = require('../utils/sendVerificationMail');
 
 class authController {
 
@@ -24,12 +26,15 @@ class authController {
         email: email,
         password: hashedPassword,
         status: "offline",
+        emailToken: crypto.randomBytes(64).toString("hex")
       });
+
+      sendVerificationMail(newUser) // kirim email asli
 
       res.status(201).json({
         status: [201, 'Success'],
         halaman: 'Register',
-        message: 'Registrasi Berhasil!',
+        message: 'Registrasi Berhasil, Verifikasi email anda!',
         data: newUser
       });
 
@@ -45,6 +50,7 @@ class authController {
       
     }
   }
+
 
   // halaman LOGIN | GET, POST & UPDATE data user
   static login(req, res, next) {
@@ -70,6 +76,13 @@ class authController {
             message: `Password Salah untuk email : ${data.email}`
           });
         }
+        if (data.isVerified === null || data.isVerified === false) {
+          return res.status(401).json({
+            status: [401, 'Failed'],
+            halaman: 'Login',
+            message: 'Email belum diverifikasi!'
+          });
+        }
         else {
           const JWTtime = process.env.JWT_EXPIRED_TIME
           const token = jwt.sign({ // data yang di encoded jadi JWT, diteruskan ke middleware JWT : middlewares/index.js
@@ -87,6 +100,88 @@ class authController {
             halaman: 'Login',
             message: 'Anda Berhasil Login',
             token
+          });
+        }
+      })
+      .catch(err => {
+        return res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'Login',
+          message: 'Something went wrong',
+          error: err.message
+        });
+      });
+  }
+
+  // halaman verifikasi EMAIL | 
+  static verifyEmail(req, res, nex) {
+    try {
+      const emailToken = req.body.emailToken;
+      if (!emailToken) {
+        return res.status(404).json({
+          status: [404, 'Failed'],
+          halaman: 'verifyEmail',
+          message: 'emailToken Not Found!'
+        });
+      }
+      User.findOne({
+        where: {
+          emailToken
+        }
+      })
+        .then(async data => {
+          if(data) {
+            data.update({ 
+              emailToken: null,
+              isVerified: true,
+             }) 
+            return res.status(200).json({
+              status: [200, 'Success'],
+              halaman: 'verifyEmail',
+              message: 'Email berhasil terverifikasi',
+              data,
+            });
+          } else {
+            return res.status(404).json({
+              status: [404, 'Failed'],
+              halaman: 'verifyEmail',
+              message: 'Verifikasi email gagal, token salah!',
+              data,
+            });
+          }
+        })
+    } catch (err) {
+      return res.status(500).json({
+        status: [500, 'Failed'],
+        halaman: 'verifyEmail',
+        message: 'Something went wrong',
+        error: err.message
+      });
+    }
+  }
+
+  // halaman resend email verification
+  static async resendVerification(req, res, next) {
+    const { email } = req.body;
+    User.findOne({
+      where: {
+        email: email
+      }
+    })
+      .then(async data => {
+        if (!data) {
+          return res.status(404).json({
+            status: [404, 'Failed'],
+            halaman: 'Login',
+            message: 'Email Salah atau Tidak Terdaftar!'
+          });
+        }
+        else {
+          sendVerificationMail(data)
+          return res.status(200).json({
+            status: [200, 'Success'],
+            halaman: 'Login',
+            message: 'Email verifikasi terkirim, cek email anda',
           });
         }
       })
