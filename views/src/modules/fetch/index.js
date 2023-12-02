@@ -31,6 +31,15 @@ async function verifyUserEmail(emailToken) {
   }
 }
 
+async function resendVerifyUserEmail(email) {
+  try {
+    const response = await instance.post("/verify-email/resend", {email});
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message || "Something went wrong");
+  }
+}
+
 
 // Function for login user endpoint
 async function login(email, password) {
@@ -327,7 +336,7 @@ async function logout() {
 
 
 export { 
-  register, verifyUserEmail, login, 
+  register, verifyUserEmail, resendVerifyUserEmail, login, 
   getUserbyId, userProfile, getUserByUniqueId, updateProfile, getAllUser,
   getYourPostingan, getAllPostingan, getPostByUniqueId, getPostDetailBySlug, getPostTerbaru, getPostTerlama, createPost, updatePostBySlug, delYourPostinganById,
   getAllDataUserAdmin, getUserRoleAdmin, deleteUserByUniqueIdAdmin, 

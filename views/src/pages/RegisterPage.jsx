@@ -170,6 +170,9 @@ function RegisterPage() {
                   <span className='underline text-sky-600 decoration-sky-600 ms-1' style={{ cursor: 'pointer' }} onClick={() => navigate("/login")}>Login</span>
                 </p>
               </div>
+                <p className='text-sm text-center mt-1'>
+                  <span className='underline text-sky-600 decoration-sky-600 ms-1' style={{ cursor: 'pointer' }} onClick={() => navigate("/verify-email/resend")}>Resend Email Verification</span>
+                </p>
 
             </form>
 

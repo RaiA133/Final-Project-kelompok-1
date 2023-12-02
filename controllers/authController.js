@@ -51,6 +51,7 @@ class authController {
     }
   }
 
+
   // halaman LOGIN | GET, POST & UPDATE data user
   static login(req, res, next) {
     const { email, password } = req.body
@@ -60,13 +61,6 @@ class authController {
       }
     })
       .then(async data => {
-        if (data.isVerified === null || data.isVerified === false) {
-          return res.status(401).json({
-            status: [401, 'Failed'],
-            halaman: 'Login',
-            message: 'Email belum diverifikasi!'
-          });
-        }
         if (!data) {
           return res.status(404).json({
             status: [404, 'Failed'],
@@ -80,6 +74,13 @@ class authController {
             status: [400, 'Failed'],
             halaman: 'Login',
             message: `Password Salah untuk email : ${data.email}`
+          });
+        }
+        if (data.isVerified === null || data.isVerified === false) {
+          return res.status(401).json({
+            status: [401, 'Failed'],
+            halaman: 'Login',
+            message: 'Email belum diverifikasi!'
           });
         }
         else {
@@ -157,6 +158,41 @@ class authController {
         error: err.message
       });
     }
+  }
+
+  // halaman resend email verification
+  static async resendVerification(req, res, next) {
+    const { email } = req.body;
+    User.findOne({
+      where: {
+        email: email
+      }
+    })
+      .then(async data => {
+        if (!data) {
+          return res.status(404).json({
+            status: [404, 'Failed'],
+            halaman: 'Login',
+            message: 'Email Salah atau Tidak Terdaftar!'
+          });
+        }
+        else {
+          sendVerificationMail(data)
+          return res.status(200).json({
+            status: [200, 'Success'],
+            halaman: 'Login',
+            message: 'Email verifikasi terkirim, cek email anda',
+          });
+        }
+      })
+      .catch(err => {
+        return res.status(500).json({
+          status: [500, 'Failed'],
+          halaman: 'Login',
+          message: 'Something went wrong',
+          error: err.message
+        });
+      });
   }
 
   // halaman LOGOUT | GET & UPDATE data user ( middlewares : JWT | login needed )
