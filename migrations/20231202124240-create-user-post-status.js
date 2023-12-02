@@ -3,17 +3,17 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('User_post_statuses', {
-      no: {
+      id: {
         allowNull: false,
         unique: true,
         autoIncrement: true,
+        primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id: { 
+      post_slug: {
         allowNull: true,
-        unique: true,
-        primaryKey: true,
-        type: Sequelize.TEXT
+        unique:true,
+        type: Sequelize.TEXT,
       },
       status: {
         type: Sequelize.ENUM("On Going", "Already Taken"),

@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User_post_status.init({
+    post_slug: DataTypes.TEXT,
     status: DataTypes.STRING
   }, {
     sequelize,

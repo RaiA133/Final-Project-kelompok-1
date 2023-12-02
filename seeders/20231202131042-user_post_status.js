@@ -5,25 +5,25 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const addUserPostStatus = [
       {
-        id: "1-logo-design",
+        post_slug: "1-logo-design",
         status: "On Going",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        id: '1-pengerjaan-web-gis',
+        post_slug: '1-pengerjaan-web-gis',
         status: "On Going",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        id: '2-big-dropdhipper-app',
+        post_slug: '2-big-dropdhipper-app',
         status: "On Going",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        id: '3-travel-blog-writer',
+        post_slug: '3-travel-blog-writer',
         status: "On Going",
         createdAt: new Date(),
         updatedAt: new Date(),

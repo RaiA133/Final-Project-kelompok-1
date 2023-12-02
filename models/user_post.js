@@ -11,7 +11,6 @@
        */
       static associate(models) {
         User_posts.belongsTo(models.User, { as: 'user', foreignKey: 'unique_id', hooks: true });
-        User_posts.belongsTo(models.User_post_status, { as: 'status', foreignKey: 'slug', hooks: true });
       }
     }
     User_posts.init({

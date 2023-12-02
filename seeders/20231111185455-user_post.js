@@ -148,7 +148,7 @@ module.exports = {
       },
       {
         unique_id: users.user1,
-        slug: Date.now() + '-' + 'pengerjaan-web-gis',
+        slug: '1' + '-' + 'pengerjaan-web-gis',
         post_title: "Pengerjaan Web GIS",
         post_desc: "Saya sedang mencari seorang pengembang web GIS berpengalaman yang dapat membantu saya dalam pengembangan situs web GIS. Saya memiliki kebutuhan untuk menciptakan solusi yang memukau secara visual, fungsional, dan responsif. Dengan harapan untuk menggunakan teknologi seperti Google Maps API, Leaflet, dan Mapbox, saya mencari seseorang yang dapat memberikan hasil terbaik sesuai dengan kebutuhan bisnis atau proyek saya. Saya berharap untuk bekerja sama dengan seseorang yang kreatif dan berdedikasi, dan berharap dapat melihat hasil yang memuaskan dalam waktu yang efisien.",
         post_category: "GIS Development",
@@ -162,7 +162,7 @@ module.exports = {
       },
       {
         unique_id: users.user1,
-        slug: Date.now() + '-' + 'big-dropdhipper-app',
+        slug: '2' + '-' + 'big-dropdhipper-app',
         post_title: "Big Dropshipper App",
         post_desc: "I Want to make a dropshipper app that can make people buy thing to my shop. I hove you can contribute in this project feel free to contact me.",
         post_category: "E-commerce",
@@ -176,7 +176,7 @@ module.exports = {
       },
       {
         unique_id: users.user1,
-        slug: Date.now() + '-' + 'travel-blog-writer',
+        slug: '3' + '-' + 'travel-blog-writer',
         post_title: "Travel Blog Writer",
         post_desc: "Saya mencari seorang penulis blog perjalanan berpengalaman yang dapat menyediakan konten menarik dan inspiratif untuk blog perjalanan saya. Saya memiliki kecintaan pada petualangan dan budaya, dan saya ingin membawa pembaca saya dalam perjalanan yang menarik melalui tulisan. Saya berharap dapat bermitra dengan seseorang yang memiliki kemampuan bercerita yang kuat, dan dapat menghadirkan pengalaman unik melalui setiap artikel. Jika Anda memiliki keahlian dalam menciptakan konten yang memukau, saya ingin bekerja sama dengan Anda untuk menghasilkan konten yang bernilai tambah untuk audiens saya.",
         post_category: "Content Creation",
