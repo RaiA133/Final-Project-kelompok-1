@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import BellAlert from '../assets/icon/bell-alert.svg'
 import { getUserByUniqueIdChat } from "../modules/fetch"
 import { ChatContext } from "../contexts/ChatContext";
-import { unreadNotificationsFunc } from "../hooks/unreadNotificationsFunc";
+import { unreadNotificationsFunc } from "../utils/unreadNotificationsFunc";
 import moment from "moment";
 
 const Notification = () => {

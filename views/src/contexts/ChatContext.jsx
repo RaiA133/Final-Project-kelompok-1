@@ -11,18 +11,18 @@ export const ChatContextProvider = ({ children }) => {
   const [user, setUser] = useState(null) // profile kita
   const [allUsers, setAllUsers] = useState([]) // semua users
   const [otherUserByUniqueId, setOtherUserByUniqueId] = useState([]) // simpan data user lain yg diget berdasarkan unique_id
-  const [userChats, setUserChats] = useState() // seluruh data percakapan / data table chats
+  const [userChats, setUserChats] = useState() // seluruh data percakapan / data table chats, otomatis terupdate berdasarkan notif & newMessage (socket.io)
   const [potentialChats, setPotentialChats] = useState([]) // user lain yg belum ngobrol sama kita
   const [currentChat, setCurrentChat] = useState(null) // state penampung ketika user di userbox di klik, menyimpan percakapan/chat
   const [userOrMessageDel, setUserOrMessageDel] = useState(null) // untuk merefresh get data chat / messages dibawah
-  const [messages, setMessages] = useState(null) // menampung semua pesan yg di pilih dari user yg ada di userbox, yg dikirim ke client
+  const [messages, setMessages] = useState(null) // socket.io // menampung semua pesan yg di pilih dari user yg ada di userbox, yg dikirim ke client
   const [sendTextMessageError, setSendTextMessageError] = useState(null)
-  const [newMessage, setNewMessage] = useState(null) // penampung message yg dikirim dari socket io, diterukan ke messages
-  const [socket, setSocket] = useState(null) // baseurl socket.io
-  const [onlineUsers, setOnlineUsers] = useState([]) // status online/offline user (socket.io)
-  const [notifications, setNotifications] = useState([])
+  const [newMessage, setNewMessage] = useState(null) // socket.io // penampung message yg dikirim dari socket io, diterukan ke messages
+  const [socket, setSocket] = useState(null) // socket.io // baseurl socket.io
+  const [onlineUsers, setOnlineUsers] = useState([]) // socket.io // status online/offline user (socket.io)
+  const [notifications, setNotifications] = useState([]) // socket.io // state penampung notif pesan
 
-  // console.log("notifications", notifications)
+  // console.log("userChats", userChats)
   // console.log("currentChat", currentChat)
   // const recipientUniqueId = currentChat?.members.find((unique_id) => unique_id !== user?.unique_id)
   // console.log('recipientUniqueId', recipientUniqueId)
@@ -105,6 +105,7 @@ export const ChatContextProvider = ({ children }) => {
   }, [user])
 
 
+  // untuk data di userBox : last_message
   useEffect(() => {
     const getAllUserChat = async () => {
       const response = await findAllUserChats(); // get percakapan yg ada kitanya, berdasarkan unique_id hasil decoded token
@@ -113,7 +114,7 @@ export const ChatContextProvider = ({ children }) => {
       }
     }
     getAllUserChat()
-  }, [navigate, userOrMessageDel])
+  }, [navigate, newMessage, notifications])
 
   
   useEffect(() => {
