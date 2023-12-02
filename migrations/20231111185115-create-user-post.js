@@ -63,6 +63,10 @@ module.exports = {
         allowNull: true,
         type: Sequelize.DATE
       },
+      status: {
+        type: Sequelize.ENUM("On Going", "Already Taken"),
+        defaultValue: "On Going",
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATEONLY

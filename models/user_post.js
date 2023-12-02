@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     post_worktime: DataTypes.STRING,
     skills: DataTypes.ARRAY(DataTypes.STRING),
     post_expired_in: DataTypes.DATE,
+    status: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'User_post',
