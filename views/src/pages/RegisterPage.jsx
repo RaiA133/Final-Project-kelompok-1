@@ -47,8 +47,8 @@ function RegisterPage() {
       );
       if (response.status[0] === 201) {
         const successMessage = response.message;
-        toast.success(successMessage + ' Silahkan Login', {
-          duration: 3000,
+        toast.success(successMessage, {
+          duration: 6000,
         });
         setTimeout(() => {
           navigate("/login")

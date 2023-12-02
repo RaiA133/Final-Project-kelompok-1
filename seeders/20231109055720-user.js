@@ -26,6 +26,7 @@ module.exports = {
         address: 'Jl. Dago atas No.23',
         contact: '08123456789',
         status: "offline",
+        isVerified: true,
         web_link: 'https://raie-site.link',
         github_link: 'https://github.com/RaiA133',
         fb_link: 'https://www.facebook.com/zuck/?locale=id_ID',
@@ -46,6 +47,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('321', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -59,6 +61,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('111', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -72,6 +75,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('password123', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -85,6 +89,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('securepass', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -98,6 +103,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('sarahpass', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -111,6 +117,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('alexpass123', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -124,6 +131,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('emilypass', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -137,6 +145,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('davidpass123', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -150,6 +159,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('meganpass', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -163,6 +173,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('robertpass123', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -176,6 +187,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('sophiepass', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -189,6 +201,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('danielpass', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -202,6 +215,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('ellapass', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -215,6 +229,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('chrispass123', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -228,6 +243,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('oliviapass', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -241,6 +257,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('ryanpass123', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -254,6 +271,7 @@ module.exports = {
         img_profile: 'default.png',
         password: await bcrypt.hash('isabellapass', 10),
         status: "offline",
+        isVerified: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },

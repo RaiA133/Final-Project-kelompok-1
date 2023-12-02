@@ -22,6 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1/', routers);
 app.use('/profile/picture', express.static(path.join(__dirname, 'assets/img/users')));
 app.use('/post/picture', express.static(path.join(__dirname, 'assets/img/user_postingan')));
+app.use('/email', express.static(path.join(__dirname, 'assets/img/email-verify')));
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => {

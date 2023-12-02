@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 import { testSession, userProfile } from '../modules/fetch';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,13 +31,18 @@ export const UserContextProvider = ({ children }) => {
     fetchData();
   }, [navigate]) // ini artinya akan berjalan tanpa refresh
 
+  const updateUser = useCallback((response) => {
+    localStorage.setItem("User", JSON.stringify(response));
+    setUserState(response);
+  }, []);
+
   return (
     <UserContext.Provider value={{
-      userState,
-      setUserState,
+      userState, setUserState,
       img_profile_link,
       set_img_profile_link,
       isAdmin, setIsAdmin,
+      updateUser,
     }}>
       {children}
     </UserContext.Provider>
