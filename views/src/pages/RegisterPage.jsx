@@ -33,7 +33,7 @@ function RegisterPage() {
       return
     }
     if(e.target.username.value.length > 20) {
-      toast.error('Username Terlalu Panjang Max 10 digit!', {
+      toast.error('Username Terlalu Panjang Max 20 digit!', {
         duration: 2500,
       });
       return

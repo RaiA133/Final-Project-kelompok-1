@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { User_post, User } = require('../models')
-const slug = require('slug')
+// const slug = require('slug')
+var slugify = require('slugify')
 
 class postController {
 
@@ -313,7 +314,7 @@ class postController {
       
       // Fungsi untuk membuat slug
       const createSlug = (title) => {
-        const formattedTitle = slug(title)
+        const formattedTitle = slugify(title)
         return formattedTitle
       };
       
@@ -363,7 +364,7 @@ class postController {
 
     // Fungsi untuk membuat slug
     const createSlug = (title) => {
-      const formattedTitle = slug(title)
+      const formattedTitle = slugify(title)
       return formattedTitle
     };
     const slugFormated = createSlug(post_title);

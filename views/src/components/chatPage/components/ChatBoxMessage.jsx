@@ -19,8 +19,8 @@ const ChatBoxMessage = () => {
   return (
     <>
       {messages && messages.map((message, index) => (
-        <div className={`chat ${message?.sender_unique_id !== user?.unique_id && "chat-start" || "chat-end"}`} key={index} ref={scroll}>
-          <div className="chat-bubble">{message?.text}</div>
+        <div className={`chat  ${message?.sender_unique_id !== user?.unique_id && "chat-start" || "chat-end"}`} key={index} ref={scroll}>
+          <div className={`chat-bubble ${message?.sender_unique_id !== user?.unique_id && "bg-base-300 text-black" || ""}`}>{message?.text}</div>
           <div className="chat-footer opacity-50">
             {/* {message?.sender_unique_id === user?.unique_id ? (<span className=''> Read </span>) : (<></>)} */}
             <time className="text-xs opacity-50 ms-2 font-bold">{moment(message?.createdAt).calendar()}</time>

@@ -189,7 +189,6 @@ export const ChatContextProvider = ({ children }) => {
 
   // klik notif pesan, langsung mengarah ke pesannya
   const markNotifificationAsRead = useCallback((n, userChats, user, notifications) => {
-    console.log("n, userChats, user, notifications", n, userChats, user, notifications)
     // find chat to open
     const desiredChat = userChats.find((chat) => { 
       const chatMembers = [user.unique_id, n.senderId];

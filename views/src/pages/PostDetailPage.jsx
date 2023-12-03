@@ -116,7 +116,7 @@ function PostDetailPage() {
                 {selectedPost?.user?.unique_id !== user?.unique_id && (
                   <div className="stat-actions">
                       <button className="btn btn-sm mr-2" onClick={directMessage}>Chat Owner</button>
-                      <button className="btn btn-sm">Ambil Kerjaan</button>
+                      {/* <button className="btn btn-sm">Ambil Kerjaan</button> */}
                   </div>
                 )}
               </div>
